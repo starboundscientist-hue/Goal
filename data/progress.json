@@ -13,170 +13,586 @@
       "id": "foundations",
       "name": "Foundations",
       "phase": 1,
-      "checklist": { "study": false, "experiment": false, "artifact": false },
+      "checklist": {
+        "study": false,
+        "experiment": false,
+        "artifact": false
+      },
       "topics": [
-        { "id": "linear_algebra", "label": "Linear algebra (SVD, eigen, matrix calculus)", "done": false },
-        { "id": "probability", "label": "Probability & statistics (Bayesian, Monte Carlo)", "done": false },
-        { "id": "optimization", "label": "Optimization (convex, gradient descent)", "done": false },
-        { "id": "numerical", "label": "Numerical methods (ODE/PDE solvers)", "done": false },
-        { "id": "dsa", "label": "Data structures & algorithms", "done": false },
-        { "id": "os_concepts", "label": "OS concepts (processes, memory, file systems)", "done": false },
-        { "id": "computer_arch", "label": "Computer architecture (pipeline, cache, RISC-V)", "done": false },
-        { "id": "gpu_arch", "label": "GPU architecture (SM, warps, tensor cores)", "done": false },
-        { "id": "networking", "label": "Networking (TCP/IP, RDMA, InfiniBand)", "done": false },
-        { "id": "compilers", "label": "Compilers basics (LLVM, code generation)", "done": false }
+        {
+          "id": "linear_algebra",
+          "label": "Linear algebra (SVD, eigen, matrix calculus)",
+          "done": false
+        },
+        {
+          "id": "probability",
+          "label": "Probability & statistics (Bayesian, Monte Carlo)",
+          "done": false
+        },
+        {
+          "id": "optimization",
+          "label": "Optimization (convex, gradient descent)",
+          "done": false
+        },
+        {
+          "id": "numerical",
+          "label": "Numerical methods (ODE/PDE solvers)",
+          "done": false
+        },
+        {
+          "id": "dsa",
+          "label": "Data structures & algorithms",
+          "done": false
+        },
+        {
+          "id": "os_concepts",
+          "label": "OS concepts (processes, memory, file systems)",
+          "done": false
+        },
+        {
+          "id": "computer_arch",
+          "label": "Computer architecture (pipeline, cache, RISC-V)",
+          "done": false
+        },
+        {
+          "id": "gpu_arch",
+          "label": "GPU architecture (SM, warps, tensor cores)",
+          "done": false
+        },
+        {
+          "id": "networking",
+          "label": "Networking (TCP/IP, RDMA, InfiniBand)",
+          "done": false
+        },
+        {
+          "id": "compilers",
+          "label": "Compilers basics (LLVM, code generation)",
+          "done": false
+        }
       ],
       "resources": [
-        { "id": "mml_book", "label": "Mathematics for Machine Learning (Deisenroth)", "done": false },
-        { "id": "cohen_stats", "label": "Modern Statistics (Mike X Cohen)", "done": false },
-        { "id": "neetcode", "label": "Neetcode 150 DSA problems", "done": false },
-        { "id": "mit_6006", "label": "MIT 6.006 Introduction to Algorithms (YouTube)", "done": false },
-        { "id": "cs61c", "label": "CS 61C: Machine Structures (UC Berkeley)", "done": false }
+        {
+          "id": "mml_book",
+          "label": "Mathematics for Machine Learning (Deisenroth)",
+          "done": false
+        },
+        {
+          "id": "cohen_stats",
+          "label": "Modern Statistics (Mike X Cohen)",
+          "done": false
+        },
+        {
+          "id": "neetcode",
+          "label": "Neetcode 150 DSA problems",
+          "done": false
+        },
+        {
+          "id": "mit_6006",
+          "label": "MIT 6.006 Introduction to Algorithms (YouTube)",
+          "done": false
+        },
+        {
+          "id": "cs61c",
+          "label": "CS 61C: Machine Structures (UC Berkeley)",
+          "done": false
+        }
       ],
       "projects": [
-        { "id": "svd_scratch", "label": "Implement SVD from scratch in NumPy, compress an image, publish blog post", "status": "not_started" },
-        { "id": "neetcode_practice", "label": "Solve 50 Neetcode problems (graphs + DP focus)", "status": "not_started" }
+        {
+          "id": "svd_scratch",
+          "label": "Implement SVD from scratch in NumPy, compress an image, publish blog post",
+          "status": "not_started"
+        },
+        {
+          "id": "neetcode_practice",
+          "label": "Solve 50 Neetcode problems (graphs + DP focus)",
+          "status": "not_started"
+        }
       ]
     },
     "alpha": {
       "id": "alpha",
       "name": "Frontier AI / ML",
       "phase": 1,
-      "checklist": { "study": false, "experiment": false, "artifact": false },
+      "checklist": {
+        "study": false,
+        "experiment": false,
+        "artifact": false
+      },
       "topics": [
-        { "id": "transformers", "label": "Transformer architectures (self-attention, RoPE, MoE)", "done": false },
-        { "id": "ssm", "label": "State-space models (Mamba, S4)", "done": false },
-        { "id": "distributed", "label": "Distributed training: FSDP, DeepSpeed, Megatron", "done": false },
-        { "id": "cuda", "label": "GPU programming: CUDA, Triton, CUTLASS, Nsight", "done": false },
-        { "id": "inference", "label": "Inference optimization: GPTQ, AWQ, vLLM, TensorRT-LLM", "done": false },
-        { "id": "rl", "label": "Reinforcement learning: PPO, SAC, RLHF, DPO", "done": false },
-        { "id": "data_pipelines", "label": "Data pipelines: tokenization, streaming, curation", "done": false },
-        { "id": "mixed_precision", "label": "Numerical stability: fp16/bf16, gradient accumulation", "done": false }
+        {
+          "id": "transformers",
+          "label": "Transformer architectures (self-attention, RoPE, MoE)",
+          "done": false
+        },
+        {
+          "id": "ssm",
+          "label": "State-space models (Mamba, S4)",
+          "done": false
+        },
+        {
+          "id": "distributed",
+          "label": "Distributed training: FSDP, DeepSpeed, Megatron",
+          "done": false
+        },
+        {
+          "id": "cuda",
+          "label": "GPU programming: CUDA, Triton, CUTLASS, Nsight",
+          "done": false
+        },
+        {
+          "id": "inference",
+          "label": "Inference optimization: GPTQ, AWQ, vLLM, TensorRT-LLM",
+          "done": false
+        },
+        {
+          "id": "rl",
+          "label": "Reinforcement learning: PPO, SAC, RLHF, DPO",
+          "done": false
+        },
+        {
+          "id": "data_pipelines",
+          "label": "Data pipelines: tokenization, streaming, curation",
+          "done": false
+        },
+        {
+          "id": "mixed_precision",
+          "label": "Numerical stability: fp16/bf16, gradient accumulation",
+          "done": false
+        }
       ],
       "resources": [
-        { "id": "karpathy", "label": "Karpathy — Neural Networks: Zero to Hero (YouTube)", "done": false },
-        { "id": "annotated_transformer", "label": "The Annotated Transformer (Harvard NLP)", "done": false },
-        { "id": "cuda_guide", "label": "NVIDIA CUDA Programming Guide", "done": false },
-        { "id": "cuda_mode", "label": "CUDA Mode lectures — Mark Saroufim (YouTube)", "done": false },
-        { "id": "pmpp", "label": "Programming Massively Parallel Processors (Kirk & Hwu)", "done": false },
-        { "id": "vllm_github", "label": "vLLM GitHub — study PagedAttention, continuous batching", "done": false },
-        { "id": "cs285", "label": "CS 285: Deep RL (UC Berkeley, YouTube)", "done": false },
-        { "id": "spinning_up", "label": "Spinning Up in Deep RL (OpenAI)", "done": false },
-        { "id": "triton_tutorials", "label": "Triton official tutorials (triton-lang.org)", "done": false }
+        {
+          "id": "karpathy",
+          "label": "Karpathy — Neural Networks: Zero to Hero (YouTube)",
+          "done": false
+        },
+        {
+          "id": "annotated_transformer",
+          "label": "The Annotated Transformer (Harvard NLP)",
+          "done": false
+        },
+        {
+          "id": "cuda_guide",
+          "label": "NVIDIA CUDA Programming Guide",
+          "done": false
+        },
+        {
+          "id": "cuda_mode",
+          "label": "CUDA Mode lectures — Mark Saroufim (YouTube)",
+          "done": false
+        },
+        {
+          "id": "pmpp",
+          "label": "Programming Massively Parallel Processors (Kirk & Hwu)",
+          "done": false
+        },
+        {
+          "id": "vllm_github",
+          "label": "vLLM GitHub — study PagedAttention, continuous batching",
+          "done": false
+        },
+        {
+          "id": "cs285",
+          "label": "CS 285: Deep RL (UC Berkeley, YouTube)",
+          "done": false
+        },
+        {
+          "id": "spinning_up",
+          "label": "Spinning Up in Deep RL (OpenAI)",
+          "done": false
+        },
+        {
+          "id": "triton_tutorials",
+          "label": "Triton official tutorials (triton-lang.org)",
+          "done": false
+        }
       ],
       "projects": [
-        { "id": "gpt2_fsdp", "label": "Train GPT-2 sized model from scratch on 2+ GPUs using FSDP — log loss curves, throughput, GPU utilization", "status": "not_started" },
-        { "id": "cuda_kernel", "label": "Write a custom CUDA kernel for fused attention; benchmark against PyTorch", "status": "not_started" },
-        { "id": "llm_quantize", "label": "Quantize an LLM to INT4 with GPTQ and deploy via vLLM; measure throughput/latency", "status": "not_started" },
-        { "id": "ppo_mujoco", "label": "Train a PPO agent in MuJoCo, record video, write up reward curves", "status": "not_started" },
-        { "id": "paper_repro", "label": "Reproduce a recent SSM or MoE paper from scratch; publish reproducibility report", "status": "not_started" }
+        {
+          "id": "gpt2_fsdp",
+          "label": "Train GPT-2 sized model from scratch on 2+ GPUs using FSDP — log loss curves, throughput, GPU utilization",
+          "status": "not_started"
+        },
+        {
+          "id": "cuda_kernel",
+          "label": "Write a custom CUDA kernel for fused attention; benchmark against PyTorch",
+          "status": "not_started"
+        },
+        {
+          "id": "llm_quantize",
+          "label": "Quantize an LLM to INT4 with GPTQ and deploy via vLLM; measure throughput/latency",
+          "status": "not_started"
+        },
+        {
+          "id": "ppo_mujoco",
+          "label": "Train a PPO agent in MuJoCo, record video, write up reward curves",
+          "status": "not_started"
+        },
+        {
+          "id": "paper_repro",
+          "label": "Reproduce a recent SSM or MoE paper from scratch; publish reproducibility report",
+          "status": "not_started"
+        }
       ]
     },
     "beta": {
       "id": "beta",
       "name": "Embodied AI",
       "phase": 2,
-      "checklist": { "study": false, "experiment": false, "artifact": false },
+      "checklist": {
+        "study": false,
+        "experiment": false,
+        "artifact": false
+      },
       "topics": [
-        { "id": "classical_control", "label": "Classical control: PID, root locus, frequency domain", "done": false },
-        { "id": "state_space", "label": "State-space: LQR, LQG, pole placement", "done": false },
-        { "id": "mpc", "label": "Model Predictive Control (MPC) and trajectory optimization", "done": false },
-        { "id": "kalman", "label": "State estimation: KF, EKF, UKF, particle filters", "done": false },
-        { "id": "factor_graphs", "label": "Factor graphs (GTSAM, g2o)", "done": false },
-        { "id": "slam", "label": "SLAM: visual SLAM, LiDAR SLAM, graph-based", "done": false },
-        { "id": "rigid_body", "label": "Rigid-body kinematics/dynamics (quaternions, Newton-Euler)", "done": false },
-        { "id": "behavior_trees", "label": "Behavior trees for task planning", "done": false }
+        {
+          "id": "classical_control",
+          "label": "Classical control: PID, root locus, frequency domain",
+          "done": false
+        },
+        {
+          "id": "state_space",
+          "label": "State-space: LQR, LQG, pole placement",
+          "done": false
+        },
+        {
+          "id": "mpc",
+          "label": "Model Predictive Control (MPC) and trajectory optimization",
+          "done": false
+        },
+        {
+          "id": "kalman",
+          "label": "State estimation: KF, EKF, UKF, particle filters",
+          "done": false
+        },
+        {
+          "id": "factor_graphs",
+          "label": "Factor graphs (GTSAM, g2o)",
+          "done": false
+        },
+        {
+          "id": "slam",
+          "label": "SLAM: visual SLAM, LiDAR SLAM, graph-based",
+          "done": false
+        },
+        {
+          "id": "rigid_body",
+          "label": "Rigid-body kinematics/dynamics (quaternions, Newton-Euler)",
+          "done": false
+        },
+        {
+          "id": "behavior_trees",
+          "label": "Behavior trees for task planning",
+          "done": false
+        }
       ],
       "resources": [
-        { "id": "modern_robotics", "label": "Coursera Modern Robotics (Northwestern, Kevin Lynch)", "done": false },
-        { "id": "prob_robotics", "label": "Probabilistic Robotics (Thrun, Burgard, Fox)", "done": false },
-        { "id": "stachniss_slam", "label": "Cyrill Stachniss SLAM lectures (YouTube, Univ. Bonn)", "done": false },
-        { "id": "gtsam_docs", "label": "GTSAM documentation and examples", "done": false },
-        { "id": "casadi_docs", "label": "CasADi documentation + examples", "done": false }
+        {
+          "id": "modern_robotics",
+          "label": "Coursera Modern Robotics (Northwestern, Kevin Lynch)",
+          "done": false
+        },
+        {
+          "id": "prob_robotics",
+          "label": "Probabilistic Robotics (Thrun, Burgard, Fox)",
+          "done": false
+        },
+        {
+          "id": "stachniss_slam",
+          "label": "Cyrill Stachniss SLAM lectures (YouTube, Univ. Bonn)",
+          "done": false
+        },
+        {
+          "id": "gtsam_docs",
+          "label": "GTSAM documentation and examples",
+          "done": false
+        },
+        {
+          "id": "casadi_docs",
+          "label": "CasADi documentation + examples",
+          "done": false
+        }
       ],
       "projects": [
-        { "id": "kalman_scratch", "label": "Implement a Kalman filter from scratch for a 2D robot; publish derivation blog post", "status": "not_started" },
-        { "id": "planar_slam", "label": "Build full planar SLAM using GTSAM or g2o with a public dataset", "status": "not_started" },
-        { "id": "pendulum_ctrl", "label": "Control simulated inverted pendulum with PID, LQR, MPC; compare performance", "status": "not_started" },
-        { "id": "orbslam3", "label": "Run ORB-SLAM3 on a public dataset and trace the full pipeline in code", "status": "not_started" },
-        { "id": "ros2_sim", "label": "Build ROS 2 robot simulation with SLAM, navigation, obstacle avoidance", "status": "not_started" }
+        {
+          "id": "kalman_scratch",
+          "label": "Implement a Kalman filter from scratch for a 2D robot; publish derivation blog post",
+          "status": "not_started"
+        },
+        {
+          "id": "planar_slam",
+          "label": "Build full planar SLAM using GTSAM or g2o with a public dataset",
+          "status": "not_started"
+        },
+        {
+          "id": "pendulum_ctrl",
+          "label": "Control simulated inverted pendulum with PID, LQR, MPC; compare performance",
+          "status": "not_started"
+        },
+        {
+          "id": "orbslam3",
+          "label": "Run ORB-SLAM3 on a public dataset and trace the full pipeline in code",
+          "status": "not_started"
+        },
+        {
+          "id": "ros2_sim",
+          "label": "Build ROS 2 robot simulation with SLAM, navigation, obstacle avoidance",
+          "status": "not_started"
+        }
       ]
     },
     "gamma": {
       "id": "gamma",
       "name": "Embedded & Real-Time",
       "phase": 1,
-      "checklist": { "study": false, "experiment": false, "artifact": false },
+      "checklist": {
+        "study": false,
+        "experiment": false,
+        "artifact": false
+      },
       "topics": [
-        { "id": "realtime_cpp", "label": "Real-time C/C++: deterministic memory, MISRA, interrupt handling", "done": false },
-        { "id": "rtos", "label": "RTOS: FreeRTOS, Zephyr, QNX awareness", "done": false },
-        { "id": "embedded_linux", "label": "Embedded Linux: Yocto, Buildroot, device trees", "done": false },
-        { "id": "microcontrollers", "label": "Microcontrollers: ARM Cortex-M, RISC-V", "done": false },
-        { "id": "fpga", "label": "FPGAs and high-level synthesis (basic HDL)", "done": false },
-        { "id": "comm_buses", "label": "Communication buses: CAN, SPI, I2C, UART, SpaceWire", "done": false },
-        { "id": "edge_inference", "label": "Edge inference: TensorRT, ONNX Runtime, TFLite Micro, TVM", "done": false }
+        {
+          "id": "realtime_cpp",
+          "label": "Real-time C/C++: deterministic memory, MISRA, interrupt handling",
+          "done": false
+        },
+        {
+          "id": "rtos",
+          "label": "RTOS: FreeRTOS, Zephyr, QNX awareness",
+          "done": false
+        },
+        {
+          "id": "embedded_linux",
+          "label": "Embedded Linux: Yocto, Buildroot, device trees",
+          "done": false
+        },
+        {
+          "id": "microcontrollers",
+          "label": "Microcontrollers: ARM Cortex-M, RISC-V",
+          "done": false
+        },
+        {
+          "id": "fpga",
+          "label": "FPGAs and high-level synthesis (basic HDL)",
+          "done": false
+        },
+        {
+          "id": "comm_buses",
+          "label": "Communication buses: CAN, SPI, I2C, UART, SpaceWire",
+          "done": false
+        },
+        {
+          "id": "edge_inference",
+          "label": "Edge inference: TensorRT, ONNX Runtime, TFLite Micro, TVM",
+          "done": false
+        }
       ],
       "resources": [
-        { "id": "freertos_tutorials", "label": "FreeRTOS official tutorials + STM32CubeIDE examples", "done": false },
-        { "id": "freertos_udemy", "label": "Mastering FreeRTOS using STM32 (Udemy)", "done": false },
-        { "id": "rtos_book", "label": "Hands-On RTOS with Microcontrollers (Amos)", "done": false },
-        { "id": "tflite_micro", "label": "TensorFlow Lite Micro documentation", "done": false },
-        { "id": "tvm_docs", "label": "TVM documentation — ML compiler for edge", "done": false }
+        {
+          "id": "freertos_tutorials",
+          "label": "FreeRTOS official tutorials + STM32CubeIDE examples",
+          "done": false
+        },
+        {
+          "id": "freertos_udemy",
+          "label": "Mastering FreeRTOS using STM32 (Udemy)",
+          "done": false
+        },
+        {
+          "id": "rtos_book",
+          "label": "Hands-On RTOS with Microcontrollers (Amos)",
+          "done": false
+        },
+        {
+          "id": "tflite_micro",
+          "label": "TensorFlow Lite Micro documentation",
+          "done": false
+        },
+        {
+          "id": "tvm_docs",
+          "label": "TVM documentation — ML compiler for edge",
+          "done": false
+        }
       ],
       "projects": [
-        { "id": "freertos_stm32", "label": "Set up FreeRTOS on STM32 Nucleo; read IMU via I2C, log to SD card in real-time task", "status": "not_started" },
-        { "id": "tflite_deploy", "label": "Train small classifier, quantize, deploy via TFLite Micro on Nucleo; measure latency", "status": "not_started" },
-        { "id": "hitl", "label": "Build HITL: Python sim streams sensor data to Nucleo, which runs EKF, sends back commands", "status": "not_started" },
-        { "id": "jetson_trt", "label": "Deploy quantized transformer on Jetson with TensorRT; benchmark throughput", "status": "not_started" }
+        {
+          "id": "freertos_stm32",
+          "label": "Set up FreeRTOS on STM32 Nucleo; read IMU via I2C, log to SD card in real-time task",
+          "status": "not_started"
+        },
+        {
+          "id": "tflite_deploy",
+          "label": "Train small classifier, quantize, deploy via TFLite Micro on Nucleo; measure latency",
+          "status": "not_started"
+        },
+        {
+          "id": "hitl",
+          "label": "Build HITL: Python sim streams sensor data to Nucleo, which runs EKF, sends back commands",
+          "status": "not_started"
+        },
+        {
+          "id": "jetson_trt",
+          "label": "Deploy quantized transformer on Jetson with TensorRT; benchmark throughput",
+          "status": "not_started"
+        }
       ]
     },
     "delta": {
       "id": "delta",
       "name": "Computational Physics",
       "phase": 2,
-      "checklist": { "study": false, "experiment": false, "artifact": false },
+      "checklist": {
+        "study": false,
+        "experiment": false,
+        "artifact": false
+      },
       "topics": [
-        { "id": "classical_mech", "label": "Classical mechanics (Lagrangian/Hamiltonian, perturbation theory)", "done": false },
-        { "id": "electromagnetism", "label": "Electromagnetism: Maxwell, radiation, antenna theory", "done": false },
-        { "id": "plasma", "label": "Plasma physics: MHD, particle-in-cell methods", "done": false },
-        { "id": "pde_methods", "label": "Numerical PDEs: finite difference, finite volume, spectral methods", "done": false },
-        { "id": "pinns", "label": "Physics-informed neural networks (PINNs)", "done": false },
-        { "id": "hpc_patterns", "label": "Scientific computing: HPC patterns, GPU-accelerated PDE solvers", "done": false }
+        {
+          "id": "classical_mech",
+          "label": "Classical mechanics (Lagrangian/Hamiltonian, perturbation theory)",
+          "done": false
+        },
+        {
+          "id": "electromagnetism",
+          "label": "Electromagnetism: Maxwell, radiation, antenna theory",
+          "done": false
+        },
+        {
+          "id": "plasma",
+          "label": "Plasma physics: MHD, particle-in-cell methods",
+          "done": false
+        },
+        {
+          "id": "pde_methods",
+          "label": "Numerical PDEs: finite difference, finite volume, spectral methods",
+          "done": false
+        },
+        {
+          "id": "pinns",
+          "label": "Physics-informed neural networks (PINNs)",
+          "done": false
+        },
+        {
+          "id": "hpc_patterns",
+          "label": "Scientific computing: HPC patterns, GPU-accelerated PDE solvers",
+          "done": false
+        }
       ],
       "resources": [
-        { "id": "plasma_conde", "label": "Introduction to Plasma Physics (Conde, 2025)", "done": false },
-        { "id": "plasma_chen", "label": "Introduction to Plasma Physics (Chen) — classic", "done": false },
-        { "id": "griffiths", "label": "Introduction to Electrodynamics (Griffiths) — first 4 chapters", "done": false },
-        { "id": "pinns_paper", "label": "Original PINNs paper (Raissi et al.)", "done": false }
+        {
+          "id": "plasma_conde",
+          "label": "Introduction to Plasma Physics (Conde, 2025)",
+          "done": false
+        },
+        {
+          "id": "plasma_chen",
+          "label": "Introduction to Plasma Physics (Chen) — classic",
+          "done": false
+        },
+        {
+          "id": "griffiths",
+          "label": "Introduction to Electrodynamics (Griffiths) — first 4 chapters",
+          "done": false
+        },
+        {
+          "id": "pinns_paper",
+          "label": "Original PINNs paper (Raissi et al.)",
+          "done": false
+        }
       ],
       "projects": [
-        { "id": "kp_prediction", "label": "Download real solar wind data; build DL model to predict Kp index 1hr ahead; benchmark vs NOAA", "status": "not_started" },
-        { "id": "heat_pinn", "label": "Implement PINN to solve 1D heat equation in PyTorch; compare to finite-difference", "status": "not_started" },
-        { "id": "double_pendulum", "label": "Simulate double pendulum via Lagrangian mechanics; compare to numerical integration", "status": "not_started" }
+        {
+          "id": "kp_prediction",
+          "label": "Download real solar wind data; build DL model to predict Kp index 1hr ahead; benchmark vs NOAA",
+          "status": "not_started"
+        },
+        {
+          "id": "heat_pinn",
+          "label": "Implement PINN to solve 1D heat equation in PyTorch; compare to finite-difference",
+          "status": "not_started"
+        },
+        {
+          "id": "double_pendulum",
+          "label": "Simulate double pendulum via Lagrangian mechanics; compare to numerical integration",
+          "status": "not_started"
+        }
       ]
     },
     "epsilon": {
       "id": "epsilon",
       "name": "Infra / MLOps",
       "phase": 1,
-      "checklist": { "study": false, "experiment": false, "artifact": false },
+      "checklist": {
+        "study": false,
+        "experiment": false,
+        "artifact": false
+      },
       "topics": [
-        { "id": "cloud", "label": "Cloud: AWS basics (EC2, S3, Lambda)", "done": false },
-        { "id": "iac", "label": "Infrastructure-as-code: Terraform, Kubernetes basics, Docker", "done": false },
-        { "id": "cicd", "label": "CI/CD: GitHub Actions, automated testing (pytest, GTest)", "done": false },
-        { "id": "build_systems", "label": "Build systems: CMake, Bazel, PlatformIO", "done": false },
-        { "id": "data_pipelines_ep", "label": "Data pipelines: Kafka, Ray, distributed data loading", "done": false },
-        { "id": "experiment_tracking", "label": "Experiment tracking: Weights & Biases, MLflow, DVC", "done": false }
+        {
+          "id": "cloud",
+          "label": "Cloud: AWS basics (EC2, S3, Lambda)",
+          "done": false
+        },
+        {
+          "id": "iac",
+          "label": "Infrastructure-as-code: Terraform, Kubernetes basics, Docker",
+          "done": false
+        },
+        {
+          "id": "cicd",
+          "label": "CI/CD: GitHub Actions, automated testing (pytest, GTest)",
+          "done": false
+        },
+        {
+          "id": "build_systems",
+          "label": "Build systems: CMake, Bazel, PlatformIO",
+          "done": false
+        },
+        {
+          "id": "data_pipelines_ep",
+          "label": "Data pipelines: Kafka, Ray, distributed data loading",
+          "done": false
+        },
+        {
+          "id": "experiment_tracking",
+          "label": "Experiment tracking: Weights & Biases, MLflow, DVC",
+          "done": false
+        }
       ],
       "resources": [
-        { "id": "github_actions", "label": "GitHub Actions documentation", "done": false },
-        { "id": "docker_docs", "label": "Docker documentation", "done": false },
-        { "id": "wandb_quickstart", "label": "Weights & Biases quickstart", "done": false },
-        { "id": "cmake_tutorial", "label": "CMake official tutorial", "done": false }
+        {
+          "id": "github_actions",
+          "label": "GitHub Actions documentation",
+          "done": false
+        },
+        {
+          "id": "docker_docs",
+          "label": "Docker documentation",
+          "done": false
+        },
+        {
+          "id": "wandb_quickstart",
+          "label": "Weights & Biases quickstart",
+          "done": false
+        },
+        {
+          "id": "cmake_tutorial",
+          "label": "CMake official tutorial",
+          "done": false
+        }
       ],
       "projects": [
-        { "id": "docker_wandb", "label": "Containerize PyTorch training script with Docker, run on cloud GPU, log metrics to W&B, version dataset with DVC", "status": "not_started" },
-        { "id": "cicd_pipeline", "label": "Set up CI/CD pipeline for a C++ or Python project with automated tests via GitHub Actions", "status": "not_started" }
+        {
+          "id": "docker_wandb",
+          "label": "Containerize PyTorch training script with Docker, run on cloud GPU, log metrics to W&B, version dataset with DVC",
+          "status": "not_started"
+        },
+        {
+          "id": "cicd_pipeline",
+          "label": "Set up CI/CD pipeline for a C++ or Python project with automated tests via GitHub Actions",
+          "status": "not_started"
+        }
       ]
     }
   },
