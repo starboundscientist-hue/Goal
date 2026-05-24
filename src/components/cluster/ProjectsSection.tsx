@@ -24,7 +24,6 @@ export function ProjectsSection({ clusterId, projects }: Props) {
 
   return (
     <div className="mb-6">
-      <h3 className="text-xs uppercase tracking-wider text-zinc-500 font-medium mb-3">Projects</h3>
       <div className="space-y-1">
         {projects.map(project => (
           <div

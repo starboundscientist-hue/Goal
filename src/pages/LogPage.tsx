@@ -3,7 +3,7 @@ import { useStore } from '../lib/store';
 import { LogRow } from '../components/logging/LogRow';
 import { AnyClusterId, CLUSTER_COLORS, CLUSTER_LABELS } from '../lib/types';
 
-const ALL_CLUSTERS: AnyClusterId[] = ['foundations', 'alpha', 'beta', 'gamma', 'delta', 'epsilon', 'work'];
+const ALL_CLUSTERS: AnyClusterId[] = ['foundations', 'alpha', 'beta', 'gamma', 'delta', 'epsilon', 'work', 'unknown'];
 
 export function LogPage() {
   const { progress } = useStore();

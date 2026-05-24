@@ -14,33 +14,37 @@ export default function App() {
   const { setProgress, setWork, setLlmOnline, setPendingGitEntries, setLastGitScan } = useStore();
 
   useEffect(() => {
-    Promise.all([api.loadProgress(), api.loadWork(), api.checkOllama()])
-      .then(([progress, work, llmOnline]) => {
-        setProgress(progress);
-        setWork(work);
-        setLlmOnline(llmOnline);
+    Promise.allSettled([api.loadProgress(), api.loadWork(), api.checkOllama()])
+      .then(([progressResult, workResult, ollamaResult]) => {
+        if (progressResult.status === 'fulfilled') setProgress(progressResult.value);
+        if (workResult.status === 'fulfilled') setWork(workResult.value);
+        setLlmOnline(ollamaResult.status === 'fulfilled' ? ollamaResult.value : false);
       });
   }, []);
 
   useEffect(() => {
     const runScan = async () => {
-      const groups = await api.runGitScan();
-      if (groups.length === 0) return;
+      try {
+        const groups = await api.runGitScan();
+        if (groups.length === 0) return;
 
-      const pending = await Promise.all(
-        groups.map(async (group) => {
-          const text = `Repo: ${group.repo}\nCommits:\n${group.commits.join('\n')}`;
-          const parsed = await api.parseText(text);
-          return {
-            id: `git_${Date.now()}_${Math.random().toString(36).slice(2)}`,
-            commit_group: group,
-            parsed: parsed || undefined
-          };
-        })
-      );
+        const pending = await Promise.all(
+          groups.map(async (group) => {
+            const text = `Repo: ${group.repo}\nCommits:\n${group.commits.join('\n')}`;
+            const parsed = await api.parseText(text);
+            return {
+              id: `git_${Date.now()}_${Math.random().toString(36).slice(2)}`,
+              commit_group: group,
+              parsed: parsed || undefined
+            };
+          })
+        );
 
-      setPendingGitEntries(pending);
-      setLastGitScan(new Date());
+        setPendingGitEntries(pending);
+        setLastGitScan(new Date());
+      } catch {
+        // git scan failed — server not ready or GIT_AUTHOR_EMAIL not set
+      }
     };
 
     runScan();

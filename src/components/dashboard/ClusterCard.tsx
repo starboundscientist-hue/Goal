@@ -48,7 +48,7 @@ export function ClusterCard({ cluster, logs }: Props) {
       <div className="flex-1 min-w-0">
         <div className="font-medium text-zinc-100">{cluster.name}</div>
         <div className="flex items-center gap-2 mt-1">
-          <span className={`inline-block rounded-full px-1.5 py-0.5 text-xs ${status.color === 'text-emerald-400' ? 'bg-emerald-950 text-emerald-400' : status.color === 'text-amber-400' ? 'bg-amber-950 text-amber-400' : status.color === 'text-orange-400' ? 'bg-orange-950 text-orange-400' : 'bg-zinc-900 text-zinc-500'}`}>
+          <span className={`inline-block rounded-full px-1.5 py-0.5 text-xs ${status.color === 'text-emerald-400' ? 'bg-emerald-950 text-emerald-400' : status.color === 'text-amber-400' ? 'bg-amber-950 text-amber-400' : status.color === 'text-orange-400' ? 'bg-orange-950 text-orange-400' : 'bg-zinc-900 text-zinc-600'}`}>
             {status.label}
           </span>
           <span className="text-xs text-zinc-500">

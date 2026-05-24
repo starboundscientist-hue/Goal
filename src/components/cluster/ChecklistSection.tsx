@@ -19,7 +19,6 @@ export function ChecklistSection({ clusterId, checklist }: Props) {
 
   return (
     <div className="mb-6">
-      <h3 className="text-xs uppercase tracking-wider text-zinc-500 font-medium mb-3">Close the loop</h3>
       <div className="space-y-2">
         {items.map(({ field, label, desc }) => (
           <label key={field} className="flex items-center gap-3 p-2 rounded-md hover:bg-surface-hover cursor-pointer">

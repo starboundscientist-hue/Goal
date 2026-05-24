@@ -68,8 +68,8 @@ export function Sidebar() {
 
       <div className="px-4 py-3 border-t border-surface-border">
         <div className="flex items-center gap-2">
-          <span className={`w-1.5 h-1.5 rounded-full ${llmOnline ? 'bg-emerald-400' : 'bg-zinc-600'}`} />
-          <span className="text-xs text-zinc-600">
+          <span className={`w-1.5 h-1.5 rounded-full ${llmOnline ? 'bg-emerald-400' : 'bg-amber-400'}`} />
+          <span className={`text-xs ${llmOnline ? 'text-zinc-600' : 'text-amber-500'}`}>
             {llmOnline ? 'Ollama online' : 'Ollama offline'}
           </span>
         </div>

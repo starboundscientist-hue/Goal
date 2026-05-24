@@ -111,8 +111,8 @@ export interface Meta {
   start_date: string;
   target_years: number;
   weekly_goal_hours: number;
-  last_coach_run?: string;
-  last_coach_output?: string;
+  last_coach_run?: string | null;
+  last_coach_output?: string | null;
 }
 
 export interface Progress {

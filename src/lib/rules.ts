@@ -82,9 +82,9 @@ export function computeFocusQueue(progress: Progress): FocusItem[] {
   return items
     .sort((a, b) => a.priority - b.priority)
     .filter(item => {
-      if (!item.cluster) return true;
-      if (seen.has(item.cluster)) return false;
-      seen.add(item.cluster);
+      const key = item.cluster || '__none__';
+      if (seen.has(key)) return false;
+      seen.add(key);
       return true;
     })
     .slice(0, 5);

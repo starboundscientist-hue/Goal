@@ -14,7 +14,7 @@ export function SemanticLogger() {
   const [state, setState] = useState<State>('input');
   const [inputText, setInputText] = useState('');
   const [parsed, setParsed] = useState<ParsedLogEntry | null>(null);
-  const [editCluster, setEditCluster] = useState<AnyClusterId>('unknown');
+  const [editCluster, setEditCluster] = useState<AnyClusterId>('foundations');
   const [editTopic, setEditTopic] = useState('');
   const [editHours, setEditHours] = useState(1.0);
   const [editDone, setEditDone] = useState(true);
@@ -44,7 +44,7 @@ export function SemanticLogger() {
         setEditTopic('');
         setEditHours(1.0);
         setEditDone(true);
-        setEditCluster('unknown');
+        setEditCluster('foundations');
       }, 200);
     } else {
       setTimeout(() => textareaRef.current?.focus(), 50);
@@ -55,7 +55,7 @@ export function SemanticLogger() {
     if (!inputText.trim()) return;
 
     if (!llmOnline) {
-      setEditCluster('unknown');
+      setEditCluster('foundations');
       setEditTopic(inputText.slice(0, 60));
       setState('manual');
       return;
@@ -72,7 +72,7 @@ export function SemanticLogger() {
       setEditDone(result.is_completed);
       setState('preview');
     } else {
-      setEditCluster('unknown');
+      setEditCluster('foundations');
       setEditTopic(inputText.slice(0, 60));
       setState('manual');
     }

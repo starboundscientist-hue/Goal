@@ -25,10 +25,10 @@ export function ActivityHeatmap({ logs }: Props) {
         <div className="flex items-center gap-1.5">
           <span className="text-[10px] text-zinc-600">Less</span>
           <div className="w-2.5 h-2.5 rounded-[2px] bg-[#1f1f23]" />
-          <div className="w-2.5 h-2.5 rounded-[2px] bg-[#60a5fa66]" />
-          <div className="w-2.5 h-2.5 rounded-[2px] bg-[#60a5fa99]" />
-          <div className="w-2.5 h-2.5 rounded-[2px] bg-[#60a5facc]" />
-          <div className="w-2.5 h-2.5 rounded-[2px] bg-[#60a5fa]" />
+          <div className="w-2.5 h-2.5 rounded-[2px] bg-[#3f3f46]" />
+          <div className="w-2.5 h-2.5 rounded-[2px] bg-[#52525b]" />
+          <div className="w-2.5 h-2.5 rounded-[2px] bg-[#71717a]" />
+          <div className="w-2.5 h-2.5 rounded-[2px] bg-[#a1a1aa]" />
           <span className="text-[10px] text-zinc-600">More</span>
         </div>
       </div>
@@ -48,6 +48,9 @@ export function ActivityHeatmap({ logs }: Props) {
               style={{ backgroundColor: cellColor(cell.clusterId, cell.hours) }}
               title={`${cell.date}: ${cell.hours}h${cell.clusterId ? ' \u2014 ' + cell.clusterId : ''}`}
             />
+          ))}
+          {Array.from({ length: 371 - cells.length }).map((_, i) => (
+            <div key={`e${i}`} className="rounded-[2px]" />
           ))}
         </div>
       </div>

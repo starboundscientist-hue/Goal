@@ -71,6 +71,7 @@ export function computeProjectedCompletion(
   weeklyGoalHours: number
 ): { label: string; onTrack: boolean } {
   if (weeklyAvgHours === 0) return { label: 'No data yet', onTrack: false };
+  if (weeklyGoalHours === 0) return { label: 'No goal set', onTrack: false };
 
   const targetDate = new Date(startDate);
   targetDate.setFullYear(targetDate.getFullYear() + targetYears);

@@ -11,7 +11,6 @@ export function TopicsSection({ clusterId, topics }: Props) {
 
   return (
     <div className="mb-6">
-      <h3 className="text-xs uppercase tracking-wider text-zinc-500 font-medium mb-3">Topics</h3>
       <div className="space-y-1">
         {topics.map(topic => (
           <label key={topic.id} className="flex items-center gap-3 p-2 rounded-md hover:bg-surface-hover cursor-pointer">

@@ -105,9 +105,23 @@ export default {
   darkMode: ['class'],
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
+    container: {
+      center: true,
+      padding: '2rem',
+      screens: { '2xl': '1400px' }
+    },
     extend: {
       colors: {
-        // Cluster identity colors — use these everywhere
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        primary: {
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))'
+        },
+        // Custom Goal OS colors (safely nested in extend)
         cluster: {
           foundations: '#94a3b8',
           alpha:       '#60a5fa',
@@ -117,7 +131,6 @@ export default {
           epsilon:     '#fb7185',
           work:        '#6b7280',
         },
-        // App surface colors
         surface: {
           base:    '#09090b',
           card:    '#111113',
@@ -125,6 +138,11 @@ export default {
           hover:   '#18181b',
           muted:   '#27272a',
         }
+      },
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)'
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif']
@@ -477,12 +495,68 @@ export interface FocusItem {
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import { existsSync, writeFileSync, mkdirSync } from 'fs';
+import { resolve } from 'path';
 import progressRouter from './routes/progress';
 import workRouter from './routes/work';
 import gitRouter from './routes/git';
 import llmRouter from './routes/llm';
 
 dotenv.config();
+
+// Ensure data directory and default JSON seeds exist before mounting routes
+function ensureDataFilesExist() {
+  const dataDir = resolve(process.env.DATA_DIR || './data');
+  if (!existsSync(dataDir)) {
+    try {
+      mkdirSync(dataDir, { recursive: true });
+      console.log(`Created data directory at ${dataDir}`);
+    } catch (e) {
+      console.error(`Failed to create data directory:`, e);
+      return;
+    }
+  }
+
+  const progressPath = resolve(dataDir, 'progress.json');
+  if (!existsSync(progressPath)) {
+    const baseProgress = {
+      meta: {
+        dev_root: process.env.DEV_ROOT || "~/Dev",
+        git_author_email: process.env.GIT_AUTHOR_EMAIL || "",
+        start_date: new Date().toISOString().split('T')[0],
+        target_years: 5,
+        weekly_goal_hours: 5,
+        last_coach_run: null,
+        last_coach_output: null
+      },
+      clusters: {}, // Seeded dynamically by frontend or populated by Section 13 structures
+      logs: [],
+      git_pending: []
+    };
+    try {
+      writeFileSync(progressPath, JSON.stringify(baseProgress, null, 2), 'utf-8');
+      console.log(`Seeded progress.json at ${progressPath}`);
+    } catch (e) {
+      console.error(`Failed to write progress.json:`, e);
+    }
+  }
+
+  const workPath = resolve(dataDir, 'work.json');
+  if (!existsSync(workPath)) {
+    const baseWork = {
+      tasks: [],
+      automation_log: []
+    };
+    try {
+      writeFileSync(workPath, JSON.stringify(baseWork, null, 2), 'utf-8');
+      console.log(`Seeded work.json at ${workPath}`);
+    } catch (e) {
+      console.error(`Failed to write work.json:`, e);
+    }
+  }
+}
+
+ensureDataFilesExist();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -543,6 +617,11 @@ import { existsSync, readdirSync, statSync } from 'fs';
 import { join } from 'path';
 import type { CommitGroup } from '../src/lib/types';
 
+const EXCLUDE_DIRS = new Set([
+  'node_modules', 'dist', 'build', '.git', '.next', '.cache', 'venv', 
+  '.venv', 'target', 'Library', 'Public', 'Applications', 'Pictures', 'Music'
+]);
+
 // Find all git repos up to maxDepth levels deep under root
 function findGitRepos(root: string, maxDepth = 3, depth = 0): string[] {
   if (depth > maxDepth) return [];
@@ -550,22 +629,23 @@ function findGitRepos(root: string, maxDepth = 3, depth = 0): string[] {
 
   const repos: string[] = [];
 
-  // If this directory is itself a git repo
+  // If this directory is itself a git repo, stop recursing
   if (existsSync(join(root, '.git'))) {
     repos.push(root);
-    return repos; // don't recurse into nested repos
+    return repos;
   }
 
   try {
     const entries = readdirSync(root);
     for (const entry of entries) {
-      if (entry.startsWith('.') || entry === 'node_modules') continue;
+      if (entry.startsWith('.') || EXCLUDE_DIRS.has(entry)) continue;
       const full = join(root, entry);
       try {
-        if (statSync(full).isDirectory()) {
+        const stats = statSync(full);
+        if (stats.isDirectory()) {
           repos.push(...findGitRepos(full, maxDepth, depth + 1));
         }
-      } catch { /* skip unreadable dirs */ }
+      } catch { /* skip permission/unreadable errors */ }
     }
   } catch { /* skip unreadable root */ }
 
@@ -770,7 +850,7 @@ interface AppStore {
   setLastGitScan: (d: Date) => void;
 
   // Actions — these mutate progress AND persist to server
-  confirmLogEntry: (entry: LogEntry) => Promise<void>;
+  confirmLogEntry: (entry: LogEntry, pendingId?: string) => Promise<void>;
   dismissPendingEntry: (id: string) => void;
   toggleTopic: (clusterId: string, topicId: string) => Promise<void>;
   toggleResource: (clusterId: string, resourceId: string) => Promise<void>;
@@ -795,7 +875,7 @@ export const useStore = create<AppStore>((set, get) => ({
   setLlmOnline: (online) => set({ llmOnline: online }),
   setLastGitScan: (d) => set({ lastGitScan: d }),
 
-  confirmLogEntry: async (entry) => {
+  confirmLogEntry: async (entry, pendingId) => {
     const { progress } = get();
     if (!progress) return;
     const updated = {
@@ -803,10 +883,13 @@ export const useStore = create<AppStore>((set, get) => ({
       logs: [...progress.logs, entry]
     };
     set({ progress: updated });
-    // Remove from pending
-    set(state => ({
-      pendingGitEntries: state.pendingGitEntries.filter(p => p.id !== entry.id)
-    }));
+    
+    // Remove from pending if this log was created from a git commit card
+    if (pendingId) {
+      set(state => ({
+        pendingGitEntries: state.pendingGitEntries.filter(p => p.id !== pendingId)
+      }));
+    }
     await api.saveProgress(updated);
   },
 
@@ -1415,54 +1498,155 @@ export default function App() {
 
 ### 10.3 `ClusterCard.tsx`
 
-Props: `cluster: ClusterState, logs: LogEntry[]`
-
 ```tsx
-// Layout: relative flex items-start gap-4 p-4 rounded-lg
-// Background: bg-surface-card border border-surface-border
-// Left accent: absolute left-0 top-0 bottom-0 w-0.5 rounded-l-lg
-//   style={{ backgroundColor: CLUSTER_COLORS[cluster.id] }}
-// Hover: hover:bg-surface-hover transition-colors cursor-pointer
-// onClick: navigate(`/cluster/${cluster.id}`)
+import { useNavigate } from 'react-router-dom';
+import type { ClusterState, LogEntry } from '../../lib/types';
+import { CLUSTER_COLORS, CLUSTER_LABELS } from '../../lib/types';
+import { computeClusterProgress, getLastWorkedDate, relativeTime, clusterStatus } from '../../lib/utils';
+import { Card } from '../ui/card';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
 
-// Inside:
-// [Left] Progress arc (SVG, 48x48)
-//   - SVG circle r=20, strokeWidth=4
-//   - Background circle: stroke="#27272a"
-//   - Progress arc: stroke=CLUSTER_COLORS[cluster.id]
-//   - strokeDasharray: `${progress * 1.257} 125.7`  (circumference = 2π*20 ≈ 125.7)
-//   - strokeLinecap="round", transform="rotate(-90 24 24)"
-//   - Center text: "{progress}%" in text-xs font-semibold
+interface Props {
+  cluster: ClusterState;
+  logs: LogEntry[];
+}
 
-// [Right]
-//   Line 1: cluster.name in font-medium text-zinc-100
-//   Line 2: status chip + last worked
-//     Status chip: small rounded-full px-1.5 py-0.5 text-xs
-//       Active = bg-emerald-950 text-emerald-400
-//       Stale = bg-amber-950 text-amber-400
-//       Slow = bg-orange-950 text-orange-400
-//       Not started = bg-zinc-900 text-zinc-500
-//       Closed = bg-zinc-900 text-zinc-500
-//     Last worked: text-zinc-500 text-xs ml-2
-//   Line 3: Closing checklist mini-indicators
-//     Three dots: ● ● ● in cluster color if done, ○ ○ ○ in zinc-700 if not
-//     Tooltip on hover: "Study / Experiment / Artifact"
+export function ClusterCard({ cluster, logs }: Props) {
+  const navigate = useNavigate();
+  const progress = computeClusterProgress(cluster);
+  const lastWorked = getLastWorkedDate(cluster.id, logs);
+  const status = clusterStatus(cluster, logs);
+
+  const radius = 20;
+  const circumference = 2 * Math.PI * radius; // ~125.66
+  const strokeDashoffset = circumference - (progress / 100) * circumference;
+
+  return (
+    <Card 
+      onClick={() => navigate(`/cluster/${cluster.id}`)}
+      className="relative flex items-start gap-4 p-4 bg-surface-card border-surface-border hover:bg-surface-hover transition-all cursor-pointer group"
+    >
+      <div 
+        className="absolute left-0 top-0 bottom-0 w-1 rounded-l-lg" 
+        style={{ backgroundColor: CLUSTER_COLORS[cluster.id] }}
+      />
+      
+      {/* SVG Circle Progress Arc */}
+      <div className="relative w-12 h-12 flex-shrink-0">
+        <svg className="w-full h-full" viewBox="0 0 48 48">
+          <circle cx="24" cy="24" r={radius} className="stroke-surface-muted fill-none" strokeWidth="3" />
+          <circle 
+            cx="24" cy="24" r={radius} 
+            className="fill-none transition-all duration-500 ease-out" 
+            strokeWidth="3.5"
+            stroke={CLUSTER_COLORS[cluster.id]}
+            strokeDasharray={circumference}
+            strokeDashoffset={strokeDashoffset}
+            strokeLinecap="round"
+            transform="rotate(-90 24 24)"
+          />
+        </svg>
+        <span className="absolute inset-0 flex items-center justify-center text-xs font-semibold text-zinc-100">
+          {progress}%
+        </span>
+      </div>
+
+      <div className="flex-grow min-w-0">
+        <h3 className="font-semibold text-sm text-zinc-100 group-hover:text-white truncate">{cluster.name}</h3>
+        <div className="flex items-center gap-2 mt-1">
+          <span className={`text-xs font-medium ${status.color}`}>{status.label}</span>
+          <span className="text-zinc-500 text-xs truncate">worked {relativeTime(lastWorked)}</span>
+        </div>
+        
+        {/* Checklist Indicators */}
+        <div className="flex items-center gap-1.5 mt-3">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="flex items-center gap-1">
+                  <span className={`w-2 h-2 rounded-full ${cluster.checklist.study ? 'bg-emerald-400' : 'bg-zinc-700'}`} />
+                  <span className={`w-2 h-2 rounded-full ${cluster.checklist.experiment ? 'bg-emerald-400' : 'bg-zinc-700'}`} />
+                  <span className={`w-2 h-2 rounded-full ${cluster.checklist.artifact ? 'bg-emerald-400' : 'bg-zinc-700'}`} />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent className="bg-zinc-950 text-zinc-300 border-zinc-800 text-xs">
+                <span>Study / Experiment / Artifact checklist</span>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
+      </div>
+    </Card>
+  );
+}
 ```
 
 ### 10.4 `ActivityHeatmap.tsx`
 
-Props: `logs: LogEntry[]`
-
 ```tsx
-// Uses buildHeatmapData(logs) from utils.ts → array of 365 cells
-// Grid: 53 cols × 7 rows (weeks × days)
-// Each cell: 10×10px square, gap-[2px], rounded-[2px]
-// Color: CLUSTER_COLORS[cell.clusterId] if hours > 0, else '#1f1f23'
-// Opacity: scale with hours: 0h=bg, 0-1h=40%, 1-2h=60%, 2-3h=80%, 3h+=100%
-// Tooltip on hover: "{date}: {hours}h — {CLUSTER_LABELS[clusterId]}"
-// Use shadcn Tooltip component
-// No labels needed (keep it simple)
-// Wrap in: overflow-x-auto (scrollable on smaller screens)
+import type { LogEntry } from '../../lib/types';
+import { CLUSTER_COLORS, CLUSTER_LABELS } from '../../lib/types';
+import { buildHeatmapData } from '../../lib/utils';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
+
+interface Props {
+  logs: LogEntry[];
+}
+
+export function ActivityHeatmap({ logs }: Props) {
+  const cells = buildHeatmapData(logs);
+
+  return (
+    <div className="bg-surface-card border border-surface-border rounded-lg p-5 mt-6">
+      <h3 className="text-sm font-semibold text-zinc-400 mb-4">ACTIVITY GRID</h3>
+      <div className="overflow-x-auto">
+        <div className="grid grid-flow-col grid-rows-7 gap-[3px] min-w-[700px] py-1">
+          <TooltipProvider>
+            {cells.map((cell) => {
+              const hasWorked = cell.hours > 0;
+              let bg = '#1f1f23'; // Default grid color
+              let opacity = 1;
+
+              if (hasWorked && cell.clusterId) {
+                bg = CLUSTER_COLORS[cell.clusterId as any] || '#6b7280';
+                opacity = cell.hours < 1 ? 0.4 : cell.hours < 2 ? 0.6 : cell.hours < 3 ? 0.8 : 1.0;
+              }
+
+              return (
+                <Tooltip key={cell.date}>
+                  <TooltipTrigger asChild>
+                    <div 
+                      className="w-[10px] h-[10px] rounded-[2px] transition-all hover:scale-125"
+                      style={{ backgroundColor: bg, opacity }}
+                    />
+                  </TooltipTrigger>
+                  <TooltipContent className="bg-zinc-950 text-zinc-300 border-zinc-800 text-xs">
+                    <span className="font-semibold">{cell.date}</span>
+                    <span className="block text-zinc-400 mt-0.5">
+                      {hasWorked 
+                        ? `${cell.hours}h logged inside ${CLUSTER_LABELS[cell.clusterId as any] || 'Other'}` 
+                        : 'No activity logged'}
+                    </span>
+                  </TooltipContent>
+                </Tooltip>
+              );
+            })}
+          </TooltipProvider>
+        </div>
+      </div>
+      <div className="flex items-center justify-end gap-3 mt-3 text-xs text-zinc-500">
+        <span>Less</span>
+        <div className="flex gap-[2px]">
+          <div className="w-[8px] h-[8px] bg-zinc-800 rounded-[1px]" />
+          <div className="w-[8px] h-[8px] bg-sky-500 opacity-40 rounded-[1px]" />
+          <div className="w-[8px] h-[8px] bg-sky-500 opacity-70 rounded-[1px]" />
+          <div className="w-[8px] h-[8px] bg-sky-500 rounded-[1px]" />
+        </div>
+        <span>More</span>
+      </div>
+    </div>
+  );
+}
 ```
 
 ### 10.5 `PaceBar.tsx`

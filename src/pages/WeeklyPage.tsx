@@ -58,11 +58,13 @@ export function WeeklyPage() {
         {focusQueue.map((item, i) => (
           <div
             key={i}
-            className={`rounded-lg p-3 border-l-2 ${
-              item.type === 'warning' ? 'border-l-amber-400' :
-              item.type === 'unlock' ? 'border-l-blue-400' :
-              'border-l-' + (item.cluster ? CLUSTER_COLORS[item.cluster] : 'zinc-500')
-            } bg-surface-card border border-surface-border`}
+            className="rounded-lg p-3 border-l-2 bg-surface-card border border-surface-border"
+            style={{
+              borderLeftColor:
+                item.type === 'warning' ? '#fbbf24' :
+                item.type === 'unlock' ? '#60a5fa' :
+                item.cluster ? CLUSTER_COLORS[item.cluster] : '#52525b'
+            }}
           >
             <div className="flex items-center gap-2">
               <span className="text-zinc-500 text-xs font-mono">{i + 1}</span>
