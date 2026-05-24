@@ -7,6 +7,40 @@
 
 ---
 
+## ✅ All 15 Bugs Verified Fixed (May 24 re-audit)
+
+| # | Bug | Status |
+|---|-----|--------|
+| 1 | WeeklyPage focus queue border colors | ✅ Fixed |
+| 2 | SemanticLogger cluster dropdown blank on open | ✅ Fixed |
+| 3 | `concurrently` in production dependencies | ✅ Fixed |
+| 4 | LLM offline flag (UX gap) | ✅ Fixed |
+| 5 | Offline banner flashes on every page load | ✅ Fixed |
+| 6 | App.tsx drops all data if any API call fails | ✅ Fixed |
+| 7 | Duplicate section headers in ClusterDetail | ✅ Fixed |
+| 8 | `Meta` type mismatch (`undefined` vs `null`) | ✅ Fixed |
+| 9 | LogPage hides `'unknown'` cluster logs | ✅ Fixed |
+| 10 | ActivityHeatmap 6 blank trailing slots | ✅ Fixed |
+| 11 | ActivityHeatmap legend hardcoded alpha-blue | ✅ Fixed |
+| 12 | `computeProjectedCompletion` divide-by-zero | ✅ Fixed |
+| 13 | Focus queue dedup passes all `undefined`-cluster items | ✅ Fixed |
+| 14 | `tsconfig.json` includes test files (build blocker) | ✅ Fixed |
+| 17 | Dead code in `computeProjectedCompletion` after linter edit | ✅ Fixed |
+
+```
+$ npx tsc --noEmit → 0 errors
+$ npm test        → 7 files, 97 tests, 0 failures
+$ npm run build   → tsc + vite build ✓
+```
+
+No test files were modified — all fixes are in implementation code and configuration only.
+
+---
+
+# Detailed Bug Reports
+
+---
+
 ## Bug 1 — WeeklyPage focus queue border colors (broken rendering)
 
 **Found by:** Claude  
@@ -186,8 +220,9 @@ if (!item.cluster) return true; // always passes — no dedup for undefined
 
 ---
 
-## Bug 17 — Dead code in `computeProjectedCompletion` after linter edit ✅ Fixed
+## Bug 17 — Dead code in `computeProjectedCompletion` after linter edit
 
+**Found by:** DeepSeek  
 **File:** `src/lib/utils.ts:73-74`  
 **Severity:** Code quality — line 74 was unreachable, always false
 
@@ -207,18 +242,8 @@ if (weeklyGoalHours === 0) return { label: 'No goal set', onTrack: false };
 
 ---
 
-## Known minor issue (not fixed — acceptable for local tool)
+## Known Minor Issues (not fixed — acceptable for local tool)
+
+### LogRow timezone day label
 
 **LogRow.tsx** — `new Date(entry.date)` on a `YYYY-MM-DD` string parses as UTC midnight. In non-UTC timezones, `getDate()` can return the previous day's number. Impact is cosmetic (wrong day label in the activity log). For a local personal tool this is acceptable; a proper fix would parse the date components directly (`entry.date.slice(8, 10)`).
-
----
-
-## Final Build Verification
-
-```
-$ npm test        → 7 test files, 97 tests, 0 failures
-$ npx tsc --noEmit → 0 errors
-$ npm run build   → tsc + vite build: 355KB JS + 17KB CSS ✓
-```
-
-No test files were modified — all fixes are in implementation code and configuration only.
