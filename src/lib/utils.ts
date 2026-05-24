@@ -1,4 +1,4 @@
-import type { ClusterId, ClusterState, LogEntry, Progress } from './types';
+import type { ClusterId, ClusterState, LogEntry, Progress, ParsedLogEntry } from './types';
 
 export function computeClusterProgress(cluster: ClusterState): number {
   const topicsTotal = cluster.topics.length;
@@ -138,12 +138,33 @@ export function clusterStatus(
   if (progress === 100) return { label: 'Closed', color: 'text-zinc-500' };
 
   const last = getLastWorkedDate(cluster.id, logs);
-  const days = daysSince(last);
+  if (!last) return { label: 'Not started', color: 'text-zinc-600' };
 
-  if (progress === 0 && !last) return { label: 'Not started', color: 'text-zinc-600' };
+  const days = daysSince(last);
   if (days > 14) return { label: 'Stale', color: 'text-amber-400' };
   if (days > 7) return { label: 'Slow', color: 'text-orange-400' };
   return { label: 'Active', color: 'text-emerald-400' };
+}
+
+export function parseLLMResponse(rawText: string, fallback: ParsedLogEntry | null): ParsedLogEntry | null {
+  try {
+    let text = rawText.trim();
+    const block = text.match(/```json\s*([\s\S]*?)\s*```/i);
+    if (block?.[1]) text = block[1].trim();
+    const first = text.indexOf('{');
+    const last = text.lastIndexOf('}');
+    if (first !== -1 && last !== -1) text = text.slice(first, last + 1);
+    const parsed = JSON.parse(text);
+    if (parsed && typeof parsed === 'object') {
+      return {
+        cluster_id: parsed.cluster_id || 'unknown',
+        topic_guess: parsed.topic_guess || 'Study session',
+        hours: typeof parsed.hours === 'number' ? parsed.hours : 1.0,
+        is_completed: Boolean(parsed.is_completed)
+      };
+    }
+  } catch { /* fall through */ }
+  return fallback;
 }
 
 export function buildCoachContext(progress: Progress): string {
@@ -176,6 +197,6 @@ ${clusterSummary}
 STATS:
 - This week: ${weeklyHours}h
 - 4-week avg: ${avgHours}h/week
-- Weekly goal: ${progress.meta.weekly_goal_hours}h/week
+- weekly goal: ${progress.meta.weekly_goal_hours}h/week
   `.trim();
 }

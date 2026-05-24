@@ -33,15 +33,17 @@ export function computeFocusQueue(progress: Progress): FocusItem[] {
     const prog = computeClusterProgress(cluster);
     if (prog > 0 && prog < 100) {
       const last = getLastWorkedDate(_id, progress.logs);
-      const dd = daysSince(last);
-      if (dd > 10) {
-        items.push({
-          type: 'suggestion',
-          cluster: cluster.id,
-          reason: `${dd}d without a session`,
-          detail: `Log at least one session this week to prevent decay.`,
-          priority: 3
-        });
+      if (last) {
+        const dd = daysSince(last);
+        if (dd > 10) {
+          items.push({
+            type: 'suggestion',
+            cluster: cluster.id,
+            reason: `${dd}d stale`,
+            detail: `Log at least one session this week to prevent decay.`,
+            priority: 3
+          });
+        }
       }
     }
   }

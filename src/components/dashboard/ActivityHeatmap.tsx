@@ -19,23 +19,37 @@ export function ActivityHeatmap({ logs }: Props) {
   };
 
   return (
-    <div className="overflow-x-auto">
-      <div
-        className="grid gap-[2px]"
-        style={{
-          gridTemplateColumns: 'repeat(53, 10px)',
-          gridTemplateRows: 'repeat(7, 10px)',
-          gridAutoFlow: 'column',
-        }}
-      >
-        {cells.map((cell, i) => (
-          <div
-            key={i}
-            className="rounded-[2px]"
-            style={{ backgroundColor: cellColor(cell.clusterId, cell.hours) }}
-            title={`${cell.date}: ${cell.hours}h${cell.clusterId ? ' \u2014 ' + cell.clusterId : ''}`}
-          />
-        ))}
+    <div>
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-xs font-semibold text-zinc-400 tracking-wider">ACTIVITY GRID</span>
+        <div className="flex items-center gap-1.5">
+          <span className="text-[10px] text-zinc-600">Less</span>
+          <div className="w-2.5 h-2.5 rounded-[2px] bg-[#1f1f23]" />
+          <div className="w-2.5 h-2.5 rounded-[2px] bg-[#60a5fa66]" />
+          <div className="w-2.5 h-2.5 rounded-[2px] bg-[#60a5fa99]" />
+          <div className="w-2.5 h-2.5 rounded-[2px] bg-[#60a5facc]" />
+          <div className="w-2.5 h-2.5 rounded-[2px] bg-[#60a5fa]" />
+          <span className="text-[10px] text-zinc-600">More</span>
+        </div>
+      </div>
+      <div className="overflow-x-auto">
+        <div
+          className="grid gap-[2px]"
+          style={{
+            gridTemplateColumns: 'repeat(53, 10px)',
+            gridTemplateRows: 'repeat(7, 10px)',
+            gridAutoFlow: 'column',
+          }}
+        >
+          {cells.map((cell, i) => (
+            <div
+              key={i}
+              className="rounded-[2px]"
+              style={{ backgroundColor: cellColor(cell.clusterId, cell.hours) }}
+              title={`${cell.date}: ${cell.hours}h${cell.clusterId ? ' \u2014 ' + cell.clusterId : ''}`}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

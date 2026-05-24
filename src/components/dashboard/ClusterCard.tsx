@@ -59,15 +59,9 @@ export function ClusterCard({ cluster, logs }: Props) {
           {(['study', 'experiment', 'artifact'] as const).map((field) => (
             <span
               key={field}
-              className="text-xs"
+              className={`w-2 h-2 rounded-full ${cluster.checklist[field] ? 'bg-emerald-400' : 'bg-zinc-700'}`}
               title={field.charAt(0).toUpperCase() + field.slice(1)}
-            >
-              {cluster.checklist[field] ? (
-                <span style={{ color: CLUSTER_COLORS[cluster.id] }}>{'\u25cf'}</span>
-              ) : (
-                <span className="text-zinc-700">{'\u25cb'}</span>
-              )}
-            </span>
+            />
           ))}
         </div>
       </div>

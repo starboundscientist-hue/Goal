@@ -1,27 +1,7 @@
 import type { Progress, WorkData, ParsedLogEntry, CommitGroup } from './types';
+import { parseLLMResponse } from './utils';
 
 const BASE = '/api';
-
-function parseLLMResponse(rawText: string, fallback: ParsedLogEntry | null): ParsedLogEntry | null {
-  try {
-    let text = rawText.trim();
-    const block = text.match(/```json\s*([\s\S]*?)\s*```/i);
-    if (block?.[1]) text = block[1].trim();
-    const first = text.indexOf('{');
-    const last = text.lastIndexOf('}');
-    if (first !== -1 && last !== -1) text = text.slice(first, last + 1);
-    const parsed = JSON.parse(text);
-    if (parsed && typeof parsed === 'object') {
-      return {
-        cluster_id: parsed.cluster_id || 'unknown',
-        topic_guess: parsed.topic_guess || 'Study session',
-        hours: typeof parsed.hours === 'number' ? parsed.hours : 1.0,
-        is_completed: Boolean(parsed.is_completed)
-      };
-    }
-  } catch { /* fall through */ }
-  return fallback;
-}
 
 export async function loadProgress(): Promise<Progress> {
   const res = await fetch(`${BASE}/progress`);

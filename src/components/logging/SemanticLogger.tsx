@@ -114,7 +114,7 @@ export function SemanticLogger() {
                 value={inputText}
                 onChange={e => setInputText(e.target.value)}
                 onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSubmit(); }}}
-                placeholder="e.g. worked on Triton matmul kernel for 2 hours, got 95% of cuBLAS perf"
+                placeholder="freeform text describing your session, e.g. Triton matmul kernel for 2 hours"
                 className="w-full bg-surface-base border border-surface-border rounded-md px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-600 resize-none min-h-[80px] outline-none focus:border-zinc-600"
                 rows={3}
               />
