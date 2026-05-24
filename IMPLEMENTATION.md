@@ -165,14 +165,62 @@ DATA_DIR=./data
 PORT=3001
 ```
 
-### 1.8 Create data directory and seed files
+### 1.8 Create `.gitignore`
+
+Create this file at the project root with exactly this content:
+
+```
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
+
+# Environment variables — NEVER commit these
+.env
+.env.local
+.env.*.local
+
+# TypeScript build info
+*.tsbuildinfo
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Vite
+.vite/
+```
+
+### 1.9 Create data directory and seed files
 
 ```bash
 mkdir -p data
 ```
 
-Create `data/progress.json` (seed with the full blueprint structure — see Section 9).
-Create `data/work.json` (see Section 9).
+Create `data/progress.json` (seed with the full blueprint structure — see Section 13).
+Create `data/work.json` (see Section 13).
+
+### 1.10 Move `parseLLMResponse` to `utils.ts` and export it
+
+The `parseLLMResponse` function must live in `src/lib/utils.ts` and be exported — not in `api.ts` as a private function. This is required for the test suite to reach it. Add the exact function from Section 6 of this document to the bottom of `utils.ts` with the `export` keyword. In `api.ts`, import it:
+
+```typescript
+import { parseLLMResponse } from './utils';
+```
 
 ---
 
