@@ -1,0 +1,89 @@
+import type { Progress, WorkData, ParsedLogEntry, CommitGroup } from './types';
+
+const BASE = '/api';
+
+function parseLLMResponse(rawText: string, fallback: ParsedLogEntry | null): ParsedLogEntry | null {
+  try {
+    let text = rawText.trim();
+    const block = text.match(/```json\s*([\s\S]*?)\s*```/i);
+    if (block?.[1]) text = block[1].trim();
+    const first = text.indexOf('{');
+    const last = text.lastIndexOf('}');
+    if (first !== -1 && last !== -1) text = text.slice(first, last + 1);
+    const parsed = JSON.parse(text);
+    if (parsed && typeof parsed === 'object') {
+      return {
+        cluster_id: parsed.cluster_id || 'unknown',
+        topic_guess: parsed.topic_guess || 'Study session',
+        hours: typeof parsed.hours === 'number' ? parsed.hours : 1.0,
+        is_completed: Boolean(parsed.is_completed)
+      };
+    }
+  } catch { /* fall through */ }
+  return fallback;
+}
+
+export async function loadProgress(): Promise<Progress> {
+  const res = await fetch(`${BASE}/progress`);
+  if (!res.ok) throw new Error('Failed to load progress');
+  return res.json();
+}
+
+export async function saveProgress(data: Progress): Promise<void> {
+  await fetch(`${BASE}/progress`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+}
+
+export async function loadWork(): Promise<WorkData> {
+  const res = await fetch(`${BASE}/work`);
+  if (!res.ok) throw new Error('Failed to load work');
+  return res.json();
+}
+
+export async function saveWork(data: WorkData): Promise<void> {
+  await fetch(`${BASE}/work`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+}
+
+export async function parseText(text: string): Promise<ParsedLogEntry | null> {
+  const res = await fetch(`${BASE}/llm/parse`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ text })
+  });
+  const data = await res.json();
+  if (data.offline || !data.raw) return null;
+  return parseLLMResponse(data.raw, null);
+}
+
+export async function runGitScan(): Promise<CommitGroup[]> {
+  const res = await fetch(`${BASE}/git/scan`, { method: 'POST' });
+  const data = await res.json();
+  return data.groups || [];
+}
+
+export async function runCoach(logsText: string): Promise<string> {
+  const res = await fetch(`${BASE}/llm/coach`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ logsText })
+  });
+  const data = await res.json();
+  return data.text || 'Coach unavailable.';
+}
+
+export async function checkOllama(): Promise<boolean> {
+  try {
+    const res = await fetch(`${BASE}/llm/health`);
+    const data = await res.json();
+    return data.online === true;
+  } catch {
+    return false;
+  }
+}

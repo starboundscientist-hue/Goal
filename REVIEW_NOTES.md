@@ -1,312 +1,380 @@
-# Goal OS: Architectural Review & Production Handoff Plan
+# Goal OS: Architectural Review & Handoff Fixes
 
-This document provides a highly detailed review of [PLANNER_IDEAS.md](file:///Users/starboundcoder/Dev/Goal/PLANNER_IDEAS.md) and [IMPLEMENTATION.md](file:///Users/starboundcoder/Dev/Goal/IMPLEMENTATION.md). It assesses whether the details are sufficient for a "weaker" model (like Gemini Flash, DeepSeek-R1-Distill, Qwen-2.5-Coder, or Llama-3-Coder) to build the app end-to-end, identifies critical bugs/gaps, and provides the exact code injections and prompt guardrails needed to guarantee a flawless build.
-
----
-
-## 1. Executive Summary: Is it Handoff-Ready?
-
-> [!WARNING]
-> **Handoff Readiness Rating: 4.5 / 10 (Not Ready for a Weaker Model)**
-> While the backend routing, state schema, and data models are specified with 95% complete code, **the frontend UI layers are represented almost entirely by brief comments and bullet points**. 
-> 
-> A model like Gemini Flash or DeepSeek tasked with implementing this end-to-end will **hallucinate heavily**, write massive styling bugs, break the shadcn/ui framework, write non-functional SVGs, and introduce synchronous performance freezes.
-
-### Major Risks Identified:
-1. **The Component Desert**: 10 out of 14 UI components are described only by outline comments (e.g., `// Uses buildHeatmapData(logs)... Grid: 53 cols x 7 rows...`). A weaker model will fail to write the complex coordinate systems for the SVGs and React interfaces.
-2. **Tailwind Overwrite Bug**: The provided `tailwind.config.ts` completely replaces the default color palette with only `cluster` and `surface` tokens. This **instantly breaks all shadcn/ui components** (Buttons, Cards, Dialogs render transparent or invisible because standard shadcn color variables like `bg-background` are wiped out).
-3. **Express Startup Crash**: The backend routes read `progress.json` and `work.json` immediately on mount. If these files are missing on first run, the server crashes. The files must be created dynamically.
-4. **Git Pending ID Mismatch**: The logic for clearing pending Git commits from the dashboard is broken. The `confirmLogEntry` function generates a *new* ID instead of matching the temporary Git entry ID, meaning confirmed Git sessions will stay stuck on the screen forever.
-5. **Express Event Loop Freezing**: Recursive synchronous directory traversal (`readdirSync`, `statSync`) is used across `DEV_ROOT` on every Git scan. If you have active dev folders with large node modules or deep files, **the server will freeze for 10-20 seconds on every scan**.
+> This document reviews PLANNER_IDEAS.md and IMPLEMENTATION.md for gaps a weaker model would struggle with.
+> Each point is assessed: **Valid / Partially Valid / Invalid**.
+> Items marked **[Added by Claude]** were not in Gemini's original review.
 
 ---
 
-## 2. Detailed Gap Analysis & Code Injections
+## Assessment of Gemini's Points
 
-Below are the exact file modifications and additions required before you hand this project to a weaker coding model.
+---
 
-### 2.1 Fixing the Tailwind & Shadcn Breakdown (`tailwind.config.ts`)
-* **The Problem**: Section 1.5 in `IMPLEMENTATION.md` wipes out the shadcn design tokens.
-* **The Fix**: We must *extend* the tailwind theme rather than overwrite it, ensuring Radix and shadcn variables are maintained.
+### G1. "Component Desert" — Frontend components are prose-only
+**VALID.**
 
-Inject this corrected configuration instead of the original Section 1.5:
+Gemini is correct. 10 of 14 UI components are described in comments and bullet points, not code. A weaker model will hallucinate layout, get SVG math wrong, misuse shadcn/ui component APIs, and produce broken Tailwind class combinations.
+
+Gemini provided full code for `ClusterCard.tsx` and `ActivityHeatmap.tsx` — both are correct and should be used verbatim. The SVG approach (`strokeDashoffset` instead of `strokeDasharray` manipulation) is cleaner than what the spec described.
+
+**Remaining components that still need full code** (Gemini missed these — see Claude additions C1–C5 below):
+- `Shell.tsx` and `Sidebar.tsx`
+- `SemanticLogger.tsx` (the most complex component)
+- `CoachOutput.tsx` (typewriter has a performance trap)
+- `PaceBar.tsx`
+- `LogRow.tsx`
+
+---
+
+### G2. Tailwind Overwrite Bug
+**PARTIALLY VALID — but the diagnosis is wrong, the fix is still right.**
+
+Gemini claims the config "completely replaces the default color palette." That is incorrect — the spec uses `theme.extend`, not `theme`, so Tailwind defaults are preserved.
+
+The **real problem** is different: `npx shadcn-ui@latest init` generates CSS variable token mappings in `tailwind.config.ts` (e.g., `border: 'hsl(var(--border))'`) AND a CSS variables block in `src/index.css`. If the implementer copies the spec's tailwind config verbatim without running `shadcn init` first, those CSS variable mappings are absent, breaking all shadcn components (buttons render without borders, dialogs are invisible, etc.).
+
+**Additionally**, the spec's `index.css` contains:
+```css
+* { @apply border-surface-border; }
+```
+This conflicts with shadcn's generated `* { @apply border-border; }`. One of them overwrites the other depending on order.
+
+**Use Gemini's tailwind config fix** — it adds the required CSS variable token mappings. Then merge `index.css` carefully: keep shadcn's generated CSS variable block, replace `* { @apply border-border; }` with `* { @apply border-surface-border; }`.
+
+The corrected `tailwind.config.ts` from Gemini's review is correct. Use it.
+
+---
+
+### G3. Express Startup Crash on Missing Data Files
+**VALID.**
+
+`readFileSync` throws if the file doesn't exist. The spec says to create the files manually before running, but a weaker model will run the server first and hit a crash with an unhelpful error message.
+
+Gemini's `ensureDataFilesExist()` function is correct. Add this call in `server/index.ts` immediately after `dotenv.config()`.
+
+**One addition to Gemini's fix:** the seed object inside `ensureDataFilesExist` has `clusters: {}` (empty). Replace it with the full cluster seed from Section 13 of IMPLEMENTATION.md, or the app loads with no clusters visible and nothing works. The function should import the seed from a separate `server/seed.ts` file rather than inline a minimal skeleton.
+
+---
+
+### G4. Git Pending ID Mismatch
+**ANALYSIS VALID. THE FIX CODE IS WRONG.**
+
+Gemini correctly identified the bug: confirmed git entries stay stuck on screen forever because the ID used to filter `pendingGitEntries` doesn't match.
+
+**However, Gemini's "fix" code is byte-for-byte identical to the original spec.** Nothing was actually changed. The real bug is not in `store.ts` — it's in `GitPendingCard.tsx`, which is never shown as full code. The issue: when `GitPendingCard` constructs the `LogEntry` to pass to `onConfirm`, it must set `entry.id` to the `PendingGitEntry.id`, not call `generateId()`.
+
+**The actual fix** belongs in `GitPendingCard.tsx` confirm handler:
 
 ```typescript
-import type { Config } from 'tailwindcss'
+// Inside GitPendingCard.tsx, on confirm button click:
+const logEntry: LogEntry = {
+  id: entry.id,  // ← CRITICAL: use the PendingGitEntry's id, not generateId()
+  date: new Date().toISOString().split('T')[0],
+  cluster: editedParsed?.cluster_id || 'unknown',
+  topic: editedParsed?.topic_guess || entry.commit_group.commits[0] || 'Git session',
+  hours: editedParsed?.hours || 1.0,
+  is_completed: editedParsed?.is_completed ?? true,
+  source: 'git',
+  git_repo: entry.commit_group.repo,
+  commits: entry.commit_group.commits,
+  notes: entry.commit_group.commits.join('\n')
+};
+onConfirm(logEntry);
+```
 
-export default {
-  darkMode: ['class'],
-  content: ['./index.html', './src/**/*.{ts,tsx}'],
-  theme: {
-    container: {
-      center: true,
-      padding: '2rem',
-      screens: { '2xl': '1400px' }
-    },
-    extend: {
-      colors: {
-        border: 'hsl(var(--border))',
-        input: 'hsl(var(--input))',
-        ring: 'hsl(var(--ring))',
-        background: 'hsl(var(--background))',
-        foreground: 'hsl(var(--foreground))',
-        primary: {
-          DEFAULT: 'hsl(var(--primary))',
-          foreground: 'hsl(var(--primary-foreground))'
-        },
-        // Custom Goal OS colors (safely nested in extend)
-        cluster: {
-          foundations: '#94a3b8',
-          alpha:       '#60a5fa',
-          beta:        '#34d399',
-          gamma:       '#fbbf24',
-          delta:       '#a78bfa',
-          epsilon:     '#fb7185',
-          work:        '#6b7280',
-        },
-        surface: {
-          base:    '#09090b',
-          card:    '#111113',
-          border:  '#1f1f23',
-          hover:   '#18181b',
-          muted:   '#27272a',
-        }
-      },
-      borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)'
-      }
-    }
-  },
-  plugins: [require('tailwindcss-animate')]
-} satisfies Config
+The `store.ts` `confirmLogEntry` function is already correct as-is. No change needed there.
+
+---
+
+### G5. Express Event Loop Freezing
+**VALID.**
+
+Synchronous `readdirSync` + `statSync` on a large dev folder blocks the Express event loop. During a scan, all API requests queue up and the UI appears frozen.
+
+Gemini's fix (the `EXCLUDE_DIRS` set) is correct and significantly reduces traversal time. The expanded list adds `.next`, `dist`, `build`, `venv`, `.venv`, `target` — all correct.
+
+**[Added by Claude]** Even with excludes, synchronous traversal still blocks for deep repos. The complete fix wraps the git scan in a child process so it never runs on the Express event loop. Update `server/routes/git.ts`:
+
+```typescript
+import { Router } from 'express';
+import { fork } from 'child_process';
+import { resolve } from 'path';
+
+const router = Router();
+
+router.post('/scan', (req, res) => {
+  const devRoot = process.env.DEV_ROOT
+    ? process.env.DEV_ROOT.replace(/^~/, process.env.HOME || '')
+    : `${process.env.HOME}/Dev`;
+  const email = process.env.GIT_AUTHOR_EMAIL || '';
+
+  if (!email) return res.status(400).json({ error: 'GIT_AUTHOR_EMAIL not set in .env' });
+
+  // Run git scan in a worker so the event loop never blocks
+  const worker = fork(resolve(__dirname, '../gitScannerWorker.js'), [], { silent: true });
+  worker.send({ devRoot, email });
+
+  const timeout = setTimeout(() => {
+    worker.kill();
+    res.json({ groups: [] }); // timeout gracefully
+  }, 10000);
+
+  worker.once('message', (groups) => {
+    clearTimeout(timeout);
+    res.json({ groups });
+  });
+
+  worker.on('error', () => {
+    clearTimeout(timeout);
+    res.json({ groups: [] });
+  });
+});
+```
+
+Create `server/gitScannerWorker.ts` (compiled to `.js`):
+```typescript
+import { scanRecentCommits } from './gitScanner';
+
+process.on('message', ({ devRoot, email }: { devRoot: string; email: string }) => {
+  const groups = scanRecentCommits(devRoot, email);
+  process.send!(groups);
+  process.exit(0);
+});
 ```
 
 ---
 
-### 2.2 Fixing the Git ID Mismatch Bug (`src/lib/store.ts`)
-* **The Problem**: Confirmed Git logs don't remove their cards because of ID re-generation.
-* **The Fix**: We must pass the *existing* Git entry ID during confirmation.
+### G6. ts-node as devDependency Missing
+**VALID.**
 
-Update the `confirmLogEntry` function in Section 5 of `IMPLEMENTATION.md` to this:
+`ts-node` is used in `npm run server` but is not in the install commands. Without it, the first `npm run dev` fails.
 
-```typescript
-confirmLogEntry: async (entry) => {
-  const { progress } = get();
-  if (!progress) return;
+**However**, Gemini's fix (just add `ts-node`) is incomplete. See Claude addition C6 below — `ts-node --esm` requires non-trivial tsconfig setup and will fail with ESM import errors. The better fix is to replace it with `tsx` entirely.
 
-  const updated = {
-    ...progress,
-    logs: [...progress.logs, entry]
-  };
+---
 
-  set({ progress: updated });
+### G7. lucide-react Missing
+**VALID.**
 
-  // Safety: Filter out the pending git entry using the matching ID of the log entry
-  set(state => ({
-    pendingGitEntries: state.pendingGitEntries.filter(p => p.id !== entry.id)
-  }));
+shadcn/ui components (Dialog close button, Select chevrons, Drawer handle, etc.) internally import from `lucide-react`. Without it, the app crashes at runtime the moment any of those components mount.
 
-  await api.saveProgress(updated);
-}
+Add to the install command in Section 1.2:
+```bash
+npm install lucide-react
 ```
 
 ---
 
-### 2.3 Resolving the Git Scanner Freezing Hazard (`server/gitScanner.ts`)
-* **The Problem**: Traverse-heavy directory scanning freezes node.
-* **The Fix**: Exclude massive common dependency folders from traversing at all (e.g. `node_modules`, `.next`, `dist`, `venv`, `.git`).
+## Additions by Claude
 
-Update the `findGitRepos` function in Section 4.4 of `IMPLEMENTATION.md` to run defensively:
+Items below were not identified in Gemini's review.
 
-```typescript
-const EXCLUDE_DIRS = new Set([
-  'node_modules', 'dist', 'build', '.git', '.next', '.cache', 'venv', 
-  '.venv', 'target', 'Library', 'Public', 'Applications', 'Pictures', 'Music'
-]);
+---
 
-function findGitRepos(root: string, maxDepth = 3, depth = 0): string[] {
-  if (depth > maxDepth) return [];
-  if (!existsSync(root)) return [];
+### C1. `ts-node --esm` Will Fail — Replace with `tsx` [CRITICAL]
+**[Added by Claude]**
 
-  const repos: string[] = [];
+The spec's server script is:
+```json
+"server": "npx ts-node --esm server/index.ts"
+```
 
-  // If this directory is itself a git repo, return it and stop recursing
-  if (existsSync(join(root, '.git'))) {
-    repos.push(root);
-    return repos;
+Running `ts-node --esm` with ES module imports (`import` statements) requires:
+- `"type": "module"` in `package.json`, which breaks the Vite build toolchain
+- OR a separate `tsconfig.server.json` with `"module": "ESNext"` and `"moduleResolution": "bundler"`
+- AND a `.env` file understood by `ts-node/esm` loader
+
+This configuration is underdetermined in the spec. A weaker model will spend hours debugging `ERR_REQUIRE_ESM` or `Cannot use import statement in a module` errors.
+
+**Fix: Replace `ts-node` with `tsx`** — it handles ESM automatically with zero config.
+
+```bash
+# Add to devDependencies install command:
+npm install -D tsx
+```
+
+Change `package.json` scripts:
+```json
+{
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"vite --port 5173\"",
+    "server": "tsx watch server/index.ts",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
   }
+}
+```
 
+`tsx watch` also gives you hot-reload on server file changes, which `ts-node` does not.
+
+Also move `concurrently` to devDependencies — it was listed as a regular dependency in the spec, which is wrong:
+```bash
+npm install -D concurrently tsx
+```
+
+---
+
+### C2. Tilde `~` in DEV_ROOT Path Won't Expand in Node.js [CRITICAL]
+**[Added by Claude]**
+
+The `.env` example in the spec uses:
+```
+DEV_ROOT=/Users/yourname/Dev
+```
+
+But if a user follows convention and types `DEV_ROOT=~/Dev`, `existsSync('~/Dev')` returns `false` on every machine because `~` is a shell construct, not a Node.js path. The git scanner silently finds zero repos.
+
+Add a tilde-expansion helper to `server/gitScanner.ts`:
+
+```typescript
+import { homedir } from 'os';
+
+function expandPath(p: string): string {
+  if (p.startsWith('~/') || p === '~') {
+    return p.replace('~', homedir());
+  }
+  return p;
+}
+```
+
+Use it in `scanRecentCommits`:
+```typescript
+export function scanRecentCommits(devRoot: string, ...): CommitGroup[] {
+  const repos = findGitRepos(expandPath(devRoot));
+  ...
+}
+```
+
+And in `server/routes/git.ts`, the fallback also needs it:
+```typescript
+const devRoot = expandPath(process.env.DEV_ROOT || '~/Dev');
+```
+
+---
+
+### C3. `git_pending` in Seed JSON Conflicts with Progress Interface [CRITICAL]
+**[Added by Claude]**
+
+The seed `progress.json` in Section 13 includes:
+```json
+{
+  "logs": [],
+  "git_pending": []
+}
+```
+
+But the `Progress` TypeScript interface in `types.ts` has no `git_pending` field:
+```typescript
+export interface Progress {
+  meta: Meta;
+  clusters: Record<ClusterId, ClusterState>;
+  logs: LogEntry[];
+  // NO git_pending field
+}
+```
+
+When TypeScript loads the JSON and types it as `Progress`, the extra field causes a type mismatch. In strict mode this silently passes but the field is unreachable and confusing. Pending git entries should only live in Zustand store memory (`PendingGitEntry[]`), never persisted to `progress.json`.
+
+**Fix:** Remove `"git_pending": []` from the seed JSON in Section 13. It doesn't belong there.
+
+---
+
+### C4. `checkOllama` Makes a Direct Browser → Ollama Request [Minor]
+**[Added by Claude]**
+
+In `src/lib/api.ts`:
+```typescript
+export async function checkOllama(): Promise<boolean> {
+  const res = await fetch('http://localhost:11434/api/tags', ...);
+```
+
+This is a browser-side fetch directly to Ollama, bypassing the Express proxy. Ollama does allow CORS from localhost by default, so it works. But it's architecturally inconsistent (everything else goes through `/api/*`), and if the Ollama URL is ever changed or CORS settings tightened, it breaks silently.
+
+**Fix:** Add a health-check route to `server/routes/llm.ts`:
+```typescript
+router.get('/health', async (_req, res) => {
   try {
-    const entries = readdirSync(root);
-    for (const entry of entries) {
-      if (entry.startsWith('.') || EXCLUDE_DIRS.has(entry)) continue;
-      const full = join(root, entry);
-      try {
-        const stats = statSync(full);
-        if (stats.isDirectory()) {
-          repos.push(...findGitRepos(full, maxDepth, depth + 1));
-        }
-      } catch { /* skip permission errors */ }
-    }
-  } catch { /* skip unreadable directories */ }
+    const r = await fetch('http://localhost:11434/api/tags', { signal: AbortSignal.timeout(1500) });
+    res.json({ online: r.ok });
+  } catch {
+    res.json({ online: false });
+  }
+});
+```
 
-  return repos;
+Update `api.ts`:
+```typescript
+export async function checkOllama(): Promise<boolean> {
+  try {
+    const res = await fetch('/api/llm/health');
+    const data = await res.json();
+    return data.online === true;
+  } catch {
+    return false;
+  }
 }
 ```
 
 ---
 
-### 2.4 Providing the Complete SVGs & Component Logic
-To save a weaker model from failing to build the SVGs and circular gauges, you should inject these complete codes directly.
+### C5. `CoachOutput.tsx` Typewriter Will Cause Performance Problems [CRITICAL]
+**[Added by Claude]**
 
-#### A. The Perfect Circular Progress Arc (`src/components/dashboard/ClusterCard.tsx`)
+The spec says:
+> "Split text into characters. Render each character with a staggered delay. Use `motion.span` for each character."
+
+A 200-word coach output is ~1,200 characters. Rendering 1,200 `motion.span` elements with Framer Motion stagger causes a noticeable freeze on mount and scrolls jankily. This is a known Framer Motion anti-pattern.
+
+**Fix: Use `setInterval` + `useState` instead.** Much simpler, zero performance issue.
+
+Full `CoachOutput.tsx`:
+
 ```tsx
-import { useNavigate } from 'react-router-dom';
-import type { ClusterState, LogEntry } from '../../lib/types';
-import { CLUSTER_COLORS, CLUSTER_LABELS } from '../../lib/types';
-import { computeClusterProgress, getLastWorkedDate, relativeTime, clusterStatus } from '../../lib/utils';
-import { Card } from '../ui/card';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
+import { useState, useEffect, useRef } from 'react';
 
 interface Props {
-  cluster: ClusterState;
-  logs: LogEntry[];
+  text: string;
+  speed?: number; // ms per character, default 18
 }
 
-export function ClusterCard({ cluster, logs }: Props) {
-  const navigate = useNavigate();
-  const progress = computeClusterProgress(cluster);
-  const lastWorked = getLastWorkedDate(cluster.id, logs);
-  const status = clusterStatus(cluster, logs);
+export function CoachOutput({ text, speed = 18 }: Props) {
+  const [displayed, setDisplayed] = useState('');
+  const indexRef = useRef(0);
 
-  const radius = 20;
-  const circumference = 2 * Math.PI * radius; // ~125.66
-  const strokeDashoffset = circumference - (progress / 100) * circumference;
+  useEffect(() => {
+    // Reset when text changes (new coach run)
+    setDisplayed('');
+    indexRef.current = 0;
+
+    if (!text) return;
+
+    const interval = setInterval(() => {
+      indexRef.current += 1;
+      setDisplayed(text.slice(0, indexRef.current));
+      if (indexRef.current >= text.length) clearInterval(interval);
+    }, speed);
+
+    return () => clearInterval(interval);
+  }, [text, speed]);
+
+  // Render each line — detect ALL_CAPS section headers
+  const lines = displayed.split('\n');
 
   return (
-    <Card 
-      onClick={() => navigate(`/cluster/${cluster.id}`)}
-      className="relative flex items-start gap-4 p-4 bg-surface-card border-surface-border hover:bg-surface-hover transition-all cursor-pointer group"
-    >
-      <div 
-        className="absolute left-0 top-0 bottom-0 w-1 rounded-l-lg" 
-        style={{ backgroundColor: CLUSTER_COLORS[cluster.id] }}
-      />
-      
-      {/* SVG Circle Progress Arc */}
-      <div className="relative w-12 h-12 flex-shrink-0">
-        <svg className="w-full h-full" viewBox="0 0 48 48">
-          <circle cx="24" cy="24" r={radius} className="stroke-surface-muted fill-none" strokeWidth="3" />
-          <circle 
-            cx="24" cy="24" r={radius} 
-            className="fill-none transition-all duration-500 ease-out" 
-            strokeWidth="3.5"
-            stroke={CLUSTER_COLORS[cluster.id]}
-            strokeDasharray={circumference}
-            strokeDashoffset={strokeDashoffset}
-            strokeLinecap="round"
-            transform="rotate(-90 24 24)"
-          />
-        </svg>
-        <span className="absolute inset-0 flex items-center justify-center text-xs font-semibold text-zinc-100">
-          {progress}%
-        </span>
-      </div>
-
-      <div className="flex-grow min-w-0">
-        <h3 className="font-semibold text-sm text-zinc-100 group-hover:text-white truncate">{cluster.name}</h3>
-        <div className="flex items-center gap-2 mt-1">
-          <span className={`text-xs font-medium ${status.color}`}>{status.label}</span>
-          <span className="text-zinc-500 text-xs truncate">worked {relativeTime(lastWorked)}</span>
-        </div>
-        
-        {/* Checklist Indicators */}
-        <div className="flex items-center gap-1.5 mt-3">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="flex items-center gap-1">
-                  <span className={`w-2 h-2 rounded-full ${cluster.checklist.study ? 'bg-emerald-400' : 'bg-zinc-700'}`} />
-                  <span className={`w-2 h-2 rounded-full ${cluster.checklist.experiment ? 'bg-emerald-400' : 'bg-zinc-700'}`} />
-                  <span className={`w-2 h-2 rounded-full ${cluster.checklist.artifact ? 'bg-emerald-400' : 'bg-zinc-700'}`} />
-                </div>
-              </TooltipTrigger>
-              <TooltipContent className="bg-zinc-950 text-zinc-300 border-zinc-800 text-xs">
-                <span>Study / Experiment / Artifact checklist</span>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </div>
-      </div>
-    </Card>
-  );
-}
-```
-
-#### B. The 365-Day Activity Heatmap (`src/components/dashboard/ActivityHeatmap.tsx`)
-```tsx
-import type { LogEntry } from '../../lib/types';
-import { CLUSTER_COLORS, CLUSTER_LABELS } from '../../lib/types';
-import { buildHeatmapData } from '../../lib/utils';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
-
-interface Props {
-  logs: LogEntry[];
-}
-
-export function ActivityHeatmap({ logs }: Props) {
-  const cells = buildHeatmapData(logs);
-
-  return (
-    <div className="bg-surface-card border border-surface-border rounded-lg p-5 mt-6">
-      <h3 className="text-sm font-semibold text-zinc-400 mb-4">ACTIVITY GRID</h3>
-      <div className="overflow-x-auto">
-        <div className="grid grid-flow-col grid-rows-7 gap-[3px] min-w-[700px] py-1">
-          <TooltipProvider>
-            {cells.map((cell) => {
-              const hasWorked = cell.hours > 0;
-              let bg = '#1f1f23'; // Default grid color
-              let opacity = 1;
-
-              if (hasWorked && cell.clusterId) {
-                bg = CLUSTER_COLORS[cell.clusterId as any] || '#6b7280';
-                opacity = cell.hours < 1 ? 0.4 : cell.hours < 2 ? 0.6 : cell.hours < 3 ? 0.8 : 1.0;
-              }
-
-              return (
-                <Tooltip key={cell.date}>
-                  <TooltipTrigger asChild>
-                    <div 
-                      className="w-[10px] h-[10px] rounded-[2px] transition-all hover:scale-125"
-                      style={{ backgroundColor: bg, opacity }}
-                    />
-                  </TooltipTrigger>
-                  <TooltipContent className="bg-zinc-950 text-zinc-300 border-zinc-800 text-xs">
-                    <span className="font-semibold">{cell.date}</span>
-                    <span className="block text-zinc-400 mt-0.5">
-                      {hasWorked 
-                        ? `${cell.hours}h logged inside ${CLUSTER_LABELS[cell.clusterId as any] || 'Other'}` 
-                        : 'No activity logged'}
-                    </span>
-                  </TooltipContent>
-                </Tooltip>
-              );
-            })}
-          </TooltipProvider>
-        </div>
-      </div>
-      <div className="flex items-center justify-end gap-3 mt-3 text-xs text-zinc-500">
-        <span>Less</span>
-        <div className="flex gap-[2px]">
-          <div className="w-[8px] h-[8px] bg-zinc-800 rounded-[1px]" />
-          <div className="w-[8px] h-[8px] bg-sky-500 opacity-40 rounded-[1px]" />
-          <div className="w-[8px] h-[8px] bg-sky-500 opacity-70 rounded-[1px]" />
-          <div className="w-[8px] h-[8px] bg-sky-500 rounded-[1px]" />
-        </div>
-        <span>More</span>
-      </div>
+    <div className="font-mono text-sm leading-relaxed whitespace-pre-wrap text-zinc-300">
+      {lines.map((line, i) => {
+        const isSectionHeader = /^[A-Z][A-Z\s]{3,}$/.test(line.trim());
+        const isActionLine = line.trim().startsWith('→');
+        return (
+          <div key={i} className={
+            isSectionHeader ? 'text-zinc-100 font-semibold mt-4 mb-1' :
+            isActionLine ? 'text-blue-400 mt-1' :
+            'text-zinc-300'
+          }>
+            {line || ' '}
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -314,108 +382,539 @@ export function ActivityHeatmap({ logs }: Props) {
 
 ---
 
-### 2.5 Express Server Startup & Seed File Safety
-* **The Problem**: The backend routing assumes `progress.json` and `work.json` are already seated. If these files are missing on first start, the server throws 500 or crashes immediately.
-* **The Fix**: Add a defensive boot-loader function inside `server/index.ts` that runs before mounting the routes to check for data folder and file existence, dynamically seeding them if absent.
+### C6. Full `Shell.tsx` and `Sidebar.tsx` Code Missing
+**[Added by Claude]**
 
-Inject this code inside your server initialization:
+These are the outermost structural components. A weaker model getting the layout wrong causes every single page to look broken, and it's the first thing rendered. Providing full code prevents this.
 
-```typescript
-import { existsSync, writeFileSync, mkdirSync } from 'fs';
-import { resolve } from 'path';
+**`Shell.tsx`:**
+```tsx
+import { useLocation } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Sidebar } from './Sidebar';
 
-export function ensureDataFilesExist() {
-  const dataDir = resolve(process.env.DATA_DIR || './data');
-  
-  // 1. Ensure the directory exists
-  if (!existsSync(dataDir)) {
-    try {
-      mkdirSync(dataDir, { recursive: true });
-      console.log(`Created data directory at ${dataDir}`);
-    } catch (e) {
-      console.error(`Failed to create data directory:`, e);
-      return;
-    }
-  }
+interface Props {
+  children: React.ReactNode;
+}
 
-  // 2. Ensure progress.json exists (base skeleton if seed is missing)
-  const progressPath = resolve(dataDir, 'progress.json');
-  if (!existsSync(progressPath)) {
-    const baseProgress = {
-      meta: {
-        dev_root: process.env.DEV_ROOT || "~/Dev",
-        git_author_email: process.env.GIT_AUTHOR_EMAIL || "",
-        start_date: new Date().toISOString().split('T')[0],
-        target_years: 5,
-        weekly_goal_hours: 5,
-        last_coach_run: null,
-        last_coach_output: null
-      },
-      clusters: {}, // Will be populated by Section 13 structures
-      logs: [],
-      git_pending: []
-    };
-    try {
-      writeFileSync(progressPath, JSON.stringify(baseProgress, null, 2), 'utf-8');
-      console.log(`Seeded default progress.json skeleton`);
-    } catch (e) {
-      console.error(`Failed to write progress.json:`, e);
-    }
-  }
-
-  // 3. Ensure work.json exists
-  const workPath = resolve(dataDir, 'work.json');
-  if (!existsSync(workPath)) {
-    const baseWork = {
-      tasks: [],
-      automation_log: []
-    };
-    try {
-      writeFileSync(workPath, JSON.stringify(baseWork, null, 2), 'utf-8');
-      console.log(`Seeded default work.json skeleton`);
-    } catch (e) {
-      console.error(`Failed to write work.json:`, e);
-    }
-  }
+export function Shell({ children }: Props) {
+  const location = useLocation();
+  return (
+    <div className="flex h-screen overflow-hidden bg-surface-base">
+      <Sidebar />
+      <main className="flex-1 overflow-y-auto">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={location.pathname}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.15, ease: 'easeOut' }}
+            className="min-h-full px-8 py-6 max-w-5xl mx-auto"
+          >
+            {children}
+          </motion.div>
+        </AnimatePresence>
+      </main>
+    </div>
+  );
 }
 ```
 
-Add this call at the very top of `server/index.ts` right after `dotenv.config()`:
+**`Sidebar.tsx`:**
+```tsx
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useStore } from '../../lib/store';
+import { CLUSTER_COLORS } from '../../lib/types';
+import { relativeTime } from '../../lib/utils';
+
+const CLUSTER_NAV = [
+  { id: 'foundations', label: 'Foundations', symbol: '⊗' },
+  { id: 'alpha',       label: 'Frontier AI',  symbol: 'α' },
+  { id: 'beta',        label: 'Embodied AI',  symbol: 'β' },
+  { id: 'gamma',       label: 'Embedded',     symbol: 'γ' },
+  { id: 'delta',       label: 'Comp Physics', symbol: 'δ' },
+  { id: 'epsilon',     label: 'Infra',        symbol: 'ε' },
+] as const;
+
+const navBase = 'flex items-center gap-2.5 px-3 py-1.5 rounded-md text-sm transition-colors w-full text-left';
+const navInactive = 'text-zinc-400 hover:text-zinc-100 hover:bg-surface-hover';
+const navActive = 'text-zinc-100 bg-surface-hover';
+
+export function Sidebar() {
+  const { llmOnline, lastGitScan } = useStore();
+
+  const openLogger = () => {
+    window.dispatchEvent(new CustomEvent('open-logger'));
+  };
+
+  return (
+    <aside className="w-[220px] flex-shrink-0 flex flex-col border-r border-surface-border bg-surface-base">
+      {/* Logo */}
+      <div className="px-4 py-5 flex items-center gap-2">
+        <span className="text-blue-400 text-base">◉</span>
+        <span className="font-semibold text-zinc-100 tracking-tight">GOAL OS</span>
+      </div>
+
+      <nav className="flex-1 overflow-y-auto px-2 space-y-0.5">
+        {/* Main nav */}
+        <NavLink to="/" end className={({ isActive }) => `${navBase} ${isActive ? navActive : navInactive}`}>
+          Dashboard
+        </NavLink>
+
+        <button onClick={openLogger} className={`${navBase} ${navInactive}`}>
+          Log Session
+          <span className="ml-auto text-xs text-zinc-600">⌘K</span>
+        </button>
+
+        {/* Clusters */}
+        <div className="pt-3 pb-1 px-3">
+          <span className="text-xs uppercase tracking-wider text-zinc-600 font-medium">Clusters</span>
+        </div>
+
+        {CLUSTER_NAV.map(({ id, label, symbol }) => (
+          <NavLink
+            key={id}
+            to={`/cluster/${id}`}
+            className={({ isActive }) => `${navBase} ${isActive ? navActive : navInactive}`}
+          >
+            <span className="text-xs font-mono w-4 text-center" style={{ color: CLUSTER_COLORS[id] }}>
+              {symbol}
+            </span>
+            <span>{label}</span>
+          </NavLink>
+        ))}
+
+        {/* Secondary nav */}
+        <div className="pt-3" />
+        <NavLink to="/work" className={({ isActive }) => `${navBase} ${isActive ? navActive : navInactive}`}>
+          Work Tracker
+        </NavLink>
+        <NavLink to="/review" className={({ isActive }) => `${navBase} ${isActive ? navActive : navInactive}`}>
+          Weekly Review
+        </NavLink>
+      </nav>
+
+      {/* Footer — git sync status */}
+      <div className="px-4 py-3 border-t border-surface-border">
+        <div className="flex items-center gap-2">
+          <span className={`w-1.5 h-1.5 rounded-full ${llmOnline ? 'bg-emerald-400' : 'bg-zinc-600'}`} />
+          <span className="text-xs text-zinc-600">
+            {llmOnline ? 'Ollama online' : 'Ollama offline'}
+          </span>
+        </div>
+        {lastGitScan && (
+          <div className="text-xs text-zinc-700 mt-0.5">
+            Git: synced {relativeTime(lastGitScan)}
+          </div>
+        )}
+      </div>
+    </aside>
+  );
+}
+```
+
+Note that `Sidebar.tsx` dispatches `new CustomEvent('open-logger')`. The `SemanticLogger.tsx` must listen for it:
 ```typescript
-dotenv.config();
-ensureDataFilesExist(); // Prevent server crashes from missing data files
+// Inside SemanticLogger useEffect:
+const handleOpenEvent = () => setOpen(true);
+window.addEventListener('open-logger', handleOpenEvent);
+return () => window.removeEventListener('open-logger', handleOpenEvent);
 ```
 
 ---
 
-## 3. What is Missing in `IMPLEMENTATION.md`?
+### C7. Full `SemanticLogger.tsx` Code Missing [CRITICAL]
+**[Added by Claude]**
 
-To ensure you can run the app without encountering errors during terminal compilation, make sure these final items are addressed:
+This is the most complex component — a 4-state machine with LLM calls, fallback handling, and a custom confirm UI. Without full code, a weaker model will produce something completely different.
 
-1. **Tooling for Server Execution**: `concurrently` runs `npm run server` which calls `npx ts-node --esm server/index.ts`. However, `ts-node` is a **devDependency** that must be explicitly added to `devDependencies`. Without it, the application runner will fail immediately upon launching.
-2. **Missing UI Icons Package**: Components like `Sidebar.tsx` and `GitPendingCard.tsx` assume standard Unicode blocks (e.g., `⎇`, `◉`, `⊗`), but shadcn UI elements require `lucide-react` for standard UI symbols. Ensure it's in the setup step.
+```tsx
+import { useState, useEffect, useRef } from 'react';
+import { Dialog, DialogContent, DialogTitle } from '../ui/dialog';
+import { Textarea } from '../ui/textarea';
+import { Button } from '../ui/button';
+import { Badge } from '../ui/badge';
+import { Skeleton } from '../ui/skeleton';
+import { useStore } from '../../lib/store';
+import * as api from '../../lib/api';
+import { CLUSTER_COLORS, CLUSTER_LABELS, type AnyClusterId, type ParsedLogEntry, type LogEntry } from '../../lib/types';
+import { generateId } from '../../lib/utils';
+
+type State = 'input' | 'loading' | 'preview' | 'manual';
+
+const CLUSTERS: AnyClusterId[] = ['foundations', 'alpha', 'beta', 'gamma', 'delta', 'epsilon', 'work'];
+
+export function SemanticLogger() {
+  const [open, setOpen] = useState(false);
+  const [state, setState] = useState<State>('input');
+  const [inputText, setInputText] = useState('');
+  const [parsed, setParsed] = useState<ParsedLogEntry | null>(null);
+  // Editable preview fields
+  const [editCluster, setEditCluster] = useState<AnyClusterId>('unknown');
+  const [editTopic, setEditTopic] = useState('');
+  const [editHours, setEditHours] = useState(1.0);
+  const [editDone, setEditDone] = useState(true);
+
+  const { confirmLogEntry, llmOnline } = useStore();
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // Global keyboard shortcut + custom event
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.metaKey && e.key === 'k') { e.preventDefault(); setOpen(true); }
+    };
+    const onEvent = () => setOpen(true);
+    document.addEventListener('keydown', onKey);
+    window.addEventListener('open-logger', onEvent);
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      window.removeEventListener('open-logger', onEvent);
+    };
+  }, []);
+
+  // Reset to input state when closed
+  useEffect(() => {
+    if (!open) {
+      setTimeout(() => {
+        setState('input');
+        setInputText('');
+        setParsed(null);
+      }, 200); // wait for close animation
+    } else {
+      setTimeout(() => textareaRef.current?.focus(), 50);
+    }
+  }, [open]);
+
+  const handleSubmit = async () => {
+    if (!inputText.trim()) return;
+
+    if (!llmOnline) {
+      setState('manual');
+      return;
+    }
+
+    setState('loading');
+    const result = await api.parseText(inputText);
+
+    if (result) {
+      setParsed(result);
+      setEditCluster(result.cluster_id);
+      setEditTopic(result.topic_guess);
+      setEditHours(result.hours);
+      setEditDone(result.is_completed);
+      setState('preview');
+    } else {
+      setState('manual');
+    }
+  };
+
+  const handleConfirm = () => {
+    const entry: LogEntry = {
+      id: generateId(),
+      date: new Date().toISOString().split('T')[0],
+      cluster: state === 'manual' ? editCluster : (parsed?.cluster_id || editCluster),
+      topic: state === 'manual' ? editTopic : (parsed?.topic_guess || editTopic),
+      hours: state === 'manual' ? editHours : (parsed?.hours || editHours),
+      is_completed: state === 'manual' ? editDone : (parsed?.is_completed ?? editDone),
+      source: 'manual',
+      notes: inputText
+    };
+    confirmLogEntry(entry);
+    setOpen(false);
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent className="bg-surface-card border-surface-border max-w-lg">
+        <DialogTitle className="text-zinc-100 text-sm font-medium">
+          {state === 'input' && 'What did you work on?'}
+          {state === 'loading' && 'Parsing...'}
+          {state === 'preview' && 'Confirm log entry'}
+          {state === 'manual' && 'Log session manually'}
+        </DialogTitle>
+
+        {/* STATE: input */}
+        {state === 'input' && (
+          <div className="space-y-3">
+            <Textarea
+              ref={textareaRef}
+              value={inputText}
+              onChange={e => setInputText(e.target.value)}
+              onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSubmit(); }}}
+              placeholder="e.g. worked on Triton matmul kernel for 2 hours, got 95% of cuBLAS perf"
+              className="bg-surface-base border-surface-border text-zinc-100 placeholder:text-zinc-600 resize-none min-h-[80px]"
+              rows={3}
+            />
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-zinc-600">
+                {llmOnline ? 'Ollama online · auto-tagging enabled' : 'Ollama offline · will use manual form'}
+              </span>
+              <Button size="sm" onClick={handleSubmit} className="bg-blue-600 hover:bg-blue-500 text-white">
+                Parse ↵
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {/* STATE: loading */}
+        {state === 'loading' && (
+          <div className="space-y-2 py-2">
+            <Skeleton className="h-4 w-3/4 bg-surface-muted" />
+            <Skeleton className="h-4 w-1/2 bg-surface-muted" />
+            <Skeleton className="h-4 w-2/3 bg-surface-muted" />
+          </div>
+        )}
+
+        {/* STATE: preview */}
+        {state === 'preview' && (
+          <div className="space-y-3">
+            <div className="grid grid-cols-2 gap-3">
+              {/* Cluster */}
+              <div>
+                <label className="text-xs text-zinc-500 mb-1 block">Cluster</label>
+                <select
+                  value={editCluster}
+                  onChange={e => setEditCluster(e.target.value as AnyClusterId)}
+                  className="w-full bg-surface-base border border-surface-border rounded-md px-2 py-1.5 text-sm text-zinc-100"
+                >
+                  {CLUSTERS.map(c => (
+                    <option key={c} value={c}>{CLUSTER_LABELS[c]}</option>
+                  ))}
+                </select>
+              </div>
+              {/* Hours */}
+              <div>
+                <label className="text-xs text-zinc-500 mb-1 block">Hours</label>
+                <input
+                  type="number"
+                  step="0.5"
+                  min="0.5"
+                  max="12"
+                  value={editHours}
+                  onChange={e => setEditHours(parseFloat(e.target.value))}
+                  className="w-full bg-surface-base border border-surface-border rounded-md px-2 py-1.5 text-sm text-zinc-100"
+                />
+              </div>
+            </div>
+            {/* Topic */}
+            <div>
+              <label className="text-xs text-zinc-500 mb-1 block">Topic</label>
+              <input
+                type="text"
+                value={editTopic}
+                onChange={e => setEditTopic(e.target.value)}
+                className="w-full bg-surface-base border border-surface-border rounded-md px-2 py-1.5 text-sm text-zinc-100"
+              />
+            </div>
+            {/* Status */}
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="done"
+                checked={editDone}
+                onChange={e => setEditDone(e.target.checked)}
+                className="accent-blue-500"
+              />
+              <label htmlFor="done" className="text-sm text-zinc-300">Completed / done</label>
+              {/* Cluster color badge */}
+              <div
+                className="ml-auto w-2.5 h-2.5 rounded-full"
+                style={{ backgroundColor: CLUSTER_COLORS[editCluster] }}
+              />
+            </div>
+            <div className="flex justify-end gap-2 pt-1">
+              <Button variant="outline" size="sm" onClick={() => setState('manual')}
+                className="border-surface-border text-zinc-400 hover:text-zinc-100">
+                Edit manually
+              </Button>
+              <Button size="sm" onClick={handleConfirm} className="bg-blue-600 hover:bg-blue-500 text-white">
+                Confirm ↵
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {/* STATE: manual */}
+        {state === 'manual' && (
+          <div className="space-y-3">
+            {!llmOnline && (
+              <p className="text-xs text-amber-400">Ollama offline — fill in manually</p>
+            )}
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="text-xs text-zinc-500 mb-1 block">Cluster</label>
+                <select
+                  value={editCluster}
+                  onChange={e => setEditCluster(e.target.value as AnyClusterId)}
+                  className="w-full bg-surface-base border border-surface-border rounded-md px-2 py-1.5 text-sm text-zinc-100"
+                >
+                  {CLUSTERS.map(c => (
+                    <option key={c} value={c}>{CLUSTER_LABELS[c]}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="text-xs text-zinc-500 mb-1 block">Hours</label>
+                <input
+                  type="number" step="0.5" min="0.5" max="12"
+                  value={editHours}
+                  onChange={e => setEditHours(parseFloat(e.target.value))}
+                  className="w-full bg-surface-base border border-surface-border rounded-md px-2 py-1.5 text-sm text-zinc-100"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="text-xs text-zinc-500 mb-1 block">Topic</label>
+              <input
+                type="text" value={editTopic}
+                onChange={e => setEditTopic(e.target.value)}
+                placeholder="e.g. Kalman filter implementation"
+                className="w-full bg-surface-base border border-surface-border rounded-md px-2 py-1.5 text-sm text-zinc-100"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <input type="checkbox" id="done2" checked={editDone}
+                onChange={e => setEditDone(e.target.checked)} className="accent-blue-500" />
+              <label htmlFor="done2" className="text-sm text-zinc-300">Completed</label>
+            </div>
+            <div className="flex justify-end">
+              <Button size="sm" onClick={handleConfirm} className="bg-blue-600 hover:bg-blue-500 text-white">
+                Save entry
+              </Button>
+            </div>
+          </div>
+        )}
+      </DialogContent>
+    </Dialog>
+  );
+}
+```
 
 ---
 
+### C8. Missing `tsconfig.json` Content [CRITICAL]
+**[Added by Claude]**
 
-## 4. Flawless Handoff Instruction Template
+The file tree lists `tsconfig.json` and `tsconfig.node.json` but neither is provided. `tsx` (the replacement for `ts-node`) works without complex config, but TypeScript compilation for the overall project still needs a correct `tsconfig.json`.
 
-When you prompt Gemini Flash or DeepSeek to build the system, **copy and paste this exact instruction prompt** to guarantee they build it without error.
-
-```markdown
-You are an expert full-stack React & TypeScript developer tasked with building the "Goal OS" system. 
-You are provided with:
-1. The IMPLEMENTATION.md file outlining all models, stores, and backend routes.
-2. The REVIEW_NOTES.md containing explicit architectural fixes, code extensions, and bug solutions.
-
-Follow these strict compilation requirements:
-- Use the updated Extend-Theme config in REVIEW_NOTES.md to protect shadcn/ui.
-- Implement the exact SVGs and coordinate calculations for ClusterCard.tsx and ActivityHeatmap.tsx from REVIEW_NOTES.md.
-- Ensure that the store.ts confirmLogEntry matches the Git entry ID filter exactly as outlined in the fix.
-- Exclude common massive build folders (e.g. node_modules, .next, dist) in gitScanner.ts to prevent freezing.
-
-Your build sequence:
-1. Run "npm i lucide-react ts-node typescript -D" to secure icons and compilation libraries.
-2. If progress.json or work.json is missing in data/, the server MUST write the default seed JSON dynamically on startup instead of throwing a 500.
-3. Complete the UI component bodies by referencing their wireframes exactly. No placeholder variables, no stub functions.
+**`tsconfig.json`** (for the React/Vite frontend):
+```json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
 ```
+
+**`tsconfig.node.json`** (for Vite config and server):
+```json
+{
+  "compilerOptions": {
+    "composite": true,
+    "skipLibCheck": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true,
+    "strict": false
+  },
+  "include": ["vite.config.ts", "server/**/*.ts", "tailwind.config.ts"]
+}
+```
+
+---
+
+### C9. `WeeklyPage.tsx` logsText Builder Code Not Specified
+**[Added by Claude]**
+
+The spec says "build logsText (last 7 days of logs as plain text)" but never shows the code. A weaker model will format this incorrectly, which degrades coach quality since the prompt is tightly coupled to the format.
+
+Add this helper to `src/lib/utils.ts`:
+
+```typescript
+export function buildCoachContext(progress: Progress): string {
+  const sevenDaysAgo = new Date();
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+  const recentLogs = progress.logs
+    .filter(l => new Date(l.date) >= sevenDaysAgo && l.cluster !== 'work')
+    .sort((a, b) => a.date.localeCompare(b.date));
+
+  const logLines = recentLogs.map(l =>
+    `${l.date} | ${l.cluster} | ${l.topic} | ${l.hours}h | ${l.is_completed ? 'done' : 'in-progress'}`
+  ).join('\n');
+
+  const clusterSummary = Object.entries(progress.clusters).map(([id, c]) => {
+    const prog = computeClusterProgress(c);
+    return `${id}: ${prog}% (study:${c.checklist.study}, experiment:${c.checklist.experiment}, artifact:${c.checklist.artifact})`;
+  }).join('\n');
+
+  const weeklyHours = recentLogs.reduce((sum, l) => sum + l.hours, 0);
+  const avgHours = computeWeeklyAvgHours(progress.logs);
+
+  return `
+RECENT LOGS (last 7 days):
+${logLines || 'No sessions logged this week.'}
+
+CLUSTER STATE:
+${clusterSummary}
+
+STATS:
+- This week: ${weeklyHours}h
+- 4-week avg: ${avgHours}h/week
+- Weekly goal: ${progress.meta.weekly_goal_hours}h/week
+  `.trim();
+}
+```
+
+Use it in `WeeklyPage.tsx`:
+```typescript
+import { buildCoachContext } from '../lib/utils';
+
+const logsText = buildCoachContext(progress);
+const result = await api.runCoach(logsText);
+```
+
+---
+
+## Updated Build Checklist Additions
+
+Add these items to the build checklist in IMPLEMENTATION.md after Phase 1 setup:
+
+- [ ] 0.1 Replace `ts-node` with `tsx`: `npm install -D tsx` and update package.json scripts
+- [ ] 0.2 Verify `tsconfig.json` and `tsconfig.node.json` match Section C8 above
+- [ ] 0.3 Set `DEV_ROOT` in `.env` using full absolute path (not `~/Dev`), e.g. `/Users/yourname/Dev`
+- [ ] 0.4 Install `lucide-react`: `npm install lucide-react`
+- [ ] 0.5 After running `npx shadcn-ui@latest init`, check that `tailwind.config.ts` now contains shadcn CSS variable mappings. Then manually add the `cluster` and `surface` color blocks from Section 1.5 **inside the existing extend block** — do not replace the file.
+- [ ] 0.6 After `shadcn init`, check `src/index.css`. It will have a `:root` and `.dark` block with shadcn CSS variables. Keep that block. Replace shadcn's `* { @apply border-border; }` with `* { @apply border-surface-border; }`. Add the scrollbar styles from the spec below shadcn's generated styles.
+- [ ] 0.7 Remove `"git_pending": []` from seed `progress.json` — it doesn't belong in the Progress type
+
+---
+
+## Summary: What to Give a Weaker Model
+
+The implementing model should receive files in this order, telling it to follow IMPLEMENTATION.md but with these overrides applied:
+
+1. `IMPLEMENTATION.md` as the base spec
+2. This `REVIEW_NOTES.md` as the override/fix layer
+3. Explicit instruction: **"When REVIEW_NOTES.md contradicts IMPLEMENTATION.md, REVIEW_NOTES.md wins"**
+4. Explicit instruction: **"Do not generate code for Shell.tsx, Sidebar.tsx, SemanticLogger.tsx, CoachOutput.tsx, ClusterCard.tsx, or ActivityHeatmap.tsx — use the exact code from REVIEW_NOTES.md verbatim"**
+5. For all other components: follow the spec in IMPLEMENTATION.md Section 10
