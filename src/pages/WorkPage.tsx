@@ -10,7 +10,7 @@ export function WorkPage() {
   const [title, setTitle] = useState('');
   const [due, setDue] = useState('');
 
-  if (!work) return <div className="text-zinc-500">Loading...</div>;
+  if (!work) return <div className="text-muted-foreground">Loading...</div>;
 
   const handleSave = () => {
     if (!title.trim()) return;
@@ -29,7 +29,7 @@ export function WorkPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-lg font-semibold text-zinc-100">Work</h1>
+        <h1 className="text-lg font-semibold text-foreground">Work</h1>
         <button
           onClick={() => setShowForm(true)}
           className="text-xs text-white bg-blue-600 hover:bg-blue-500 px-3 py-1.5 rounded-md"
@@ -45,18 +45,18 @@ export function WorkPage() {
             value={title}
             onChange={e => setTitle(e.target.value)}
             placeholder="Task title"
-            className="w-full bg-surface-base border border-surface-border rounded px-2 py-1.5 text-sm text-zinc-100 outline-none"
+            className="w-full bg-surface-base border border-surface-border rounded px-2 py-1.5 text-sm text-foreground outline-none"
             autoFocus
           />
           <input
             type="date"
             value={due}
             onChange={e => setDue(e.target.value)}
-            className="w-full bg-surface-base border border-surface-border rounded px-2 py-1.5 text-sm text-zinc-100 outline-none"
+            className="w-full bg-surface-base border border-surface-border rounded px-2 py-1.5 text-sm text-foreground outline-none"
           />
           <div className="flex gap-2">
             <button onClick={handleSave} className="text-xs text-white bg-blue-600 hover:bg-blue-500 px-3 py-1.5 rounded-md">Save</button>
-            <button onClick={() => setShowForm(false)} className="text-xs text-zinc-400 hover:text-zinc-100 px-3 py-1.5">Cancel</button>
+            <button onClick={() => setShowForm(false)} className="text-xs text-muted-foreground hover:text-foreground px-3 py-1.5">Cancel</button>
           </div>
         </div>
       )}
@@ -66,7 +66,7 @@ export function WorkPage() {
           <TaskRow key={task.id} task={task} />
         ))}
         {work.tasks.length === 0 && (
-          <div className="text-sm text-zinc-500">No tasks yet.</div>
+          <div className="text-sm text-muted-foreground">No tasks yet.</div>
         )}
       </div>
 

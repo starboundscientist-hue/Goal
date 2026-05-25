@@ -14,7 +14,7 @@ describe('ActivityHeatmap', () => {
 
   it('renders exactly 365 cells', () => {
     const { container } = render(<ActivityHeatmap logs={[]} />);
-    const cells = container.querySelectorAll('[style*="background-color"]');
+    const cells = container.querySelectorAll('.grid > [style*="background-color"]');
     expect(cells).toHaveLength(365);
   });
 

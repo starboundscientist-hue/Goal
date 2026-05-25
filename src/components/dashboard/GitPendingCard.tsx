@@ -37,30 +37,30 @@ export function GitPendingCard({ entry, onConfirm, onDismiss }: Props) {
   return (
     <div className="bg-surface-card border border-surface-border rounded-lg p-4 mb-4">
       <div className="flex items-center gap-2 mb-3">
-        <span className="text-zinc-400">{'\u238b'}</span>
-        <span className="text-sm font-medium text-zinc-100">
+        <span className="text-muted-foreground">{'\u238b'}</span>
+        <span className="text-sm font-medium text-foreground">
           Git detected {commits.length} commit{commits.length !== 1 ? 's' : ''}
         </span>
       </div>
 
-      <div className="text-xs text-zinc-500 mb-2 font-mono">{repoShort}</div>
+      <div className="text-xs text-muted-foreground mb-2 font-mono">{repoShort}</div>
 
       <div className="space-y-1 mb-3">
         {commits.slice(0, 3).map((msg, i) => (
-          <div key={i} className="text-sm text-zinc-400">{'\u2192'} {msg}</div>
+          <div key={i} className="text-sm text-muted-foreground">{'\u2192'} {msg}</div>
         ))}
         {commits.length > 3 && (
-          <div className="text-xs text-zinc-600">...and {commits.length - 3} more</div>
+          <div className="text-xs text-muted-foreground">...and {commits.length - 3} more</div>
         )}
       </div>
 
       <div className="grid grid-cols-2 gap-3 mb-3">
         <div>
-          <label className="text-xs text-zinc-500 mb-1 block">Cluster</label>
+          <label className="text-xs text-muted-foreground mb-1 block">Cluster</label>
           <select
             value={editCluster}
             onChange={e => setEditCluster(e.target.value as AnyClusterId)}
-            className="w-full bg-surface-base border border-surface-border rounded px-2 py-1 text-sm text-zinc-100"
+            className="w-full bg-surface-base border border-surface-border rounded px-2 py-1 text-sm text-foreground"
           >
             {(['foundations', 'alpha', 'beta', 'gamma', 'delta', 'epsilon', 'work', 'unknown'] as const).map(c => (
               <option key={c} value={c}>{CLUSTER_LABELS[c]}</option>
@@ -68,34 +68,34 @@ export function GitPendingCard({ entry, onConfirm, onDismiss }: Props) {
           </select>
         </div>
         <div>
-          <label className="text-xs text-zinc-500 mb-1 block">Hours</label>
+          <label className="text-xs text-muted-foreground mb-1 block">Hours</label>
           <input
             type="number" step="0.5" min="0.5" max="12"
             value={editHours}
             onChange={e => setEditHours(parseFloat(e.target.value))}
-            className="w-full bg-surface-base border border-surface-border rounded px-2 py-1 text-sm text-zinc-100"
+            className="w-full bg-surface-base border border-surface-border rounded px-2 py-1 text-sm text-foreground"
           />
         </div>
       </div>
 
       <div className="mb-3">
-        <label className="text-xs text-zinc-500 mb-1 block">Topic</label>
+          <label className="text-xs text-muted-foreground mb-1 block">Topic</label>
         <input
           type="text" value={editTopic}
           onChange={e => setEditTopic(e.target.value)}
-          className="w-full bg-surface-base border border-surface-border rounded px-2 py-1 text-sm text-zinc-100"
+          className="w-full bg-surface-base border border-surface-border rounded px-2 py-1 text-sm text-foreground"
         />
       </div>
 
       <div className="flex items-center gap-2 mb-3">
         <input type="checkbox" id={`done-${entry.id}`} checked={editDone}
           onChange={e => setEditDone(e.target.checked)} className="accent-blue-500" />
-        <label htmlFor={`done-${entry.id}`} className="text-sm text-zinc-300">Completed</label>
+        <label htmlFor={`done-${entry.id}`} className="text-sm text-foreground">Completed</label>
         <div className="ml-auto w-2.5 h-2.5 rounded-full" style={{ backgroundColor: CLUSTER_COLORS[editCluster] }} />
       </div>
 
       <div className="flex justify-end gap-2">
-        <button onClick={onDismiss} className="text-xs text-zinc-500 hover:text-zinc-300 px-3 py-1.5 rounded-md border border-surface-border">
+        <button onClick={onDismiss} className="text-xs text-muted-foreground hover:text-foreground px-3 py-1.5 rounded-md border border-surface-border">
           Dismiss
         </button>
         <button onClick={handleConfirm} className="text-xs text-white bg-blue-600 hover:bg-blue-500 px-3 py-1.5 rounded-md">

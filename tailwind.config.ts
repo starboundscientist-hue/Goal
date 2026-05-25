@@ -49,11 +49,11 @@ export default {
           work:        '#6b7280',
         },
         surface: {
-          base:    '#09090b',
-          card:    '#111113',
-          border:  '#1f1f23',
-          hover:   '#18181b',
-          muted:   '#27272a',
+          base:    'var(--surface-base)',
+          card:    'var(--surface-card)',
+          border:  'var(--surface-border)',
+          hover:   'var(--surface-hover)',
+          muted:   'var(--surface-muted)',
         }
       },
       fontFamily: {

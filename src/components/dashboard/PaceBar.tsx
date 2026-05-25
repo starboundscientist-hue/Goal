@@ -21,8 +21,8 @@ export function PaceBar({ progress }: Props) {
   return (
     <div className="mb-6">
       <div className="flex items-center justify-between mb-2">
-        <span className="text-sm text-zinc-400">Phase {phase}: Foundation</span>
-        <span className="text-sm text-zinc-100 font-medium">{phaseProgress}%</span>
+        <span className="text-sm text-muted-foreground">Phase {phase}: Foundation</span>
+        <span className="text-sm text-foreground font-medium">{phaseProgress}%</span>
       </div>
       <div className="w-full h-1.5 bg-surface-muted rounded-full overflow-hidden">
         <div
@@ -30,7 +30,7 @@ export function PaceBar({ progress }: Props) {
           style={{ width: `${phaseProgress}%`, backgroundColor: '#60a5fa' }}
         />
       </div>
-      <div className="mt-2 text-sm text-zinc-500">
+      <div className="mt-2 text-sm text-muted-foreground">
         At current pace, Phase {phase} closes {projection.label}
         {' \u00b7 '}{weeklyAvg}h/week avg
         {' \u00b7 '}Target: {goal}h

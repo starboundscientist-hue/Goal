@@ -30,10 +30,17 @@ export const CLUSTER_LABELS: Record<AnyClusterId, string> = {
   unknown:     'Unknown',
 };
 
+export interface Subtopic {
+  id: string;
+  label: string;
+  done: boolean;
+}
+
 export interface Topic {
   id: string;
   label: string;
   done: boolean;
+  subtopics?: Subtopic[];
 }
 
 export interface Resource {

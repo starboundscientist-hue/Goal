@@ -40,18 +40,18 @@ export function ClusterCard({ cluster, logs }: Props) {
             transform="rotate(-90 24 24)"
           />
         </svg>
-        <span className="absolute inset-0 flex items-center justify-center text-xs font-semibold text-zinc-100">
+        <span className="absolute inset-0 flex items-center justify-center text-xs font-semibold text-foreground">
           {progress}%
         </span>
       </div>
 
       <div className="flex-1 min-w-0">
-        <div className="font-medium text-zinc-100">{cluster.name}</div>
+        <div className="font-medium text-foreground">{cluster.name}</div>
         <div className="flex items-center gap-2 mt-1">
-          <span className={`inline-block rounded-full px-1.5 py-0.5 text-xs ${status.color === 'text-emerald-400' ? 'bg-emerald-950 text-emerald-400' : status.color === 'text-amber-400' ? 'bg-amber-950 text-amber-400' : status.color === 'text-orange-400' ? 'bg-orange-950 text-orange-400' : 'bg-zinc-900 text-zinc-600'}`}>
+          <span className={`inline-block rounded-full px-1.5 py-0.5 text-xs ${status.color === 'text-emerald-400' ? 'bg-emerald-950 text-emerald-400' : status.color === 'text-amber-400' ? 'bg-amber-950 text-amber-400' : status.color === 'text-orange-400' ? 'bg-orange-950 text-orange-400' : 'bg-surface-muted text-muted-foreground'}`}>
             {status.label}
           </span>
-          <span className="text-xs text-zinc-500">
+          <span className="text-xs text-muted-foreground">
             {lastWorked ? relativeTime(lastWorked) : '\u2014'}
           </span>
         </div>
@@ -59,7 +59,7 @@ export function ClusterCard({ cluster, logs }: Props) {
           {(['study', 'experiment', 'artifact'] as const).map((field) => (
             <span
               key={field}
-              className={`w-2 h-2 rounded-full ${cluster.checklist[field] ? 'bg-emerald-400' : 'bg-zinc-700'}`}
+              className={`w-2 h-2 rounded-full ${cluster.checklist[field] ? 'bg-emerald-400' : 'bg-surface-muted'}`}
               title={field.charAt(0).toUpperCase() + field.slice(1)}
             />
           ))}

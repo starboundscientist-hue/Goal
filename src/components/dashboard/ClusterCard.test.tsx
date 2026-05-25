@@ -62,7 +62,7 @@ describe('ClusterCard', () => {
     );
     const dots = container.querySelectorAll('.w-2.h-2.rounded-full');
     expect(dots[0]).toHaveClass('bg-emerald-400');
-    expect(dots[1]).toHaveClass('bg-zinc-700');
-    expect(dots[2]).toHaveClass('bg-zinc-700');
+    expect(dots[1]).toHaveClass('bg-surface-muted');
+    expect(dots[2]).toHaveClass('bg-surface-muted');
   });
 });

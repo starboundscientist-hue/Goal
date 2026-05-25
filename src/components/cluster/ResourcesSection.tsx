@@ -21,7 +21,7 @@ export function ResourcesSection({ clusterId, resources }: Props) {
               className="accent-blue-500"
             />
             <div className="flex-1 min-w-0">
-              <span className={`text-sm ${resource.done ? 'text-zinc-500 line-through' : 'text-zinc-100'}`}>
+              <span className={`text-sm ${resource.done ? 'text-muted-foreground line-through' : 'text-foreground'}`}>
                 {resource.label}
               </span>
             </div>

@@ -8,7 +8,7 @@ interface Props {
 const STATUS_ORDER: TaskStatus[] = ['todo', 'wip', 'done', 'stuck', 'waiting'];
 
 const STATUS_META: Record<TaskStatus, { icon: string; color: string }> = {
-  todo:     { icon: '\u25cb', color: 'text-zinc-500' },
+  todo:     { icon: '\u25cb', color: 'text-muted-foreground' },
   wip:      { icon: '\u25cf', color: 'text-blue-400' },
   done:     { icon: '\u2713', color: 'text-emerald-400' },
   stuck:    { icon: '\u26a0', color: 'text-red-400' },
@@ -31,11 +31,11 @@ export function TaskRow({ task }: Props) {
       <button onClick={cycleStatus} className={`text-sm ${meta.color} hover:opacity-80 transition-opacity`}>
         {meta.icon}
       </button>
-      <span className={`text-sm flex-1 ${task.status === 'done' ? 'text-zinc-500 line-through' : 'text-zinc-100'}`}>
+      <span className={`text-sm flex-1 ${task.status === 'done' ? 'text-muted-foreground line-through' : 'text-foreground'}`}>
         {task.title}
       </span>
       {task.due && (
-        <span className="text-xs text-zinc-500">due {task.due}</span>
+        <span className="text-xs text-muted-foreground">due {task.due}</span>
       )}
       {task.blocker && (
         <span className="text-xs text-amber-500" title={task.blocker}>blocked</span>

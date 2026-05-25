@@ -10,7 +10,7 @@ export function ActivityHeatmap({ logs }: Props) {
   const cells = buildHeatmapData(logs);
 
   const cellColor = (clusterId: string | null, hours: number): string => {
-    if (hours === 0 || !clusterId) return '#1f1f23';
+    if (hours === 0 || !clusterId) return 'var(--surface-border)';
     const color = CLUSTER_COLORS[clusterId as keyof typeof CLUSTER_COLORS] || '#3f3f46';
     if (hours <= 1) return color + '66';
     if (hours <= 2) return color + '99';
@@ -21,15 +21,15 @@ export function ActivityHeatmap({ logs }: Props) {
   return (
     <div>
       <div className="flex items-center justify-between mb-2">
-        <span className="text-xs font-semibold text-zinc-400 tracking-wider">ACTIVITY GRID</span>
+        <span className="text-xs font-semibold text-muted-foreground tracking-wider">ACTIVITY GRID</span>
         <div className="flex items-center gap-1.5">
-          <span className="text-[10px] text-zinc-600">Less</span>
-          <div className="w-2.5 h-2.5 rounded-[2px] bg-[#1f1f23]" />
-          <div className="w-2.5 h-2.5 rounded-[2px] bg-[#3f3f46]" />
-          <div className="w-2.5 h-2.5 rounded-[2px] bg-[#52525b]" />
-          <div className="w-2.5 h-2.5 rounded-[2px] bg-[#71717a]" />
-          <div className="w-2.5 h-2.5 rounded-[2px] bg-[#a1a1aa]" />
-          <span className="text-[10px] text-zinc-600">More</span>
+          <span className="text-[10px] text-muted-foreground">Less</span>
+          <div className="w-2.5 h-2.5 rounded-[2px] bg-surface-border" />
+          <div className="w-2.5 h-2.5 rounded-[2px] bg-surface-muted" />
+          <div className="w-2.5 h-2.5 rounded-[2px] bg-zinc-400" />
+          <div className="w-2.5 h-2.5 rounded-[2px] bg-zinc-500" />
+          <div className="w-2.5 h-2.5 rounded-[2px] bg-zinc-600" />
+          <span className="text-[10px] text-muted-foreground">More</span>
         </div>
       </div>
       <div className="overflow-x-auto">

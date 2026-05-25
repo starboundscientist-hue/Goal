@@ -27,7 +27,14 @@
         {
           "id": "probability",
           "label": "Probability & statistics (Bayesian, Monte Carlo)",
-          "done": false
+          "done": false,
+          "subtopics": [
+            {
+              "id": "sub_1779689347369",
+              "label": "Distributions",
+              "done": false
+            }
+          ]
         },
         {
           "id": "optimization",
@@ -42,7 +49,14 @@
         {
           "id": "dsa",
           "label": "Data structures & algorithms",
-          "done": false
+          "done": false,
+          "subtopics": [
+            {
+              "id": "sub_1779674466296",
+              "label": "Course 1: Algorithm toolbox",
+              "done": false
+            }
+          ]
         },
         {
           "id": "os_concepts",

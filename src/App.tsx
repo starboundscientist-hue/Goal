@@ -11,7 +11,11 @@ import { useStore } from './lib/store';
 import * as api from './lib/api';
 
 export default function App() {
-  const { setProgress, setWork, setLlmOnline, setPendingGitEntries, setLastGitScan } = useStore();
+  const { setProgress, setWork, setLlmOnline, setPendingGitEntries, setLastGitScan, theme } = useStore();
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('light', theme === 'light');
+  }, [theme]);
 
   useEffect(() => {
     Promise.allSettled([api.loadProgress(), api.loadWork(), api.checkOllama()])

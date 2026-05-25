@@ -22,13 +22,13 @@ export function ClusterDetail({ cluster, logs }: Props) {
 
   return (
     <div>
-      <button onClick={() => navigate('/')} className="text-sm text-zinc-500 hover:text-zinc-300 mb-4 flex items-center gap-1">
+      <button onClick={() => navigate('/')} className="text-sm text-muted-foreground hover:text-foreground mb-4 flex items-center gap-1">
         {'\u2190'} Back
       </button>
 
       <div className="flex items-center gap-3 mb-2">
         <span className="w-3 h-3 rounded-full" style={{ backgroundColor: CLUSTER_COLORS[cluster.id] }} />
-        <h1 className="text-xl font-semibold text-zinc-100">{cluster.name}</h1>
+        <h1 className="text-xl font-semibold text-foreground">{cluster.name}</h1>
         <span className="text-2xl font-bold" style={{ color: CLUSTER_COLORS[cluster.id] }}>
           {progress}%
         </span>
@@ -65,9 +65,9 @@ function SectionHeader({ title, sectionKey, collapsed, onToggle }: {
   return (
     <button
       onClick={() => onToggle(sectionKey)}
-      className="flex items-center gap-2 text-xs uppercase tracking-wider text-zinc-500 font-medium mb-3 hover:text-zinc-300 transition-colors"
+      className="flex items-center gap-2 text-xs uppercase tracking-wider text-muted-foreground font-medium mb-3 hover:text-foreground transition-colors"
     >
-      <span className="text-zinc-600 text-sm">{collapsed[sectionKey] ? '\u25b6' : '\u25bc'}</span>
+      <span className="text-muted-foreground text-sm">{collapsed[sectionKey] ? '\u25b6' : '\u25bc'}</span>
       {title}
     </button>
   );

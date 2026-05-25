@@ -13,11 +13,11 @@ const CLUSTER_NAV = [
 ] as const;
 
 const navBase = 'flex items-center gap-2.5 px-3 py-1.5 rounded-md text-sm transition-colors w-full text-left';
-const navInactive = 'text-zinc-400 hover:text-zinc-100 hover:bg-surface-hover';
-const navActive = 'text-zinc-100 bg-surface-hover';
+const navInactive = 'text-muted-foreground hover:text-foreground hover:bg-surface-hover';
+const navActive = 'text-foreground bg-surface-hover';
 
 export function Sidebar() {
-  const { llmOnline, lastGitScan } = useStore();
+  const { llmOnline, lastGitScan, theme, toggleTheme } = useStore();
 
   const openLogger = () => {
     window.dispatchEvent(new CustomEvent('open-logger'));
@@ -27,7 +27,7 @@ export function Sidebar() {
     <aside className="w-[220px] flex-shrink-0 flex flex-col border-r border-surface-border bg-surface-base">
       <div className="px-4 py-5 flex items-center gap-2">
         <span className="text-blue-400 text-base">{'\u25c9'}</span>
-        <span className="font-semibold text-zinc-100 tracking-tight">GOAL OS</span>
+        <span className="font-semibold text-foreground tracking-tight">GOAL OS</span>
       </div>
 
       <nav className="flex-1 overflow-y-auto px-2 space-y-0.5">
@@ -37,11 +37,11 @@ export function Sidebar() {
 
         <button onClick={openLogger} className={`${navBase} ${navInactive}`}>
           Log Session
-          <span className="ml-auto text-xs text-zinc-600">{'\u2318'}K</span>
+          <span className="ml-auto text-xs text-muted-foreground">{'\u2318'}K</span>
         </button>
 
         <div className="pt-3 pb-1 px-3">
-          <span className="text-xs uppercase tracking-wider text-zinc-600 font-medium">Clusters</span>
+          <span className="text-xs uppercase tracking-wider text-muted-foreground font-medium">Clusters</span>
         </div>
 
         {CLUSTER_NAV.map(({ id, label, symbol }) => (
@@ -66,18 +66,25 @@ export function Sidebar() {
         </NavLink>
       </nav>
 
-      <div className="px-4 py-3 border-t border-surface-border">
+      <div className="px-4 py-3 border-t border-surface-border space-y-2">
         <div className="flex items-center gap-2">
           <span className={`w-1.5 h-1.5 rounded-full ${llmOnline ? 'bg-emerald-400' : 'bg-amber-400'}`} />
-          <span className={`text-xs ${llmOnline ? 'text-zinc-600' : 'text-amber-500'}`}>
+          <span className={`text-xs ${llmOnline ? 'text-muted-foreground' : 'text-amber-500'}`}>
             {llmOnline ? 'Ollama online' : 'Ollama offline'}
           </span>
         </div>
         {lastGitScan && (
-          <div className="text-xs text-zinc-700 mt-0.5">
+          <div className="text-xs text-muted-foreground/60 mt-0.5">
             Git: synced {relativeTime(lastGitScan)}
           </div>
         )}
+        <button
+          onClick={toggleTheme}
+          className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground transition-colors w-full"
+        >
+          {theme === 'dark' ? '\u2600' : '\u263D'}
+          <span>{theme === 'dark' ? 'Light mode' : 'Dark mode'}</span>
+        </button>
       </div>
     </aside>
   );

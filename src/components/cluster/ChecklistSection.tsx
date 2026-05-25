@@ -29,8 +29,8 @@ export function ChecklistSection({ clusterId, checklist }: Props) {
               className="accent-blue-500"
             />
             <div>
-              <div className="text-sm text-zinc-100">{label}</div>
-              <div className="text-xs text-zinc-500">{desc}</div>
+              <div className="text-sm text-foreground">{label}</div>
+              <div className="text-xs text-muted-foreground">{desc}</div>
             </div>
           </label>
         ))}

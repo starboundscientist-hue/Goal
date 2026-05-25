@@ -14,7 +14,7 @@ const STATUS_ICON: Record<string, string> = {
 };
 
 const STATUS_COLOR: Record<string, string> = {
-  not_started: 'text-zinc-500',
+  not_started: 'text-muted-foreground',
   in_progress: 'text-blue-400',
   done: 'text-emerald-400',
 };
@@ -34,11 +34,11 @@ export function ProjectsSection({ clusterId, projects }: Props) {
             <span className={`text-sm ${STATUS_COLOR[project.status]}`}>
               {STATUS_ICON[project.status]}
             </span>
-            <span className={`text-sm flex-1 ${project.status === 'done' ? 'text-zinc-500 line-through' : 'text-zinc-100'}`}>
+            <span className={`text-sm flex-1 ${project.status === 'done' ? 'text-muted-foreground line-through' : 'text-foreground'}`}>
               {project.label}
             </span>
             {project.detected_commits && project.detected_commits.length > 0 && (
-              <span className="text-xs text-zinc-500">
+              <span className="text-xs text-muted-foreground">
                 {'\u21b3'} {project.detected_commits.length} commits
               </span>
             )}
