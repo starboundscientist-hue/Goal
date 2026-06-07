@@ -2,6 +2,11 @@
 
 Personal study/work tracking dashboard. React 18 + TypeScript + Vite 8 frontend, Express 5 backend, persisted to JSON files on disk.
 
+## Documentation
+
+- **`UPLIFT.md`** — active UI/UX uplift plan (the WorkTask cockpit). Read this before any UI work.
+- **`legacy/`** — historical planning/bugfix docs from the initial build (blueprints, IMPLEMENTATION.md, REVIEW_NOTES.md, TESTS.md, BUGS_FIXED.md, etc.). Reference only.
+
 ## Project structure
 
 - Root `package.json` is the real app. `goal-os/` is a **dead Vite scaffold** — do not touch.
@@ -13,7 +18,7 @@ Personal study/work tracking dashboard. React 18 + TypeScript + Vite 8 frontend,
 ```sh
 npm run dev            # concurrently: Express on :3001 + Vite on :5173
 npm run server         # tsx watch server/index.ts (standalone)
-npm test               # vitest run (97 tests, 7 files)
+npm test               # vitest run (98 tests, 7 files)
 npm run test:watch     # vitest interactive
 npm run test:coverage  # vitest with coverage
 npm run build          # tsc && vite build
@@ -30,8 +35,8 @@ npm run build          # tsc && vite build
 ## Dev server
 
 - Vite proxies `/api/*` to `http://localhost:3001`.
-- `.env` required for: `GIT_AUTHOR_EMAIL`, `DEV_ROOT`, `GEMINI_API_KEY`, `DATA_DIR`, `PORT`.
-- Ollama (`qwen2.5:7b-instruct` at `localhost:11434`) for semantic log parsing. Gemini 2.0 Flash for weekly coach.
+- `.env` required for: `GIT_AUTHOR_EMAIL`, `DEV_ROOT`, `OPENROUTER_API_KEY`, `DATA_DIR`, `PORT`.
+- OpenRouter (`google/gemma-2-9b-it`) for semantic log parsing and weekly coach.
 - No database — all data in `data/progress.json` and `data/work.json`, read/written by Express routes.
 
 ## Architecture notes
