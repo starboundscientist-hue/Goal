@@ -1,6 +1,7 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import type { Topic } from '../../lib/types';
 import { useStore } from '../../lib/store';
+import { SubtopicModal } from './SubtopicModal';
 
 interface Props {
   clusterId: string;
@@ -34,7 +35,6 @@ export function TopicsSection({ clusterId, topics }: Props) {
     if (e.key === 'Escape') { setAddingTopic(false); setNewTopicLabel(''); }
   };
 
-  // Sync selectedTopic with live store data so subtopics update inside modal
   const liveTopic = selectedTopic
     ? topics.find(t => t.id === selectedTopic.id) ?? null
     : null;
@@ -62,8 +62,8 @@ export function TopicsSection({ clusterId, topics }: Props) {
             onChange={e => setNewTopicLabel(e.target.value)}
             onKeyDown={handleKeyDown}
             onBlur={handleAddTopic}
-            placeholder="Topic name…"
-            className="flex-1 bg-surface-muted text-foreground text-sm rounded-md px-3 py-1.5 outline-none border border-surface-border focus:border-blue-500 placeholder:text-muted-foreground"
+            placeholder="Topic name\u2026"
+            className="flex-1 bg-surface-muted/60 text-foreground text-sm rounded-lg px-3 py-1.5 outline-none border border-surface-border/60 focus:border-blue-500/50 placeholder:text-muted-foreground/60"
           />
           <button
             onMouseDown={e => { e.preventDefault(); handleAddTopic(); }}
@@ -75,13 +75,13 @@ export function TopicsSection({ clusterId, topics }: Props) {
             onMouseDown={() => { setAddingTopic(false); setNewTopicLabel(''); }}
             className="text-xs text-muted-foreground hover:text-foreground px-1"
           >
-            ✕
+            {'\u2715'}
           </button>
         </div>
       ) : (
         <button
           onClick={() => setAddingTopic(true)}
-          className="mt-2 ml-1 flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+          className="mt-2 ml-1 flex items-center gap-1.5 text-xs text-muted-foreground/60 hover:text-foreground/80 transition-colors"
         >
           <span className="text-base leading-none">+</span> Add topic
         </button>
@@ -111,24 +111,25 @@ function TopicRow({
   onRemove: () => void;
   onOpenSubtopics: () => void;
 }) {
-  const [hovered, setHovered] = useState(false);
   const subtopicCount = topic.subtopics?.length ?? 0;
   const subtopicDone = topic.subtopics?.filter(s => s.done).length ?? 0;
 
   return (
-    <div
-      className="group flex items-center gap-3 p-2 rounded-md hover:bg-surface-hover"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      <input
-        type="checkbox"
-        checked={topic.done}
-        onChange={onToggle}
-        className="accent-blue-500 shrink-0 cursor-pointer"
-      />
+    <div className="group flex items-center gap-3 p-2 rounded-lg hover:bg-white/[0.03] transition-colors">
+      <button
+        type="button"
+        onClick={onToggle}
+        className={`w-4 h-4 rounded border flex items-center justify-center shrink-0 transition-all ${
+          topic.done
+            ? 'bg-blue-500/20 border-blue-500/60 text-blue-400'
+            : 'border-surface-border/60 hover:border-blue-500/40'
+        }`}
+        aria-pressed={topic.done}
+      >
+        {topic.done && <span className="text-[10px]">{'\u2713'}</span>}
+      </button>
       <span
-        className={`flex-1 text-sm cursor-pointer select-none ${topic.done ? 'text-muted-foreground line-through' : 'text-foreground'}`}
+        className={`flex-1 text-sm cursor-pointer select-none ${topic.done ? 'text-muted-foreground/50 line-through' : 'text-foreground/80'}`}
         onClick={onOpenSubtopics}
       >
         {topic.label}
@@ -136,7 +137,7 @@ function TopicRow({
 
       {subtopicCount > 0 && (
         <span
-          className="text-xs text-muted-foreground cursor-pointer hover:text-foreground shrink-0"
+          className="text-xs text-muted-foreground/50 cursor-pointer hover:text-foreground/70 shrink-0 transition-colors"
           onClick={onOpenSubtopics}
         >
           {subtopicDone}/{subtopicCount}
@@ -145,155 +146,19 @@ function TopicRow({
 
       <button
         onClick={onOpenSubtopics}
-        className={`text-muted-foreground hover:text-blue-400 text-xs shrink-0 transition-opacity ${hovered ? 'opacity-100' : 'opacity-0'}`}
+        className="text-muted-foreground/50 hover:text-blue-400 text-xs shrink-0 opacity-0 group-hover:opacity-100 transition-all"
         title="Subtopics"
       >
-        ›
+        {'\u203a'}
       </button>
 
       <button
         onClick={onRemove}
-        className={`text-muted-foreground hover:text-red-400 text-xs shrink-0 transition-opacity ${hovered ? 'opacity-100' : 'opacity-0'}`}
+        className="text-muted-foreground/50 hover:text-red-400 text-xs shrink-0 opacity-0 group-hover:opacity-100 transition-all"
         title="Remove topic"
       >
-        ✕
+        {'\u2715'}
       </button>
-    </div>
-  );
-}
-
-function SubtopicModal({
-  clusterId,
-  topic,
-  onClose,
-}: {
-  clusterId: string;
-  topic: Topic;
-  onClose: () => void;
-}) {
-  const addSubtopic = useStore(s => s.addSubtopic);
-  const removeSubtopic = useStore(s => s.removeSubtopic);
-  const toggleSubtopic = useStore(s => s.toggleSubtopic);
-
-  const [newLabel, setNewLabel] = useState('');
-  const inputRef = useRef<HTMLInputElement>(null);
-  const overlayRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    inputRef.current?.focus();
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [onClose]);
-
-  const handleOverlayClick = useCallback((e: React.MouseEvent) => {
-    if (e.target === overlayRef.current) onClose();
-  }, [onClose]);
-
-  const handleAdd = async () => {
-    const label = newLabel.trim();
-    if (!label) return;
-    await addSubtopic(clusterId, topic.id, label);
-    setNewLabel('');
-    inputRef.current?.focus();
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') handleAdd();
-    if (e.key === 'Escape') onClose();
-  };
-
-  const subtopics = topic.subtopics ?? [];
-  const doneCount = subtopics.filter(s => s.done).length;
-
-  return (
-    <div
-      ref={overlayRef}
-      onClick={handleOverlayClick}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
-    >
-      <div
-        className="relative w-full max-w-md mx-4 bg-surface-card border border-surface-border rounded-2xl shadow-2xl overflow-hidden"
-        onClick={e => e.stopPropagation()}
-      >
-        {/* Header */}
-        <div className="px-6 pt-6 pb-4 border-b border-surface-border">
-          <div className="flex items-start justify-between gap-3">
-            <div>
-              <p className="text-xs uppercase tracking-widest text-muted-foreground mb-1">Subtopics</p>
-              <h2 className="text-base font-semibold text-foreground leading-snug">{topic.label}</h2>
-            </div>
-            <button
-              onClick={onClose}
-              className="text-muted-foreground hover:text-foreground text-lg leading-none mt-0.5 shrink-0"
-            >
-              ✕
-            </button>
-          </div>
-          {subtopics.length > 0 && (
-            <div className="mt-3">
-              <div className="flex justify-between text-xs text-muted-foreground mb-1">
-                <span>{doneCount} / {subtopics.length} done</span>
-                <span>{Math.round((doneCount / subtopics.length) * 100)}%</span>
-              </div>
-              <div className="w-full h-1 bg-surface-muted rounded-full overflow-hidden">
-                <div
-                  className="h-full rounded-full bg-blue-500 transition-all duration-300"
-                  style={{ width: `${(doneCount / subtopics.length) * 100}%` }}
-                />
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Subtopic list */}
-        <div className="px-6 py-3 max-h-72 overflow-y-auto space-y-0.5">
-          {subtopics.length === 0 && (
-            <p className="text-xs text-muted-foreground py-4 text-center">No subtopics yet. Add one below.</p>
-          )}
-          {subtopics.map(sub => (
-            <div key={sub.id} className="group flex items-center gap-3 py-2 px-1 rounded-lg hover:bg-surface-hover">
-              <input
-                type="checkbox"
-                checked={sub.done}
-                onChange={() => toggleSubtopic(clusterId, topic.id, sub.id)}
-                className="accent-blue-500 shrink-0 cursor-pointer"
-              />
-              <span className={`flex-1 text-sm ${sub.done ? 'text-muted-foreground line-through' : 'text-foreground'}`}>
-                {sub.label}
-              </span>
-              <button
-                onClick={() => removeSubtopic(clusterId, topic.id, sub.id)}
-                className="opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-red-400 text-xs transition-opacity shrink-0"
-                title="Remove"
-              >
-                ✕
-              </button>
-            </div>
-          ))}
-        </div>
-
-        {/* Add subtopic */}
-        <div className="px-6 pb-6 pt-3 border-t border-surface-border">
-          <div className="flex items-center gap-2">
-            <input
-              ref={inputRef}
-              value={newLabel}
-              onChange={e => setNewLabel(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="Add a subtopic…"
-              className="flex-1 bg-surface-muted text-foreground text-sm rounded-lg px-3 py-2 outline-none border border-surface-border focus:border-blue-500 placeholder:text-muted-foreground"
-            />
-            <button
-              onClick={handleAdd}
-              disabled={!newLabel.trim()}
-              className="bg-blue-600 hover:bg-blue-500 disabled:opacity-30 disabled:cursor-not-allowed text-white text-sm px-4 py-2 rounded-lg transition-colors"
-            >
-              Add
-            </button>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

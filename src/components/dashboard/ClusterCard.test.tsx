@@ -1,13 +1,22 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { ClusterCard } from './ClusterCard';
-import { ALPHA_CLUSTER, makeLog, TODAY_STR } from '../../lib/test-fixtures';
+import { ALPHA_CLUSTER, makeLog, TODAY, TODAY_STR } from '../../lib/test-fixtures';
 
 const mockNavigate = vi.fn();
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom');
   return { ...actual, useNavigate: () => mockNavigate };
+});
+
+beforeEach(() => {
+  vi.useFakeTimers();
+  vi.setSystemTime(TODAY);
+});
+
+afterEach(() => {
+  vi.useRealTimers();
 });
 
 const renderCard = (overrides = {}) =>
@@ -61,8 +70,8 @@ describe('ClusterCard', () => {
       <MemoryRouter><ClusterCard cluster={cluster} logs={[]} /></MemoryRouter>
     );
     const dots = container.querySelectorAll('.w-2.h-2.rounded-full');
-    expect(dots[0]).toHaveClass('bg-emerald-400');
-    expect(dots[1]).toHaveClass('bg-surface-muted');
-    expect(dots[2]).toHaveClass('bg-surface-muted');
+    expect(dots[0]).toHaveClass('bg-emerald-400/80');
+    expect(dots[1]).toHaveClass('bg-surface-muted/40');
+    expect(dots[2]).toHaveClass('bg-surface-muted/40');
   });
 });

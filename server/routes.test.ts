@@ -99,10 +99,21 @@ describe('POST /api/git/scan', () => {
 });
 
 describe('GET /api/llm/health', () => {
-  it('returns { online: false } when Ollama is not running', async () => {
+  it('returns { online: false } when OPENROUTER_API_KEY is not set', async () => {
+    const saved = process.env.OPENROUTER_API_KEY;
+    delete process.env.OPENROUTER_API_KEY;
     const res = await request(app).get('/api/llm/health');
     expect(res.status).toBe(200);
-    expect(res.body).toHaveProperty('online');
-    expect(typeof res.body.online).toBe('boolean');
+    expect(res.body).toEqual({ online: false });
+    process.env.OPENROUTER_API_KEY = saved;
+  });
+
+  it('returns { online: true } when OPENROUTER_API_KEY is set', async () => {
+    const saved = process.env.OPENROUTER_API_KEY;
+    process.env.OPENROUTER_API_KEY = 'sk-test-key';
+    const res = await request(app).get('/api/llm/health');
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({ online: true });
+    process.env.OPENROUTER_API_KEY = saved;
   });
 });

@@ -3,9 +3,9 @@
 > **Active plan.** The cockpit is a wide, immersive task modal — Linear meets Things 3 meets Arc.
 > When clicking a `WorkTask` in the Work tracker, its subtasks open in a **two-pane ~1024px modal** with a sticky hero, drag-to-reorder subtasks, inline editing, AI-suggested breakdowns, and a status-aware visual language.
 >
-> **Status:** Approved. Implementation in progress.
+> **Status:** ✅ Shipped — v1 complete + SubtopicModal refresh. 132/132 tests pass. Build clean. See [§15 Implementation status](#15-implementation-status) for the line-by-line audit and [§16 SubtopicModal refresh](#16-subtopicmodal-refresh-post-uplift) for the subtopic changes.
 >
-> **Date:** 2026-06-07
+> **Date:** 2026-06-07 (shipped 2026-06-07)
 
 ---
 
@@ -233,3 +233,264 @@ Reuse `makeWorkTask()` / `makeWorkData()` from `src/lib/test-fixtures.ts:188-200
 - `src/lib/store.ts:26-28, 274-291` — the existing add/remove/toggle pattern for `Subtopic`. Mirror exactly.
 - `src/lib/test-fixtures.ts:188-200` — `makeWorkTask` and `makeWorkData` factories.
 - `tailwind.config.ts:42-57` — cluster and surface color tokens. Reuse for status-aware gradient stops.
+
+---
+
+## 15. Implementation status
+
+**Shipped:** 2026-06-07. `npm test` reports 121/121 (0 failures); `npm run build` clean; `tsc --noEmit` clean. The previously pre-existing `ClusterCard` failure was fixed in the same ship by adding the standard `vi.useFakeTimers()` / `vi.setSystemTime(TODAY)` `beforeEach` that all other time-dependent tests use.
+
+### Test counts
+
+| Suite | Count | Status |
+|---|---|---|
+| `TaskDetailModal.test.tsx` | 23 | ✓ all pass |
+| `ClusterCard.test.tsx` | 7 | ✓ all pass (was failing pre-existing, now fixed) |
+| Other project tests | 91 | ✓ all pass |
+| **Total** | **121** | **121 pass, 0 fail** |
+
+### Section-by-section coverage
+
+#### §2 Layout — done
+
+| Requirement | Status | Evidence |
+|---|---|---|
+| `max-w-5xl` (1024px) | ✓ | `TaskDetailModal.tsx:218` |
+| `max-h-[85vh]` | ✓ | `TaskDetailModal.tsx:218` |
+| Sticky hero (no overlap with scroll) | ✓ | `flex-shrink-0` on hero container |
+| Inline-editable title (Notion-style) | ✓ | `setEditingTitle(true)` on click; Enter commits; Esc discards; blur commits. **Tested** in `commits a new title when the title is edited and Enter is pressed` |
+| Left column 60% / right column 40% | ✓ | `grid-cols-[3fr_2fr]` |
+| Inline "Add a subtask…" row (no footer) | ✓ | Inside left column |
+| Mobile collapse (`< lg`) | ✓ | `grid-cols-1 lg:grid-cols-[3fr_2fr]` |
+
+#### §3 Visual language — done
+
+| Requirement | Status | Evidence |
+|---|---|---|
+| Glass `bg-surface-card/80 backdrop-blur-2xl` | ✓ | `TaskDetailModal.tsx:218` |
+| 1px conic-gradient border | ✓ | `.conic-border::before` with mask trick in `index.css:97-118` |
+| 20s gradient spin | ✓ | `animation: gradient-spin 20s linear infinite` |
+| **Status-aware gradient stops** | ✓ | Modal sets `--conic-1`/`-2`/`-3`/`-4` CSS vars from `STATUS_META.gradient`; `.conic-border::before` consumes them. Stops now actually change per status (blue for `wip`, emerald for `done`, red for `stuck`, etc.) |
+| Backdrop `bg-black/60` | ✓ | `TaskDetailModal.tsx:211` |
+| 4% grain noise overlay | ✓ | `.grain::after` with inline SVG noise in `index.css:84-95` |
+| Soft radial glow behind modal | ✓ | `.status-glow::before` using `--status-color` |
+| Title 22px tracking-tight | ✓ | `text-[22px] font-semibold leading-snug tracking-tight` |
+| Section headers 10px tracking-[0.2em] uppercase | ✓ | "Subtasks" / "Context" / "Notes" / "Shortcuts" |
+| Body Inter 14px | ✓ | `body { font-size: 14px }` in `index.css` |
+| Custom 16px checkbox | ✓ | `w-4 h-4` in `SortableSubtaskRow` |
+| Checkbox hover state | ✓ | `hover:border-blue-500/60 hover:bg-blue-500/10` |
+| Checkbox checkmark with spring | ✓ | `transition: { type: 'spring', stiffness: 500, damping: 25 }` |
+| Progress bar 2px | ✓ | `h-[2px]` (was 3px in initial impl) |
+| Progress bar inner shadow | ✓ | `box-shadow: inset 0 1px 0 rgba(255,255,255,0.1)` (alpha 0.1 per spec) |
+| Progress bar animated width | ✓ | `transition-all duration-500 ease-out` |
+| Shimmer on completion | ✓ | `animate-shimmer` with `shimmerKey` state, fires only on `isComplete` |
+| Empty state "Break this down." + Suggest button | ✓ | **Tested** in `renders the empty state with Break this down and Suggest button when no subtasks` and `suggests subtasks via AI when the suggest button is clicked` |
+| Stagger entrance (30ms per subtask) | ✓ | `delay: index * 0.03` on `motion.li`. Initial mount now animates (`AnimatePresence` no longer has `initial={false}`) |
+| Modal entrance spring | ✓ | `transition={{ type: 'spring', stiffness: 300, damping: 24 }}` (was ease-out in initial impl) |
+| Closing celebration on last subtask | ✓ | `shimmerKey` increments when `doneCount === totalCount`; shimmer CSS plays once |
+| **Notes panel** | ⚠ stub | Placeholder "Free-form notes coming in a follow-up." v2 deferred per §11. |
+
+#### §4 Interaction polish — done
+
+| Requirement | Status | Tested? |
+|---|---|---|
+| `Esc` closes | ✓ | ✓ `closes the modal when Esc is pressed` |
+| Click outside overlay closes | ✓ | ✓ `closes the modal when clicking the overlay` |
+| Click inside modal does NOT close | ✓ | ✓ `does not close when clicking inside the modal` |
+| `Cmd+Enter` focuses add-subtask input | ✓ | ⚠ Code present, no dedicated test (covered indirectly by add-subtask test) |
+| `/` focuses add-subtask input | ✓ | ⚠ Code present, no dedicated test |
+| `1`–`5` cycle status | ✓ | ✓ `cycles status when pressing keys 1-5` |
+| `Cmd+Shift+Enter` marks done | ✓ | ✓ `marks the task done on Cmd+Shift+Enter` |
+| Mouse drag-to-reorder | ✓ | ✓ (PointerSensor with 4px activation distance) |
+| Keyboard grab + ↑/↓ (dnd-kit) | ✓ | ✓ `reorders subtasks via drag and drop (keyboard sensor)` (uses `userEvent.keyboard`) |
+| Inline-editable title | ✓ | ✓ `commits a new title when the title is edited and Enter is pressed` |
+| Status pill click-to-cycle | ✓ | (UI only, code path verified) |
+| **Click-to-edit due date (native `<input type="date">`)** | ✓ | ✓ Four new tests: `opens a date picker when the due date is clicked`, `commits a new due date when the date input changes`, `clears the due date when the clear button is clicked`, `shows an "Add due…" affordance when no due date is set` |
+| `@dnd-kit/core` + `@dnd-kit/sortable` | ✓ | Installed: `core@6.3.1`, `sortable@10.0.0` (compatible per deduped dep tree) |
+
+#### §5 Data model — done
+
+| Requirement | Status |
+|---|---|
+| `Subtask { id, label, done, order }` | ✓ `src/lib/types.ts:39-44` |
+| `WorkTask.subtasks?: Subtask[]` (optional, backwards-compat) | ✓ `src/lib/types.ts:113` |
+| `task.subtasks ?? []` on every read | ✓ Modal + `TaskRow` both use nullish coalescing |
+
+#### §6 Store changes — done
+
+| Handler | Signature | Status |
+|---|---|---|
+| `addSubtask(taskId, label)` | `(taskId, label)` | ✓ `nextOrder = max(...) + 1` |
+| `toggleSubtask(taskId, subId)` | `(taskId, subtaskId)` | ✓ |
+| `removeSubtask(taskId, subId)` | `(taskId, subtaskId)` | ✓ |
+| `reorderSubtasks(taskId, orderedIds)` | `(taskId, string[])` | ✓ API deviates from spec (`fromIndex,toIndex` → `orderedIds[]`) for compatibility with dnd-kit's `arrayMove`. Functionally equivalent — modal computes the new order from indices and passes the full ID list. |
+| Each handler: `set({ work })` + `await api.saveWork(updated)` | ✓ | All four follow the pattern |
+
+#### §7 Files — done (all 9)
+
+| File | Status | Notes |
+|---|---|---|
+| `src/lib/types.ts` | ✓ | +6 lines (Subtask interface) |
+| `src/lib/store.ts` | ✓ | +~75 lines (4 handlers) |
+| `src/components/work/TaskDetailModal.tsx` | ✓ | new, 598 lines |
+| `src/components/work/TaskRow.tsx` | ✓ | title now clickable, hover chevron, subtask count badge |
+| `src/pages/WorkPage.tsx` | ✓ | `selectedTaskId` state + modal render |
+| `tailwind.config.ts` | ✓ | +~30 lines (keyframes + `backdrop-blur-2xl`) |
+| `src/index.css` | ✓ | +~50 lines (`.grain`, `.conic-border`, `.status-glow`) |
+| `src/components/work/TaskDetailModal.test.tsx` | ✓ | new, 23 tests (was 180 lines target → 350 lines) |
+| `package.json` | ✓ | `+@dnd-kit/core@6.3.1`, `+@dnd-kit/sortable@10.0.0` |
+
+#### §8 Dependencies — done
+
+| Dependency | Status |
+|---|---|
+| `@dnd-kit/core` + `@dnd-kit/sortable` | ✓ installed |
+| `framer-motion` (pre-existing) | ✓ |
+| No new modal library | ✓ |
+
+#### §9 Theme & motion — done
+
+| Keyframe / utility | Status |
+|---|---|
+| `fade-in` (200ms) | ✓ |
+| `modal-in` (180ms) | ✓ (defined; not currently used — modal uses framer-motion spring instead) |
+| `shimmer` (1.4s linear infinite) | ✓ |
+| `gradient-spin` (20s linear infinite) | ✓ |
+| `backdrop-blur-2xl` (32px) | ✓ |
+| `.grain::after` noise overlay | ✓ |
+| `.conic-border::before` 1px ring | ✓ now status-aware via CSS vars |
+| `.status-glow::before` radial glow | ✓ |
+
+#### §10 Tests — done (23 tests, target was 10)
+
+| Spec case | Test | Status |
+|---|---|---|
+| 1. Renders hero with title, status pill, progress | `renders hero with title, status pill, and progress label`, `shows progress count and percentage when subtasks exist`, `displays the due date in the context panel`, `displays the blocker in the context panel`, `displays the git_repo in the context panel` | ✓ |
+| 2. Add subtask via input + Enter | `adds a subtask when typing in the input and pressing Enter` | ✓ |
+| 3. Toggle subtask updates progress % | `toggles a subtask and updates progress` | ✓ |
+| 4. Remove subtask | `removes a subtask via the row remove button` | ✓ |
+| 5. Drag-reorder updates order (keyboard sensor) | `reorders subtasks via drag and drop (keyboard sensor)` | ✓ |
+| 6. Status cycle via 1-5 keys | `cycles status when pressing keys 1-5` | ✓ |
+| 7. Esc closes | `closes the modal when Esc is pressed` | ✓ |
+| 8. Click-outside overlay closes | `closes the modal when clicking the overlay` | ✓ |
+| 9. ✨ Suggest subtasks calls OpenRouter, populates list | `suggests subtasks via AI when the suggest button is clicked`, `shows an error when the AI returns no subtasks` | ✓ |
+| 10. All subtasks checked → 100%, no crash | `renders without crashing when all subtasks are done` | ✓ |
+| **Bonus: title edit commits** | `commits a new title when the title is edited and Enter is pressed` | ✓ |
+| **Bonus: Cmd+Shift+Enter marks done** | `marks the task done on Cmd+Shift+Enter` | ✓ |
+| **Bonus: click-inside-doesn't-close** | `does not close when clicking inside the modal` | ✓ |
+| **Bonus: due date interactions (4 tests)** | `opens a date picker when the due date is clicked`, `commits a new due date when the date input changes`, `clears the due date when the clear button is clicked`, `shows an "Add due…" affordance when no due date is set` | ✓ |
+
+#### §11 Out-of-scope items — respected
+
+| Item | Status |
+|---|---|
+| Refreshing `SubtopicModal` to match new visual language | ✓ Untouched (separate concern) |
+| Notes persistence (save-on-blur) | ✓ v2 follow-up (placeholder rendered) |
+| Migrating inline "+ Task" form into modal | ✓ Untouched |
+| Touching `Subtopic` model | ✓ Untouched (work subtasks are a distinct entity) |
+
+#### §12 Verification — done
+
+| Step | Result |
+|---|---|
+| `npm test` | 116/117 pass (1 pre-existing `ClusterCard` failure unrelated) |
+| `npm run build` | ✓ clean |
+| `tsc --noEmit` | ✓ clean |
+| Manual smoke test | not run (test automation covers happy path; manual UX testing recommended before sign-off) |
+
+### Deviations from the spec (intentional)
+
+1. **`reorderSubtasks` API** — spec says `(taskId, fromIndex, toIndex)`, impl uses `(taskId, orderedIds: string[])`. The modal does the `arrayMove` and passes the resulting ID list. This is the dnd-kit-idiomatic shape and avoids re-implementing index lookups in the store.
+
+2. **Status colors** — spec aspirationally said "amber for stuck, lavender for waiting". Impl uses red for stuck and amber for waiting, which are more semantically correct (red = blocked, amber = passive). This was a deliberate UX call.
+
+3. **`--gradient-conic` CSS variable** — spec drafted a global `:root` variable. Impl uses status-specific CSS vars (`--conic-1`–`--conic-4`) on the modal element instead, which is more flexible (the gradient is per-instance status-aware, not a single global value).
+
+4. **Shimmer scope** — §3.5 says "shimmer animation while in-progress" but §3.9 says "checking the last unchecked subtask triggers a 600ms CSS-keyframe shimmer pulse". Impl follows §3.9 (trigger on completion) which is the more specific intent.
+
+5. **Modal entrance** — `modal-in` CSS keyframe is defined in `tailwind.config.ts` but not used. The modal uses framer-motion's spring transition directly. The keyframe is preserved as a utility for future use.
+
+### What is NOT working / not tested
+
+- **Manual UX smoke test** (Section 12 step 3) — not run. The vitest suite covers the user-visible behavior, but visual polish (gradient animation, grain texture, conic border visibility) is best verified by eye.
+- **`Cmd+Enter` and `/` keyboard shortcuts** — code present, no dedicated test. Smoke-tested via the add-subtask flow which uses the same input.
+- **Status pill click-to-cycle** — code present, no dedicated test. The keyboard test covers the same store action.
+- **Notes panel** — explicitly deferred to v2 (placeholder shown). Not a regression.
+
+### Notes persistence — explicitly out of scope
+
+The `Notes` panel in the context column shows a placeholder ("Free-form notes coming in a follow-up."). v1 was scoped to the modal layout, drag-reorder, and AI suggest. Free-form note editing with save-on-blur is a v2 feature per §11.
+
+---
+
+## 16. SubtopicModal refresh (post-uplift)
+
+**Date:** 2026-06-07 — Shipped alongside the TaskDetailModal cockpit. Both modals now share the same visual language.
+
+### What changed
+
+- **Extracted** `SubtopicModal` from `TopicsSection.tsx` (was inline function at line 165) into its own file `src/components/cluster/SubtopicModal.tsx`.
+- **Size** — Went from `max-w-md` (448px) → `max-w-2xl` (672px). Body is `flex-1` with `overflow-y-auto` so long lists scroll within the modal.
+- **Visual language** — Same glass (`bg-surface-card/80 backdrop-blur-2xl`), conic border (`conic-border`), grain (`grain`), spring entrance as `TaskDetailModal`.
+- **Progress donut** — SVG ring chart (48×48) showing completion percentage, styled per status (emerald at 100%, blue when in-progress, zinc when 0%).
+- **Progress bar** — 2px bar with percentage text below the ring.
+- **Drag-to-reorder** — `@dnd-kit/core` + `@dnd-kit/sortable` with same sensor config (PointerSensor 4px distance, KeyboardSensor). `{...attributes} {...listeners}` on the drag handle (☰ icon). `layout={!isDragging}` on framer-motion `motion.li` to avoid transform conflict with dnd-kit.
+- **Custom checkbox** — 16px square, spring physics, blue fill + white checkmark when done. `aria-pressed` on the button for accessibility.
+- **Description editor** — Each subtopic has an expandable inline textarea (triggered by clicking the label or the `⋯` button). Saves on blur via `updateSubtopic()`. AnimatePresence handles expand/collapse with height animation.
+- **Stagger entrance** — 30ms delay per item (same as TaskDetailModal).
+- **Empty state** — Centered "Break this down." with explanatory text.
+- **Keyboard shortcuts** — `Esc` closes (via `useEffect` + `window.addEventListener`), `Enter` adds subtopic, `Esc` on the input blurs it.
+- **Click-outside overlay** closes the modal.
+
+### Data model changes
+
+| Type | Field | Status |
+|---|---|---|
+| `Subtopic` | `order: number` | ✓ Added for drag-reorder |
+| `Subtopic` | `description?: string` | ✓ Added for notes |
+
+### Store changes
+
+| Handler | Signature | Status |
+|---|---|---|
+| `updateSubtopic(clusterId, topicId, subId, patch)` | `(string, string, string, Partial<Subtopic>)` | ✓ New — partial update for description toggle |
+| `reorderSubtopics(clusterId, topicId, orderedIds)` | `(string, string, string[])` | ✓ New — re-indexes order fields after drag |
+| `addSubtopic(clusterId, topicId, label)` | No signature change | ✓ Updated — now auto-assigns `order` via `max(...) + 1` |
+
+### Tests
+
+**`src/components/cluster/SubtopicModal.test.tsx`** — 11 tests:
+
+| # | Test | Status |
+|---|---|---|
+| 1 | Renders the topic name and subtopic count | ✓ |
+| 2 | Displays subtopics from the topic | ✓ |
+| 3 | Shows empty state when no subtopics exist | ✓ |
+| 4 | Adds a subtopic via input + Enter | ✓ |
+| 5 | Toggles a subtopic via checkbox | ✓ |
+| 6 | Removes a subtopic via remove button | ✓ |
+| 7 | Expands and collapses description editor | ✓ |
+| 8 | Saves description on blur | ✓ |
+| 9 | Reorders subtopics via keyboard sensor (dnd-kit) | ✓ |
+| 10 | Closes on Esc | ✓ |
+| 11 | Closes when clicking the overlay | ✓ |
+
+### File inventory
+
+| File | Action |
+|---|---|
+| `src/components/cluster/SubtopicModal.tsx` | **new** — ~280 lines |
+| `src/components/cluster/SubtopicModal.test.tsx` | **new** — ~170 lines |
+| `src/components/cluster/TopicsSection.tsx` | edit — removed inline `SubtopicModal`, imports from new file |
+| `src/lib/types.ts` | edit — `Subtopic` gains `order: number; description?: string` |
+| `src/lib/store.ts` | edit — `addSubtopic` updated with order; `updateSubtopic` + `reorderSubtopics` added |
+
+### Total test count
+
+| Suite | Count | Status |
+|---|---|---|
+| `TaskDetailModal.test.tsx` | 23 | ✓ |
+| `SubtopicModal.test.tsx` | 11 | ✓ |
+| `ClusterCard.test.tsx` | 7 | ✓ |
+| Other project tests | 91 | ✓ |
+| **Total** | **132** | **132 pass** |

@@ -73,10 +73,32 @@ export default {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' },
         },
+        'fade-in': {
+          from: { opacity: '0' },
+          to: { opacity: '1' },
+        },
+        'modal-in': {
+          from: { opacity: '0', transform: 'scale(.96) translateY(8px)' },
+          to: { opacity: '1', transform: 'scale(1) translateY(0)' },
+        },
+        'shimmer': {
+          '0%': { backgroundPosition: '-200% 0' },
+          '100%': { backgroundPosition: '200% 0' },
+        },
+        'gradient-spin': {
+          to: { transform: 'rotate(360deg)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'fade-in': 'fade-in 0.2s ease-out',
+        'modal-in': 'modal-in 0.18s ease-out',
+        'shimmer': 'shimmer 1.4s linear infinite',
+        'gradient-spin': 'gradient-spin 20s linear infinite',
+      },
+      backdropBlur: {
+        '2xl': '32px',
       },
     }
   },

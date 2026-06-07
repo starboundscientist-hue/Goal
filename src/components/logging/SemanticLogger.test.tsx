@@ -64,7 +64,7 @@ describe('SemanticLogger', () => {
     fireEvent.keyDown(textarea, { key: 'Enter' });
 
     await waitFor(() => {
-      expect(screen.getByText(/Ollama offline/i)).toBeInTheDocument();
+      expect(screen.getByText(/AI offline/i)).toBeInTheDocument();
     });
   });
 

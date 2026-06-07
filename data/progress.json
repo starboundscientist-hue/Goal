@@ -39,7 +39,8 @@
         {
           "id": "optimization",
           "label": "Optimization (convex, gradient descent)",
-          "done": false
+          "done": false,
+          "subtopics": []
         },
         {
           "id": "numerical",
@@ -137,7 +138,21 @@
         {
           "id": "transformers",
           "label": "Transformer architectures (self-attention, RoPE, MoE)",
-          "done": false
+          "done": false,
+          "subtopics": [
+            {
+              "id": "sub_1780853231975",
+              "label": "sd",
+              "done": false,
+              "order": 0
+            },
+            {
+              "id": "sub_1780853224985",
+              "label": "s",
+              "done": false,
+              "order": 1
+            }
+          ]
         },
         {
           "id": "ssm",
@@ -374,7 +389,8 @@
         {
           "id": "rtos",
           "label": "RTOS: FreeRTOS, Zephyr, QNX awareness",
-          "done": false
+          "done": false,
+          "subtopics": []
         },
         {
           "id": "embedded_linux",
@@ -394,7 +410,8 @@
         {
           "id": "comm_buses",
           "label": "Communication buses: CAN, SPI, I2C, UART, SpaceWire",
-          "done": false
+          "done": false,
+          "subtopics": []
         },
         {
           "id": "edge_inference",

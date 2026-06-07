@@ -9,7 +9,7 @@ export function LogPage() {
   const { progress } = useStore();
   const [activeFilters, setActiveFilters] = useState<Set<string>>(new Set(ALL_CLUSTERS));
 
-  if (!progress) return <div className="text-muted-foreground">Loading...</div>;
+  if (!progress) return <div className="text-muted-foreground/50">Loading...</div>;
 
   const toggleFilter = (id: string) => {
     const next = new Set(activeFilters);
@@ -38,10 +38,10 @@ export function LogPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-lg font-semibold text-foreground">Activity Log</h1>
+        <h1 className="text-lg font-semibold text-foreground/90">Activity Log</h1>
         <button
           onClick={() => window.dispatchEvent(new CustomEvent('open-logger'))}
-          className="text-xs text-white bg-blue-600 hover:bg-blue-500 px-3 py-1.5 rounded-md"
+          className="text-xs text-white bg-blue-600/90 hover:bg-blue-500 px-3 py-1.5 rounded-lg transition-colors"
         >
           + New Entry
         </button>
@@ -52,14 +52,14 @@ export function LogPage() {
           <button
             key={id}
             onClick={() => toggleFilter(id)}
-            className={`rounded-full px-2 py-1 text-xs border transition-colors ${
+            className={`rounded-full px-2.5 py-1 text-xs border transition-all ${
               activeFilters.has(id)
-                ? 'text-white border-current'
-                : 'bg-surface-muted text-muted-foreground border-transparent'
+                ? 'text-white/90 border-current'
+                : 'bg-surface-muted/30 text-muted-foreground/50 border-transparent hover:bg-surface-muted/50'
             }`}
             style={activeFilters.has(id) ? {
-              backgroundColor: CLUSTER_COLORS[id] + '33',
-              borderColor: CLUSTER_COLORS[id],
+              backgroundColor: CLUSTER_COLORS[id] + '22',
+              borderColor: CLUSTER_COLORS[id] + '66',
               color: CLUSTER_COLORS[id]
             } : {}}
           >
@@ -71,7 +71,7 @@ export function LogPage() {
       <div className="space-y-4">
         {Object.entries(grouped).sort(([a], [b]) => b.localeCompare(a)).map(([month, entries]) => (
           <div key={month}>
-            <div className="text-xs uppercase tracking-wider text-muted-foreground font-medium mb-2">
+            <div className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground/40 font-medium mb-2">
               {new Date(month + '-01').toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
             </div>
             {entries.map(entry => (
@@ -80,11 +80,11 @@ export function LogPage() {
           </div>
         ))}
         {filtered.length === 0 && (
-          <div className="text-sm text-muted-foreground">No log entries yet.</div>
+          <div className="text-sm text-muted-foreground/50">No log entries yet.</div>
         )}
       </div>
 
-      <div className="sticky bottom-0 mt-6 pt-3 border-t border-surface-border text-sm text-muted-foreground">
+      <div className="sticky bottom-0 mt-6 pt-3 border-t border-surface-border/30 text-sm text-muted-foreground/50 bg-surface-base/80 backdrop-blur-xl">
         Week total: {weekTotal}h study
       </div>
     </div>

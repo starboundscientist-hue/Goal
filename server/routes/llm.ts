@@ -1,8 +1,6 @@
 import { Router } from 'express';
 
 const router = Router();
-const OLLAMA_URL = 'http://localhost:11434/v1/chat/completions';
-const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 
 const PARSE_SYSTEM_PROMPT = `You are a silent background parser for Goal OS.
 Parse the user's text into a JSON object. Output ONLY a raw JSON object, no markdown, no explanation.
@@ -45,26 +43,51 @@ PACE
 
 Keep the total response under 200 words. Be direct. No encouragement, no fluff.`;
 
+function openRouterHeaders() {
+  const apiKey = process.env.OPENROUTER_API_KEY;
+  return {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${apiKey}`,
+  };
+}
+
+async function openRouterFetch(path: string, options: RequestInit, timeout: number): Promise<Response | null> {
+  const apiKey = process.env.OPENROUTER_API_KEY;
+  if (!apiKey) return null;
+  try {
+    return await fetch(`https://openrouter.ai${path}`, {
+      ...options,
+      headers: { ...openRouterHeaders(), ...(options.headers as Record<string, string> | undefined) },
+      signal: AbortSignal.timeout(timeout),
+    });
+  } catch (err) {
+    console.warn(`[openRouter] ${path} failed:`, err instanceof Error ? err.message : err);
+    return null;
+  }
+}
+
 router.post('/parse', async (req, res) => {
   const { text } = req.body;
   if (!text) return res.status(400).json({ error: 'text required' });
 
-  try {
-    const response = await fetch(OLLAMA_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'qwen2.5:7b-instruct',
-        messages: [
-          { role: 'system', content: PARSE_SYSTEM_PROMPT },
-          { role: 'user', content: text }
-        ],
-        temperature: 0.1,
-        stream: false
-      }),
-      signal: AbortSignal.timeout(4000)
-    });
+  const response = await openRouterFetch('/api/v1/chat/completions', {
+    method: 'POST',
+    body: JSON.stringify({
+      model: 'google/gemma-2-9b-it',
+      messages: [
+        { role: 'system', content: PARSE_SYSTEM_PROMPT },
+        { role: 'user', content: text }
+      ],
+      temperature: 0.1,
+      stream: false
+    }),
+  }, 8000);
 
+  if (!response || !response.ok) {
+    return res.json({ raw: '', offline: true });
+  }
+
+  try {
     const data = await response.json() as any;
     const raw = data.choices?.[0]?.message?.content || '';
     res.json({ raw });
@@ -75,39 +98,96 @@ router.post('/parse', async (req, res) => {
 
 router.post('/coach', async (req, res) => {
   const { logsText } = req.body;
-  const apiKey = process.env.GEMINI_API_KEY;
 
-  if (!apiKey) {
-    return res.status(400).json({ error: 'GEMINI_API_KEY not set in .env' });
+  const response = await openRouterFetch('/api/v1/chat/completions', {
+    method: 'POST',
+    body: JSON.stringify({
+      model: 'google/gemma-2-9b-it',
+      messages: [
+        { role: 'system', content: COACH_SYSTEM_PROMPT },
+        { role: 'user', content: logsText }
+      ],
+      temperature: 0.3,
+      max_tokens: 512,
+      stream: false
+    }),
+  }, 15000);
+
+  if (!response || !response.ok) {
+    return res.json({ text: '', offline: true });
   }
 
   try {
-    const response = await fetch(`${GEMINI_URL}?key=${apiKey}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [
-          { role: 'user', parts: [{ text: COACH_SYSTEM_PROMPT + '\n\n' + logsText }] }
-        ],
-        generationConfig: { temperature: 0.3, maxOutputTokens: 512 }
-      }),
-      signal: AbortSignal.timeout(15000)
-    });
-
     const data = await response.json() as any;
-    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response from coach.';
+    const text = data.choices?.[0]?.message?.content || '';
     res.json({ text });
-  } catch (e) {
-    res.status(500).json({ error: 'Gemini call failed', detail: String(e) });
+  } catch {
+    res.json({ text: '', offline: true });
   }
 });
 
-router.get('/health', async (_req, res) => {
+router.get('/health', (_req, res) => {
+  res.json({ online: !!process.env.OPENROUTER_API_KEY });
+});
+
+const SUBTASK_SUGGEST_PROMPT = `You are a planning assistant for Goal OS.
+Given a task title (and optional context), break it down into 3-6 concrete, actionable subtasks.
+Each subtask should be a single verb-led phrase, short (under 60 chars), specific, and executable.
+
+Output ONLY a raw JSON object — no markdown, no explanation, no preamble.
+Schema:
+{
+  "subtasks": ["Subtask 1", "Subtask 2", "Subtask 3"]
+}`;
+
+router.post('/suggest-subtasks', async (req, res) => {
+  const { title, context } = req.body as { title?: string; context?: string };
+  if (!title) return res.status(400).json({ error: 'title required' });
+
+  const userText = context
+    ? `Task: ${title}\nContext: ${context}`
+    : `Task: ${title}`;
+
+  const response = await openRouterFetch('/api/v1/chat/completions', {
+    method: 'POST',
+    body: JSON.stringify({
+      model: 'google/gemma-2-9b-it',
+      messages: [
+        { role: 'system', content: SUBTASK_SUGGEST_PROMPT },
+        { role: 'user', content: userText },
+      ],
+      temperature: 0.4,
+      max_tokens: 400,
+      stream: false,
+    }),
+  }, 10000);
+
+  if (!response || !response.ok) {
+    return res.json({ subtasks: [], offline: true });
+  }
+
   try {
-    const r = await fetch('http://localhost:11434/api/tags', { signal: AbortSignal.timeout(1500) });
-    res.json({ online: r.ok });
+    const data = await response.json() as any;
+    const raw: string = data.choices?.[0]?.message?.content || '';
+    // Extract first JSON object from the raw text
+    const first = raw.indexOf('{');
+    const last = raw.lastIndexOf('}');
+    if (first === -1 || last === -1) {
+      return res.json({ subtasks: [], offline: true });
+    }
+    const parsed = JSON.parse(raw.slice(first, last + 1));
+    const list: unknown = parsed.subtasks;
+    if (!Array.isArray(list)) {
+      return res.json({ subtasks: [], offline: true });
+    }
+    const clean = list
+      .filter((s): s is string => typeof s === 'string')
+      .map(s => s.trim())
+      .filter(s => s.length > 0)
+      .slice(0, 8);
+    res.json({ subtasks: clean });
   } catch {
-    res.json({ online: false });
+    res.json({ subtasks: [], offline: true });
   }
 });
 

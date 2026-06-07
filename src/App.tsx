@@ -18,11 +18,11 @@ export default function App() {
   }, [theme]);
 
   useEffect(() => {
-    Promise.allSettled([api.loadProgress(), api.loadWork(), api.checkOllama()])
-      .then(([progressResult, workResult, ollamaResult]) => {
+    Promise.allSettled([api.loadProgress(), api.loadWork(), api.checkAI()])
+      .then(([progressResult, workResult, aiResult]) => {
         if (progressResult.status === 'fulfilled') setProgress(progressResult.value);
         if (workResult.status === 'fulfilled') setWork(workResult.value);
-        setLlmOnline(ollamaResult.status === 'fulfilled' ? ollamaResult.value : false);
+        setLlmOnline(aiResult.status === 'fulfilled' ? aiResult.value : false);
       });
   }, []);
 

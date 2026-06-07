@@ -34,6 +34,15 @@ export interface Subtopic {
   id: string;
   label: string;
   done: boolean;
+  order: number;
+  description?: string;
+}
+
+export interface Subtask {
+  id: string;
+  label: string;
+  done: boolean;
+  order: number;
 }
 
 export interface Topic {
@@ -103,6 +112,7 @@ export interface WorkTask {
   blocker?: string;
   git_repo?: string;
   created_date: string;
+  subtasks?: Subtask[];
 }
 
 export interface AutomationEntry {

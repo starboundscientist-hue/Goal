@@ -58,12 +58,27 @@ export async function runCoach(logsText: string): Promise<string> {
   return data.text || 'Coach unavailable.';
 }
 
-export async function checkOllama(): Promise<boolean> {
+export async function checkAI(): Promise<boolean> {
   try {
     const res = await fetch(`${BASE}/llm/health`);
     const data = await res.json();
     return data.online === true;
   } catch {
     return false;
+  }
+}
+
+export async function suggestSubtasks(title: string, context?: string): Promise<string[]> {
+  try {
+    const res = await fetch(`${BASE}/llm/suggest-subtasks`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title, context }),
+    });
+    const data = await res.json();
+    if (data.offline || !Array.isArray(data.subtasks)) return [];
+    return data.subtasks as string[];
+  } catch {
+    return [];
   }
 }

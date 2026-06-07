@@ -18,15 +18,15 @@ export function Shell({ children }: Props) {
       <Sidebar />
       <div className="flex-1 flex flex-col overflow-hidden">
         {progress && !llmOnline && !bannerDismissed && (
-          <div className="flex items-center justify-between px-4 py-2 bg-amber-950/60 border-b border-amber-900/50 text-amber-400 text-xs flex-shrink-0">
+          <div className="flex items-center justify-between px-4 py-2 bg-amber-950/40 border-b border-amber-900/30 text-amber-400/70 text-xs flex-shrink-0 backdrop-blur-xl">
             <span>
-              <span className="font-semibold mr-1">Ollama offline.</span>
+              <span className="font-semibold mr-1">AI offline.</span>
               Semantic parsing and git classification unavailable — manual entry only.
-              Start Ollama with <code className="font-mono bg-amber-950 px-1 rounded">ollama serve</code> to enable.
+              Set OPENROUTER_API_KEY in .env to enable.
             </span>
             <button
               onClick={() => setBannerDismissed(true)}
-              className="ml-4 text-amber-600 hover:text-amber-400 leading-none"
+              className="ml-4 text-amber-600/50 hover:text-amber-400/80 leading-none transition-colors"
               aria-label="Dismiss"
             >
               {'×'}

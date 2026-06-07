@@ -22,23 +22,24 @@ export function ClusterDetail({ cluster, logs }: Props) {
 
   return (
     <div>
-      <button onClick={() => navigate('/')} className="text-sm text-muted-foreground hover:text-foreground mb-4 flex items-center gap-1">
+      <button onClick={() => navigate('/')} className="text-sm text-muted-foreground/60 hover:text-foreground/80 mb-4 flex items-center gap-1 transition-colors">
         {'\u2190'} Back
       </button>
 
-      <div className="flex items-center gap-3 mb-2">
-        <span className="w-3 h-3 rounded-full" style={{ backgroundColor: CLUSTER_COLORS[cluster.id] }} />
-        <h1 className="text-xl font-semibold text-foreground">{cluster.name}</h1>
-        <span className="text-2xl font-bold" style={{ color: CLUSTER_COLORS[cluster.id] }}>
-          {progress}%
-        </span>
-      </div>
-
-      <div className="w-full h-1.5 bg-surface-muted rounded-full overflow-hidden mb-6">
-        <div
-          className="h-full rounded-full transition-all duration-500"
-          style={{ width: `${progress}%`, backgroundColor: CLUSTER_COLORS[cluster.id] }}
-        />
+      <div className="bg-surface-card/40 backdrop-blur-xl border border-surface-border/40 rounded-xl p-5 mb-6">
+        <div className="flex items-center gap-3 mb-3">
+          <span className="w-3 h-3 rounded-full opacity-80" style={{ backgroundColor: CLUSTER_COLORS[cluster.id] }} />
+          <h1 className="text-xl font-semibold text-foreground/90">{cluster.name}</h1>
+          <span className="text-2xl font-bold ml-auto" style={{ color: CLUSTER_COLORS[cluster.id] }}>
+            {progress}%
+          </span>
+        </div>
+        <div className="w-full h-1.5 bg-surface-muted/20 rounded-full overflow-hidden">
+          <div
+            className="h-full rounded-full transition-all duration-500"
+            style={{ width: `${progress}%`, backgroundColor: CLUSTER_COLORS[cluster.id] }}
+          />
+        </div>
       </div>
 
       <SectionHeader title="Close the loop" sectionKey="checklist" collapsed={collapsed} onToggle={toggle} />
@@ -65,9 +66,9 @@ function SectionHeader({ title, sectionKey, collapsed, onToggle }: {
   return (
     <button
       onClick={() => onToggle(sectionKey)}
-      className="flex items-center gap-2 text-xs uppercase tracking-wider text-muted-foreground font-medium mb-3 hover:text-foreground transition-colors"
+      className="flex items-center gap-2 text-[10px] uppercase tracking-[0.15em] text-muted-foreground/50 font-medium mb-3 hover:text-foreground/70 transition-colors"
     >
-      <span className="text-muted-foreground text-sm">{collapsed[sectionKey] ? '\u25b6' : '\u25bc'}</span>
+      <span className="text-muted-foreground/40 text-xs">{collapsed[sectionKey] ? '\u25b6' : '\u25bc'}</span>
       {title}
     </button>
   );

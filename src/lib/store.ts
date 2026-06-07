@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { Progress, WorkData, PendingGitEntry, LogEntry, WorkTask, AutomationEntry } from './types';
+import type { Progress, WorkData, PendingGitEntry, LogEntry, WorkTask, Subtask, AutomationEntry, Subtopic } from './types';
 import * as api from './api';
 
 interface AppStore {
@@ -26,11 +26,22 @@ interface AppStore {
   addSubtopic: (clusterId: string, topicId: string, label: string) => Promise<void>;
   removeSubtopic: (clusterId: string, topicId: string, subtopicId: string) => Promise<void>;
   toggleSubtopic: (clusterId: string, topicId: string, subtopicId: string) => Promise<void>;
+  updateSubtopic: (clusterId: string, topicId: string, subtopicId: string, patch: Partial<Subtopic>) => Promise<void>;
+  reorderSubtopics: (clusterId: string, topicId: string, orderedIds: string[]) => Promise<void>;
   toggleResource: (clusterId: string, resourceId: string) => Promise<void>;
+  addResource: (clusterId: string, label: string) => Promise<void>;
+  removeResource: (clusterId: string, resourceId: string) => Promise<void>;
   updateProjectStatus: (clusterId: string, projectId: string, status: string) => Promise<void>;
+  addProject: (clusterId: string, label: string) => Promise<void>;
+  removeProject: (clusterId: string, projectId: string) => Promise<void>;
   updateChecklist: (clusterId: string, field: string, value: boolean) => Promise<void>;
   addWorkTask: (task: WorkTask) => Promise<void>;
   updateWorkTaskStatus: (id: string, status: string) => Promise<void>;
+  updateWorkTask: (id: string, patch: Partial<WorkTask>) => Promise<void>;
+  addSubtask: (taskId: string, label: string) => Promise<void>;
+  toggleSubtask: (taskId: string, subtaskId: string) => Promise<void>;
+  removeSubtask: (taskId: string, subtaskId: string) => Promise<void>;
+  reorderSubtasks: (taskId: string, orderedIds: string[]) => Promise<void>;
   addAutomationEntry: (entry: AutomationEntry) => Promise<void>;
 }
 
@@ -138,7 +149,10 @@ export const useStore = create<AppStore>((set, get) => ({
     const { progress } = get();
     if (!progress) return;
     const clusters = progress.clusters as Record<string, any>;
-    const newSub = { id: `sub_${Date.now()}`, label, done: false };
+    const topic = clusters[clusterId]?.topics?.find((t: any) => t.id === topicId);
+    const subs: any[] = topic?.subtopics ?? [];
+    const nextOrder = subs.length > 0 ? Math.max(...subs.map((s: any) => s.order ?? 0)) + 1 : 0;
+    const newSub = { id: `sub_${Date.now()}`, label, done: false, order: nextOrder };
     const updated = {
       ...progress,
       clusters: {
@@ -206,6 +220,57 @@ export const useStore = create<AppStore>((set, get) => ({
     await api.saveProgress(updated);
   },
 
+  updateSubtopic: async (clusterId, topicId, subtopicId, patch) => {
+    const { progress } = get();
+    if (!progress) return;
+    const clusters = progress.clusters as Record<string, any>;
+    const updated = {
+      ...progress,
+      clusters: {
+        ...progress.clusters,
+        [clusterId]: {
+          ...clusters[clusterId],
+          topics: clusters[clusterId].topics.map((t: any) =>
+            t.id === topicId
+              ? { ...t, subtopics: (t.subtopics ?? []).map((s: any) =>
+                  s.id === subtopicId ? { ...s, ...patch } : s
+                ) }
+              : t
+          )
+        }
+      }
+    };
+    set({ progress: updated });
+    await api.saveProgress(updated);
+  },
+
+  reorderSubtopics: async (clusterId, topicId, orderedIds) => {
+    const { progress } = get();
+    if (!progress) return;
+    const clusters = progress.clusters as Record<string, any>;
+    const topic = clusters[clusterId]?.topics?.find((t: any) => t.id === topicId);
+    const subs: any[] = topic?.subtopics ?? [];
+    const reindexed = orderedIds.map((id, i) => {
+      const sub = subs.find((s: any) => s.id === id);
+      return sub ? { ...sub, order: i } : null;
+    }).filter(Boolean);
+    const remaining = subs.filter((s: any) => !orderedIds.includes(s.id));
+    const updated = {
+      ...progress,
+      clusters: {
+        ...progress.clusters,
+        [clusterId]: {
+          ...clusters[clusterId],
+          topics: clusters[clusterId].topics.map((t: any) =>
+            t.id === topicId ? { ...t, subtopics: [...reindexed, ...remaining] } : t
+          )
+        }
+      }
+    };
+    set({ progress: updated });
+    await api.saveProgress(updated);
+  },
+
   toggleResource: async (clusterId, resourceId) => {
     const { progress } = get();
     if (!progress) return;
@@ -219,6 +284,43 @@ export const useStore = create<AppStore>((set, get) => ({
           resources: clusters[clusterId].resources.map((r: any) =>
             r.id === resourceId ? { ...r, done: !r.done, finished_date: !r.done ? new Date().toISOString().split('T')[0] : undefined } : r
           )
+        }
+      }
+    };
+    set({ progress: updated });
+    await api.saveProgress(updated);
+  },
+
+  addResource: async (clusterId, label) => {
+    const { progress } = get();
+    if (!progress) return;
+    const clusters = progress.clusters as Record<string, any>;
+    const newResource = { id: `res_${Date.now()}`, label, done: false };
+    const updated = {
+      ...progress,
+      clusters: {
+        ...progress.clusters,
+        [clusterId]: {
+          ...clusters[clusterId],
+          resources: [...clusters[clusterId].resources, newResource]
+        }
+      }
+    };
+    set({ progress: updated });
+    await api.saveProgress(updated);
+  },
+
+  removeResource: async (clusterId, resourceId) => {
+    const { progress } = get();
+    if (!progress) return;
+    const clusters = progress.clusters as Record<string, any>;
+    const updated = {
+      ...progress,
+      clusters: {
+        ...progress.clusters,
+        [clusterId]: {
+          ...clusters[clusterId],
+          resources: clusters[clusterId].resources.filter((r: any) => r.id !== resourceId)
         }
       }
     };
@@ -243,6 +345,43 @@ export const useStore = create<AppStore>((set, get) => ({
               finished_date: status === 'done' ? new Date().toISOString().split('T')[0] : p.finished_date
             } : p
           )
+        }
+      }
+    };
+    set({ progress: updated });
+    await api.saveProgress(updated);
+  },
+
+  addProject: async (clusterId, label) => {
+    const { progress } = get();
+    if (!progress) return;
+    const clusters = progress.clusters as Record<string, any>;
+    const newProject = { id: `proj_${Date.now()}`, label, status: 'not_started' as const };
+    const updated = {
+      ...progress,
+      clusters: {
+        ...progress.clusters,
+        [clusterId]: {
+          ...clusters[clusterId],
+          projects: [...clusters[clusterId].projects, newProject]
+        }
+      }
+    };
+    set({ progress: updated });
+    await api.saveProgress(updated);
+  },
+
+  removeProject: async (clusterId, projectId) => {
+    const { progress } = get();
+    if (!progress) return;
+    const clusters = progress.clusters as Record<string, any>;
+    const updated = {
+      ...progress,
+      clusters: {
+        ...progress.clusters,
+        [clusterId]: {
+          ...clusters[clusterId],
+          projects: clusters[clusterId].projects.filter((p: any) => p.id !== projectId)
         }
       }
     };
@@ -285,6 +424,94 @@ export const useStore = create<AppStore>((set, get) => ({
     const updated = {
       ...work,
       tasks: work.tasks.map(t => t.id === id ? { ...t, status: status as any } : t)
+    };
+    set({ work: updated });
+    await api.saveWork(updated);
+  },
+
+  updateWorkTask: async (id, patch) => {
+    const { work } = get();
+    if (!work) return;
+    const updated = {
+      ...work,
+      tasks: work.tasks.map(t => t.id === id ? { ...t, ...patch } : t)
+    };
+    set({ work: updated });
+    await api.saveWork(updated);
+  },
+
+  addSubtask: async (taskId, label) => {
+    const { work } = get();
+    if (!work) return;
+    const updated = {
+      ...work,
+      tasks: work.tasks.map(t => {
+        if (t.id !== taskId) return t;
+        const existing = t.subtasks ?? [];
+        const nextOrder = existing.length > 0 ? Math.max(...existing.map(s => s.order)) + 1 : 0;
+        const newSub: Subtask = {
+          id: `sub_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
+          label,
+          done: false,
+          order: nextOrder,
+        };
+        return { ...t, subtasks: [...existing, newSub] };
+      })
+    };
+    set({ work: updated });
+    await api.saveWork(updated);
+  },
+
+  toggleSubtask: async (taskId, subtaskId) => {
+    const { work } = get();
+    if (!work) return;
+    const updated = {
+      ...work,
+      tasks: work.tasks.map(t => {
+        if (t.id !== taskId) return t;
+        const existing = t.subtasks ?? [];
+        return {
+          ...t,
+          subtasks: existing.map(s => s.id === subtaskId ? { ...s, done: !s.done } : s)
+        };
+      })
+    };
+    set({ work: updated });
+    await api.saveWork(updated);
+  },
+
+  removeSubtask: async (taskId, subtaskId) => {
+    const { work } = get();
+    if (!work) return;
+    const updated = {
+      ...work,
+      tasks: work.tasks.map(t => {
+        if (t.id !== taskId) return t;
+        const existing = t.subtasks ?? [];
+        return { ...t, subtasks: existing.filter(s => s.id !== subtaskId) };
+      })
+    };
+    set({ work: updated });
+    await api.saveWork(updated);
+  },
+
+  reorderSubtasks: async (taskId, orderedIds) => {
+    const { work } = get();
+    if (!work) return;
+    const updated = {
+      ...work,
+      tasks: work.tasks.map(t => {
+        if (t.id !== taskId) return t;
+        const existing = t.subtasks ?? [];
+        const byId = new Map(existing.map(s => [s.id, s]));
+        const reordered: Subtask[] = orderedIds
+          .map((id, idx) => {
+            const sub = byId.get(id);
+            return sub ? { ...sub, order: idx } : null;
+          })
+          .filter((s): s is Subtask => s !== null);
+        return { ...t, subtasks: reordered };
+      })
     };
     set({ work: updated });
     await api.saveWork(updated);

@@ -12,13 +12,14 @@ Personal study/work tracking dashboard. React 18 + TypeScript + Vite 8 frontend,
 - Root `package.json` is the real app. `goal-os/` is a **dead Vite scaffold** — do not touch.
 - `server/index.ts` imports `server/testApp.ts` (no `app.listen`) and calls `app.listen` itself. Use `testApp.ts` for supertest, not `index.ts`.
 - `src/lib/types.ts` is the **single source of truth** for all TypeScript interfaces. Never define inline types.
+- `src/components/cluster/SubtopicModal.tsx` is the new SubtopicModal (separate file extracted from `TopicsSection.tsx`). The old inline `SubtopicModal` function was removed.
 
 ## Commands
 
 ```sh
 npm run dev            # concurrently: Express on :3001 + Vite on :5173
 npm run server         # tsx watch server/index.ts (standalone)
-npm test               # vitest run (98 tests, 7 files)
+npm test               # vitest run (132 tests passing)
 npm run test:watch     # vitest interactive
 npm run test:coverage  # vitest with coverage
 npm run build          # tsc && vite build
