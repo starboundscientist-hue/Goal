@@ -3,7 +3,7 @@ import { useStore } from '../lib/store';
 import { LogRow } from '../components/logging/LogRow';
 import { AnyClusterId, CLUSTER_COLORS, CLUSTER_LABELS } from '../lib/types';
 
-const ALL_CLUSTERS: AnyClusterId[] = ['foundations', 'alpha', 'beta', 'gamma', 'delta', 'epsilon', 'work', 'unknown'];
+const ALL_CLUSTERS: AnyClusterId[] = ['foundations', 'alpha', 'beta', 'gamma', 'delta', 'epsilon', 'sde_engineering', 'ml_engineering', 'fullstack_product', 'work', 'unknown'];
 
 export function LogPage() {
   const { progress } = useStore();
@@ -55,7 +55,7 @@ export function LogPage() {
             className={`rounded-full px-2.5 py-1 text-xs border transition-all ${
               activeFilters.has(id)
                 ? 'text-white/90 border-current'
-                : 'bg-surface-muted/30 text-muted-foreground/50 border-transparent hover:bg-surface-muted/50'
+                : 'bg-surface-muted/80 text-muted-foreground/50 border-transparent hover:bg-surface-muted/50'
             }`}
             style={activeFilters.has(id) ? {
               backgroundColor: CLUSTER_COLORS[id] + '22',
@@ -84,7 +84,7 @@ export function LogPage() {
         )}
       </div>
 
-      <div className="sticky bottom-0 mt-6 pt-3 border-t border-surface-border/30 text-sm text-muted-foreground/50 bg-surface-base/80 backdrop-blur-xl">
+      <div className="sticky bottom-0 mt-6 pt-3 border-t border-surface-border/30 text-sm text-muted-foreground/50 bg-surface-base/90 backdrop-blur-xl">
         Week total: {weekTotal}h study
       </div>
     </div>

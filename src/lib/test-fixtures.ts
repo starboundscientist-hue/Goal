@@ -12,16 +12,16 @@ export const makeCluster = (overrides: Partial<ClusterState> = {}): ClusterState
   phase: 1,
   checklist: { study: false, experiment: false, artifact: false },
   topics: [
-    { id: 't1', label: 'Transformers', done: true },
-    { id: 't2', label: 'CUDA', done: false },
+    { id: 't1', label: 'Transformers', done: true, order: 0 },
+    { id: 't2', label: 'CUDA', done: false, order: 1 },
   ],
   resources: [
-    { id: 'r1', label: 'Karpathy', done: true, finished_date: '2025-04-10' },
-    { id: 'r2', label: 'CUDA Mode', done: false },
+    { id: 'r1', label: 'Karpathy', done: true, finished_date: '2025-04-10', order: 0 },
+    { id: 'r2', label: 'CUDA Mode', done: false, order: 1 },
   ],
   projects: [
-    { id: 'p1', label: 'Train GPT-2', status: 'done', finished_date: '2025-03-20' },
-    { id: 'p2', label: 'CUDA kernel', status: 'not_started' },
+    { id: 'p1', label: 'Train GPT-2', status: 'done', finished_date: '2025-03-20', order: 0 },
+    { id: 'p2', label: 'CUDA kernel', status: 'not_started', order: 1 },
   ],
   ...overrides,
 });
@@ -34,14 +34,14 @@ export const FOUNDATIONS_DONE: ClusterState = {
   phase: 1,
   checklist: { study: true, experiment: true, artifact: true },
   topics: [
-    { id: 't1', label: 'Linear algebra', done: true },
-    { id: 't2', label: 'Statistics', done: true },
+    { id: 't1', label: 'Linear algebra', done: true, order: 0 },
+    { id: 't2', label: 'Statistics', done: true, order: 1 },
   ],
   resources: [
-    { id: 'r1', label: 'MML Book', done: true, finished_date: '2025-06-01' },
+    { id: 'r1', label: 'MML Book', done: true, finished_date: '2025-06-01', order: 0 },
   ],
   projects: [
-    { id: 'p1', label: 'SVD from scratch', status: 'done', finished_date: '2025-07-01' },
+    { id: 'p1', label: 'SVD from scratch', status: 'done', finished_date: '2025-07-01', order: 0 },
   ],
 };
 
@@ -50,9 +50,9 @@ export const FOUNDATIONS_EMPTY: ClusterState = {
   name: 'Foundations',
   phase: 1,
   checklist: { study: false, experiment: false, artifact: false },
-  topics: [{ id: 't1', label: 'Linear algebra', done: false }],
-  resources: [{ id: 'r1', label: 'MML Book', done: false }],
-  projects: [{ id: 'p1', label: 'SVD from scratch', status: 'not_started' }],
+  topics: [{ id: 't1', label: 'Linear algebra', done: false, order: 0 }],
+  resources: [{ id: 'r1', label: 'MML Book', done: false, order: 0 }],
+  projects: [{ id: 'p1', label: 'SVD from scratch', status: 'not_started', order: 0 }],
 };
 
 export const makeLog = (overrides: Partial<LogEntry> = {}): LogEntry => ({
@@ -92,6 +92,9 @@ export const makeProgress = (overrides: Partial<Progress> = {}): Progress => ({
     gamma: makeCluster({ id: 'gamma', name: 'Embedded', phase: 1, topics: [], resources: [], projects: [] }),
     delta: makeCluster({ id: 'delta', name: 'Comp Physics', phase: 2, topics: [], resources: [], projects: [] }),
     epsilon: makeCluster({ id: 'epsilon', name: 'Infra', phase: 1, topics: [], resources: [], projects: [] }),
+    sde_engineering: makeCluster({ id: 'sde_engineering', name: 'SDE Engineering', phase: 3, topics: [], resources: [], projects: [] }),
+    ml_engineering: makeCluster({ id: 'ml_engineering', name: 'ML Engineering', phase: 3, topics: [], resources: [], projects: [] }),
+    fullstack_product: makeCluster({ id: 'fullstack_product', name: 'Fullstack / Product', phase: 3, topics: [], resources: [], projects: [] }),
   },
   logs: [],
   ...overrides,
@@ -101,6 +104,7 @@ export const makeWorkTask = (overrides: Partial<WorkTask> = {}): WorkTask => ({
   id: 'w1',
   title: 'Data pipeline refactor',
   status: 'wip',
+  order: 0,
   created_date: TODAY_STR,
   ...overrides,
 });

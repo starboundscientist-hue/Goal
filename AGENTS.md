@@ -6,6 +6,7 @@ Personal study/work tracking dashboard. React 18 + TypeScript + Vite 8 frontend,
 
 - **`UPLIFT.md`** — active UI/UX uplift plan (the WorkTask cockpit). Read this before any UI work.
 - **`legacy/`** — historical planning/bugfix docs from the initial build (blueprints, IMPLEMENTATION.md, REVIEW_NOTES.md, TESTS.md, BUGS_FIXED.md, etc.). Reference only.
+- **`legacy/exhaustive_blueprint.md`** — the 5-year embodied‑autonomy AI engineer plan. Knowledge clusters α–ε + Foundational Substrate + Career Tracks ζ (SDE Engineering), η (ML Engineering), θ (Fullstack/Product). The 3 career tracks are Phase 3 (parallel, non‑blocking). DSA moved from Foundations into ζ.
 
 ## Project structure
 

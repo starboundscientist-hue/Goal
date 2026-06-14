@@ -26,7 +26,7 @@ export function ClusterDetail({ cluster, logs }: Props) {
         {'\u2190'} Back
       </button>
 
-      <div className="bg-surface-card/40 backdrop-blur-xl border border-surface-border/40 rounded-xl p-5 mb-6">
+      <div className="bg-surface-card/90 backdrop-blur-xl border border-surface-border/40 rounded-xl p-5 mb-6">
         <div className="flex items-center gap-3 mb-3">
           <span className="w-3 h-3 rounded-full opacity-80" style={{ backgroundColor: CLUSTER_COLORS[cluster.id] }} />
           <h1 className="text-xl font-semibold text-foreground/90">{cluster.name}</h1>

@@ -42,19 +42,19 @@ export function AutomationSection() {
       </div>
 
       {showForm ? (
-        <div className="bg-surface-card/40 backdrop-blur-xl border border-surface-border/40 rounded-xl p-3 space-y-2">
+        <div className="bg-surface-card/90 backdrop-blur-xl border border-surface-border/40 rounded-xl p-3 space-y-2">
           <input
             type="text" value={description}
             onChange={e => setDescription(e.target.value)}
             placeholder="e.g. Jira to Slack standup script"
-            className="w-full bg-surface-base/60 border border-surface-border/40 rounded-lg px-2.5 py-1.5 text-sm text-foreground outline-none focus:border-blue-500/50 transition-colors placeholder:text-muted-foreground/40"
+            className="w-full bg-surface-base/90 border border-surface-border/40 rounded-lg px-2.5 py-1.5 text-sm text-foreground outline-none focus:border-blue-500/50 transition-colors placeholder:text-muted-foreground/40"
           />
           <div className="flex items-center gap-2">
             <input
               type="number" step="0.25" min="0" value={hoursSaved}
               onChange={e => setHoursSaved(parseFloat(e.target.value))}
               placeholder="Hours saved/week"
-              className="w-32 bg-surface-base/60 border border-surface-border/40 rounded-lg px-2.5 py-1.5 text-sm text-foreground outline-none focus:border-blue-500/50 transition-colors placeholder:text-muted-foreground/40"
+              className="w-32 bg-surface-base/90 border border-surface-border/40 rounded-lg px-2.5 py-1.5 text-sm text-foreground outline-none focus:border-blue-500/50 transition-colors placeholder:text-muted-foreground/40"
             />
             <span className="text-xs text-muted-foreground/50">hours/week saved</span>
           </div>

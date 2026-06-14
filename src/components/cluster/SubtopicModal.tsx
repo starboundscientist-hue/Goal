@@ -202,7 +202,7 @@ export function SubtopicModal({ clusterId, topic, onClose }: Props) {
                 if (e.key === 'Escape') { setNewLabel(''); e.currentTarget.blur(); }
               }}
               placeholder="Add a subtopic\u2026"
-              className="flex-1 bg-surface-base/80 border border-surface-border rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-blue-500/60 focus:bg-surface-base transition-colors"
+              className="flex-1 bg-surface-base/90 border border-surface-border rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-blue-500/60 focus:bg-surface-base transition-colors"
               data-testid="subtopic-input"
             />
             <button
@@ -358,7 +358,7 @@ function SortableSubtopicRow({
               placeholder="Notes or details about this subtopic\u2026"
               rows={2}
               data-testid="subtopic-desc-input"
-              className="ml-9 mt-1 mb-1.5 w-[calc(100%-2.25rem)] bg-surface-base/80 border border-surface-border rounded-md px-2.5 py-1.5 text-xs text-foreground placeholder:text-muted-foreground outline-none focus:border-blue-500/60 resize-none transition-colors"
+              className="ml-9 mt-1 mb-1.5 w-[calc(100%-2.25rem)] bg-surface-base/90 border border-surface-border rounded-md px-2.5 py-1.5 text-xs text-foreground placeholder:text-muted-foreground outline-none focus:border-blue-500/60 resize-none transition-colors"
             />
           </motion.div>
         )}

@@ -10,6 +10,9 @@ const CLUSTER_NAV = [
   { id: 'gamma',       label: 'Embedded',     symbol: '\u03b3' },
   { id: 'delta',       label: 'Comp Physics', symbol: '\u03b4' },
   { id: 'epsilon',     label: 'Infra',        symbol: '\u03b5' },
+  { id: 'sde_engineering',   label: 'SDE Eng',     symbol: '\u2699' },
+  { id: 'ml_engineering',    label: 'ML Eng',      symbol: '\u2299' },
+  { id: 'fullstack_product', label: 'Product',     symbol: '\u2302' },
 ] as const;
 
 const navBase = 'flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-sm transition-all w-full text-left';
@@ -24,7 +27,7 @@ export function Sidebar() {
   };
 
   return (
-    <aside className="w-[220px] flex-shrink-0 flex flex-col border-r border-surface-border/40 bg-surface-base/80 backdrop-blur-xl">
+    <aside className="w-[220px] flex-shrink-0 flex flex-col border-r border-surface-border/40 bg-surface-base/90 backdrop-blur-xl">
       <div className="px-4 py-5 flex items-center gap-2">
         <span className="text-blue-400/80 text-base">{'\u25c9'}</span>
         <span className="font-semibold text-foreground/90 tracking-tight">GOAL OS</span>

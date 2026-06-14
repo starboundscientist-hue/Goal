@@ -1,4 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
+import { useSortable } from '@dnd-kit/sortable';
+import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent } from '@dnd-kit/core';
+import { SortableContext, sortableKeyboardCoordinates as sortableKb, arrayMove, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 import type { Topic } from '../../lib/types';
 import { useStore } from '../../lib/store';
 import { SubtopicModal } from './SubtopicModal';
@@ -12,6 +16,7 @@ export function TopicsSection({ clusterId, topics }: Props) {
   const toggleTopic = useStore(s => s.toggleTopic);
   const addTopic = useStore(s => s.addTopic);
   const removeTopic = useStore(s => s.removeTopic);
+  const reorderTopics = useStore(s => s.reorderTopics);
 
   const [addingTopic, setAddingTopic] = useState(false);
   const [newTopicLabel, setNewTopicLabel] = useState('');
@@ -21,6 +26,21 @@ export function TopicsSection({ clusterId, topics }: Props) {
   useEffect(() => {
     if (addingTopic) inputRef.current?.focus();
   }, [addingTopic]);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKb })
+  );
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+    const ids = topics.map(t => t.id);
+    const oldIndex = ids.indexOf(active.id as string);
+    const newIndex = ids.indexOf(over.id as string);
+    const reordered = arrayMove(ids, oldIndex, newIndex);
+    reorderTopics(clusterId, reordered);
+  };
 
   const handleAddTopic = async () => {
     const label = newTopicLabel.trim();
@@ -39,20 +59,26 @@ export function TopicsSection({ clusterId, topics }: Props) {
     ? topics.find(t => t.id === selectedTopic.id) ?? null
     : null;
 
+  const sorted = [...topics].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+
   return (
     <div className="mb-6">
-      <div className="space-y-1">
-        {topics.map(topic => (
-          <TopicRow
-            key={topic.id}
-            clusterId={clusterId}
-            topic={topic}
-            onToggle={() => toggleTopic(clusterId, topic.id)}
-            onRemove={() => removeTopic(clusterId, topic.id)}
-            onOpenSubtopics={() => setSelectedTopic(topic)}
-          />
-        ))}
-      </div>
+      <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        <SortableContext items={sorted.map(t => t.id)} strategy={verticalListSortingStrategy}>
+          <div className="space-y-1">
+            {sorted.map(topic => (
+              <SortableTopicRow
+                key={topic.id}
+                clusterId={clusterId}
+                topic={topic}
+                onToggle={() => toggleTopic(clusterId, topic.id)}
+                onRemove={() => removeTopic(clusterId, topic.id)}
+                onOpenSubtopics={() => setSelectedTopic(topic)}
+              />
+            ))}
+          </div>
+        </SortableContext>
+      </DndContext>
 
       {addingTopic ? (
         <div className="flex items-center gap-2 mt-2 px-2">
@@ -63,7 +89,7 @@ export function TopicsSection({ clusterId, topics }: Props) {
             onKeyDown={handleKeyDown}
             onBlur={handleAddTopic}
             placeholder="Topic name\u2026"
-            className="flex-1 bg-surface-muted/60 text-foreground text-sm rounded-lg px-3 py-1.5 outline-none border border-surface-border/60 focus:border-blue-500/50 placeholder:text-muted-foreground/60"
+            className="flex-1 bg-surface-muted/80 text-foreground text-sm rounded-lg px-3 py-1.5 outline-none border border-surface-border/60 focus:border-blue-500/50 placeholder:text-muted-foreground/60"
           />
           <button
             onMouseDown={e => { e.preventDefault(); handleAddTopic(); }}
@@ -98,14 +124,47 @@ export function TopicsSection({ clusterId, topics }: Props) {
   );
 }
 
-function TopicRow({
-  clusterId,
+function SortableTopicRow({ clusterId, topic, onToggle, onRemove, onOpenSubtopics }: {
+  clusterId: string;
+  topic: Topic;
+  onToggle: () => void;
+  onRemove: () => void;
+  onOpenSubtopics: () => void;
+}) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: topic.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+  };
+
+  return (
+    <div ref={setNodeRef} style={style} className="group flex items-center gap-2 p-2 rounded-lg hover:bg-white/[0.03] transition-colors">
+      <button
+        {...attributes}
+        {...listeners}
+        className="text-muted-foreground/30 hover:text-muted-foreground/60 cursor-grab active:cursor-grabbing text-xs shrink-0 touch-none"
+        title="Drag to reorder"
+      >
+        {'\u2630'}
+      </button>
+      <TopicRowContent
+        topic={topic}
+        onToggle={onToggle}
+        onRemove={onRemove}
+        onOpenSubtopics={onOpenSubtopics}
+      />
+    </div>
+  );
+}
+
+function TopicRowContent({
   topic,
   onToggle,
   onRemove,
   onOpenSubtopics,
 }: {
-  clusterId: string;
   topic: Topic;
   onToggle: () => void;
   onRemove: () => void;
@@ -115,7 +174,7 @@ function TopicRow({
   const subtopicDone = topic.subtopics?.filter(s => s.done).length ?? 0;
 
   return (
-    <div className="group flex items-center gap-3 p-2 rounded-lg hover:bg-white/[0.03] transition-colors">
+    <>
       <button
         type="button"
         onClick={onToggle}
@@ -159,6 +218,6 @@ function TopicRow({
       >
         {'\u2715'}
       </button>
-    </div>
+    </>
   );
 }

@@ -24,7 +24,7 @@ export function LogRow({ entry }: Props) {
         <span className="text-sm text-foreground/80 flex-1 truncate">{entry.topic}</span>
         <span className="text-sm text-muted-foreground/50 w-12 text-right flex-shrink-0">{formatHours(entry.hours)}</span>
         {entry.source === 'git' && (
-          <span className="text-[10px] bg-surface-muted/40 text-muted-foreground/60 px-1.5 py-0.5 rounded font-mono">git</span>
+          <span className="text-[10px] bg-surface-muted/80 text-muted-foreground/60 px-1.5 py-0.5 rounded font-mono">git</span>
         )}
         <span className={entry.is_completed ? 'text-emerald-400/70' : 'text-muted-foreground/40'}>
           {entry.is_completed ? '\u2713' : '\u231b'}

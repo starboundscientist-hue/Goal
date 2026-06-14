@@ -7,7 +7,7 @@ import { generateId } from '../../lib/utils';
 
 type State = 'input' | 'loading' | 'preview' | 'manual';
 
-const CLUSTERS: AnyClusterId[] = ['foundations', 'alpha', 'beta', 'gamma', 'delta', 'epsilon', 'work'];
+const CLUSTERS: AnyClusterId[] = ['foundations', 'alpha', 'beta', 'gamma', 'delta', 'epsilon', 'sde_engineering', 'ml_engineering', 'fullstack_product', 'work'];
 
 export function SemanticLogger() {
   const [open, setOpen] = useState(false);
@@ -115,7 +115,7 @@ export function SemanticLogger() {
                 onChange={e => setInputText(e.target.value)}
                 onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSubmit(); }}}
                 placeholder="freeform text describing your session, e.g. Triton matmul kernel for 2 hours"
-                className="w-full bg-surface-base/60 border border-surface-border/40 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground/40 resize-none min-h-[80px] outline-none focus:border-blue-500/50 transition-colors"
+                className="w-full bg-surface-base/90 border border-surface-border/40 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground/40 resize-none min-h-[80px] outline-none focus:border-blue-500/50 transition-colors"
                 rows={3}
               />
               <div className="flex items-center justify-between">
@@ -131,9 +131,9 @@ export function SemanticLogger() {
 
           {state === 'loading' && (
             <div className="space-y-2 py-2">
-              <div className="h-4 w-3/4 bg-surface-muted/30 rounded animate-pulse" />
-              <div className="h-4 w-1/2 bg-surface-muted/30 rounded animate-pulse" />
-              <div className="h-4 w-2/3 bg-surface-muted/30 rounded animate-pulse" />
+              <div className="h-4 w-3/4 bg-surface-muted/80 rounded animate-pulse" />
+              <div className="h-4 w-1/2 bg-surface-muted/80 rounded animate-pulse" />
+              <div className="h-4 w-2/3 bg-surface-muted/80 rounded animate-pulse" />
             </div>
           )}
 
@@ -145,7 +145,7 @@ export function SemanticLogger() {
                   <select
                     value={editCluster}
                     onChange={e => setEditCluster(e.target.value as AnyClusterId)}
-                    className="w-full bg-surface-base/60 border border-surface-border/40 rounded-lg px-2 py-1.5 text-sm text-foreground outline-none focus:border-blue-500/50 transition-colors"
+                    className="w-full bg-surface-base/90 border border-surface-border/40 rounded-lg px-2 py-1.5 text-sm text-foreground outline-none focus:border-blue-500/50 transition-colors"
                   >
                     {CLUSTERS.map(c => (
                       <option key={c} value={c}>{CLUSTER_LABELS[c]}</option>
@@ -158,7 +158,7 @@ export function SemanticLogger() {
                     type="number" step="0.5" min="0.5" max="12"
                     value={editHours}
                     onChange={e => setEditHours(parseFloat(e.target.value))}
-                    className="w-full bg-surface-base/60 border border-surface-border/40 rounded-lg px-2 py-1.5 text-sm text-foreground outline-none focus:border-blue-500/50 transition-colors"
+                    className="w-full bg-surface-base/90 border border-surface-border/40 rounded-lg px-2 py-1.5 text-sm text-foreground outline-none focus:border-blue-500/50 transition-colors"
                   />
                 </div>
               </div>
@@ -167,7 +167,7 @@ export function SemanticLogger() {
                 <input
                   type="text" value={editTopic}
                   onChange={e => setEditTopic(e.target.value)}
-                  className="w-full bg-surface-base/60 border border-surface-border/40 rounded-lg px-2 py-1.5 text-sm text-foreground outline-none focus:border-blue-500/50 transition-colors"
+                  className="w-full bg-surface-base/90 border border-surface-border/40 rounded-lg px-2 py-1.5 text-sm text-foreground outline-none focus:border-blue-500/50 transition-colors"
                 />
               </div>
               <div className="flex items-center gap-2">
@@ -199,7 +199,7 @@ export function SemanticLogger() {
                   <select
                     value={editCluster}
                     onChange={e => setEditCluster(e.target.value as AnyClusterId)}
-                    className="w-full bg-surface-base/60 border border-surface-border/40 rounded-lg px-2 py-1.5 text-sm text-foreground outline-none focus:border-blue-500/50 transition-colors"
+                    className="w-full bg-surface-base/90 border border-surface-border/40 rounded-lg px-2 py-1.5 text-sm text-foreground outline-none focus:border-blue-500/50 transition-colors"
                   >
                     {CLUSTERS.map(c => (
                       <option key={c} value={c}>{CLUSTER_LABELS[c]}</option>
@@ -212,7 +212,7 @@ export function SemanticLogger() {
                     type="number" step="0.5" min="0.5" max="12"
                     value={editHours}
                     onChange={e => setEditHours(parseFloat(e.target.value))}
-                    className="w-full bg-surface-base/60 border border-surface-border/40 rounded-lg px-2 py-1.5 text-sm text-foreground outline-none focus:border-blue-500/50 transition-colors"
+                    className="w-full bg-surface-base/90 border border-surface-border/40 rounded-lg px-2 py-1.5 text-sm text-foreground outline-none focus:border-blue-500/50 transition-colors"
                   />
                 </div>
               </div>
@@ -222,7 +222,7 @@ export function SemanticLogger() {
                   type="text" value={editTopic}
                   onChange={e => setEditTopic(e.target.value)}
                   placeholder="e.g. Kalman filter implementation"
-                  className="w-full bg-surface-base/60 border border-surface-border/40 rounded-lg px-2 py-1.5 text-sm text-foreground outline-none focus:border-blue-500/50 transition-colors placeholder:text-muted-foreground/40"
+                  className="w-full bg-surface-base/90 border border-surface-border/40 rounded-lg px-2 py-1.5 text-sm text-foreground outline-none focus:border-blue-500/50 transition-colors placeholder:text-muted-foreground/40"
                 />
               </div>
               <div className="flex items-center gap-2">

@@ -35,7 +35,7 @@ export function GitPendingCard({ entry, onConfirm, onDismiss }: Props) {
   };
 
   return (
-    <div className="bg-surface-card/60 backdrop-blur-xl border border-surface-border/60 rounded-xl p-4 mb-4">
+    <div className="bg-surface-card/90 backdrop-blur-xl border border-surface-border/60 rounded-xl p-4 mb-4">
       <div className="flex items-center gap-2 mb-3">
         <span className="text-muted-foreground/60">{'\u238b'}</span>
         <span className="text-sm font-medium text-foreground">
@@ -60,9 +60,9 @@ export function GitPendingCard({ entry, onConfirm, onDismiss }: Props) {
           <select
             value={editCluster}
             onChange={e => setEditCluster(e.target.value as AnyClusterId)}
-            className="w-full bg-surface-base/60 border border-surface-border/60 rounded-lg px-2 py-1.5 text-sm text-foreground outline-none focus:border-blue-500/50 transition-colors"
+            className="w-full bg-surface-base/90 border border-surface-border/60 rounded-lg px-2 py-1.5 text-sm text-foreground outline-none focus:border-blue-500/50 transition-colors"
           >
-            {(['foundations', 'alpha', 'beta', 'gamma', 'delta', 'epsilon', 'work', 'unknown'] as const).map(c => (
+            {(['foundations', 'alpha', 'beta', 'gamma', 'delta', 'epsilon', 'sde_engineering', 'ml_engineering', 'fullstack_product', 'work', 'unknown'] as const).map(c => (
               <option key={c} value={c}>{CLUSTER_LABELS[c]}</option>
             ))}
           </select>
@@ -73,7 +73,7 @@ export function GitPendingCard({ entry, onConfirm, onDismiss }: Props) {
             type="number" step="0.5" min="0.5" max="12"
             value={editHours}
             onChange={e => setEditHours(parseFloat(e.target.value))}
-            className="w-full bg-surface-base/60 border border-surface-border/60 rounded-lg px-2 py-1.5 text-sm text-foreground outline-none focus:border-blue-500/50 transition-colors"
+            className="w-full bg-surface-base/90 border border-surface-border/60 rounded-lg px-2 py-1.5 text-sm text-foreground outline-none focus:border-blue-500/50 transition-colors"
           />
         </div>
       </div>
@@ -83,7 +83,7 @@ export function GitPendingCard({ entry, onConfirm, onDismiss }: Props) {
         <input
           type="text" value={editTopic}
           onChange={e => setEditTopic(e.target.value)}
-          className="w-full bg-surface-base/60 border border-surface-border/60 rounded-lg px-2 py-1.5 text-sm text-foreground outline-none focus:border-blue-500/50 transition-colors"
+          className="w-full bg-surface-base/90 border border-surface-border/60 rounded-lg px-2 py-1.5 text-sm text-foreground outline-none focus:border-blue-500/50 transition-colors"
         />
       </div>
 

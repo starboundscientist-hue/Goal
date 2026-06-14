@@ -369,7 +369,7 @@ export function TaskDetailModal({ task, onClose }: Props) {
                 onChange={e => setNewSubLabel(e.target.value)}
                 onKeyDown={handleSubInputKey}
                 placeholder="Add a subtask\u2026"
-                className="flex-1 bg-surface-base/80 border border-surface-border rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-blue-500/60 focus:bg-surface-base transition-colors"
+                className="flex-1 bg-surface-base/90 border border-surface-border rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-blue-500/60 focus:bg-surface-base transition-colors"
                 data-testid="subtask-input"
               />
               <button
@@ -581,7 +581,7 @@ function DueRow({ value, onChange }: { value: string | undefined; onChange: (v: 
             }
           }}
           data-testid="task-due-input"
-          className="bg-surface-base/80 border border-surface-border rounded-md px-2 py-0.5 text-xs text-foreground outline-none focus:border-blue-500/60 [color-scheme:dark]"
+          className="bg-surface-base/90 border border-surface-border rounded-md px-2 py-0.5 text-xs text-foreground outline-none focus:border-blue-500/60 [color-scheme:dark]"
         />
       </MetaRow>
     );

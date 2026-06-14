@@ -19,13 +19,13 @@ export function ActivityHeatmap({ logs }: Props) {
   };
 
   return (
-    <div className="bg-surface-card/40 backdrop-blur-xl border border-surface-border/40 rounded-xl p-4">
+    <div className="bg-surface-card/90 backdrop-blur-xl border border-surface-border/40 rounded-xl p-4">
       <div className="flex items-center justify-between mb-3">
         <span className="text-xs font-semibold text-muted-foreground/70 tracking-wider">ACTIVITY GRID</span>
         <div className="flex items-center gap-1.5">
           <span className="text-[10px] text-muted-foreground/50">Less</span>
           <div className="w-2.5 h-2.5 rounded-[2px] bg-surface-border/40" />
-          <div className="w-2.5 h-2.5 rounded-[2px] bg-surface-muted/40" />
+          <div className="w-2.5 h-2.5 rounded-[2px] bg-surface-muted/80" />
           <div className="w-2.5 h-2.5 rounded-[2px] bg-zinc-400/60" />
           <div className="w-2.5 h-2.5 rounded-[2px] bg-zinc-500/60" />
           <div className="w-2.5 h-2.5 rounded-[2px] bg-zinc-600/60" />

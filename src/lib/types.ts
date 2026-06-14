@@ -4,30 +4,39 @@ export type ClusterId =
   | 'beta'
   | 'gamma'
   | 'delta'
-  | 'epsilon';
+  | 'epsilon'
+  | 'sde_engineering'
+  | 'ml_engineering'
+  | 'fullstack_product';
 
 export type AnyClusterId = ClusterId | 'work' | 'unknown';
 
 export const CLUSTER_COLORS: Record<AnyClusterId, string> = {
-  foundations: '#94a3b8',
-  alpha:       '#60a5fa',
-  beta:        '#34d399',
-  gamma:       '#fbbf24',
-  delta:       '#a78bfa',
-  epsilon:     '#fb7185',
-  work:        '#6b7280',
-  unknown:     '#3f3f46',
+  foundations:       '#94a3b8',
+  alpha:             '#60a5fa',
+  beta:              '#34d399',
+  gamma:             '#fbbf24',
+  delta:             '#a78bfa',
+  epsilon:           '#fb7185',
+  sde_engineering:   '#f97316',
+  ml_engineering:    '#06b6d4',
+  fullstack_product: '#ec4899',
+  work:              '#6b7280',
+  unknown:           '#3f3f46',
 };
 
 export const CLUSTER_LABELS: Record<AnyClusterId, string> = {
-  foundations: 'Foundations',
-  alpha:       'Frontier AI/ML',
-  beta:        'Embodied AI',
-  gamma:       'Embedded Systems',
-  delta:       'Comp Physics',
-  epsilon:     'Infra / MLOps',
-  work:        'Work',
-  unknown:     'Unknown',
+  foundations:       'Foundations',
+  alpha:             'Frontier AI/ML',
+  beta:              'Embodied AI',
+  gamma:             'Embedded Systems',
+  delta:             'Comp Physics',
+  epsilon:           'Infra / MLOps',
+  sde_engineering:   'SDE Engineering',
+  ml_engineering:    'ML Engineering',
+  fullstack_product: 'Fullstack / Product',
+  work:              'Work',
+  unknown:           'Unknown',
 };
 
 export interface Subtopic {
@@ -49,6 +58,7 @@ export interface Topic {
   id: string;
   label: string;
   done: boolean;
+  order: number;
   subtopics?: Subtopic[];
 }
 
@@ -56,6 +66,7 @@ export interface Resource {
   id: string;
   label: string;
   done: boolean;
+  order: number;
   finished_date?: string;
 }
 
@@ -63,6 +74,7 @@ export interface Project {
   id: string;
   label: string;
   status: 'not_started' | 'in_progress' | 'done';
+  order: number;
   artifact_url?: string;
   finished_date?: string;
   notes?: string;
@@ -108,6 +120,7 @@ export interface WorkTask {
   id: string;
   title: string;
   status: TaskStatus;
+  order: number;
   due?: string;
   blocker?: string;
   git_repo?: string;

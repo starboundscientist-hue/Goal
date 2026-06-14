@@ -19,7 +19,7 @@ export function ClusterCard({ cluster, logs }: Props) {
   return (
     <div
       onClick={() => navigate(`/cluster/${cluster.id}`)}
-      className="relative flex items-start gap-4 p-4 rounded-xl bg-surface-card/60 backdrop-blur-xl border border-surface-border/60 hover:border-surface-border hover:bg-surface-card/80 transition-all cursor-pointer group"
+      className="relative flex items-start gap-4 p-4 rounded-xl bg-surface-card/90 backdrop-blur-xl border border-surface-border/60 hover:border-surface-border hover:bg-surface-card/80 transition-all cursor-pointer group"
       style={{ '--status-color': CLUSTER_COLORS[cluster.id] } as React.CSSProperties}
     >
       <div
@@ -50,7 +50,7 @@ export function ClusterCard({ cluster, logs }: Props) {
       <div className="flex-1 min-w-0">
         <div className="font-medium text-foreground">{cluster.name}</div>
         <div className="flex items-center gap-2 mt-1">
-          <span className={`inline-block rounded-full px-1.5 py-0.5 text-[10px] font-medium ${status.color === 'text-emerald-400' ? 'bg-emerald-500/10 text-emerald-400' : status.color === 'text-amber-400' ? 'bg-amber-500/10 text-amber-400' : status.color === 'text-orange-400' ? 'bg-orange-500/10 text-orange-400' : 'bg-surface-muted/60 text-muted-foreground'}`}>
+          <span className={`inline-block rounded-full px-1.5 py-0.5 text-[10px] font-medium ${status.color === 'text-emerald-400' ? 'bg-emerald-500/10 text-emerald-400' : status.color === 'text-amber-400' ? 'bg-amber-500/10 text-amber-400' : status.color === 'text-orange-400' ? 'bg-orange-500/10 text-orange-400' : 'bg-surface-muted/80 text-muted-foreground'}`}>
             {status.label}
           </span>
           <span className="text-xs text-muted-foreground/60">
@@ -61,7 +61,7 @@ export function ClusterCard({ cluster, logs }: Props) {
           {(['study', 'experiment', 'artifact'] as const).map((field) => (
             <span
               key={field}
-              className={`w-2 h-2 rounded-full transition-colors ${cluster.checklist[field] ? 'bg-emerald-400/80' : 'bg-surface-muted/40'}`}
+              className={`w-2 h-2 rounded-full transition-colors ${cluster.checklist[field] ? 'bg-emerald-400/80' : 'bg-surface-muted/80'}`}
               title={field.charAt(0).toUpperCase() + field.slice(1)}
             />
           ))}
