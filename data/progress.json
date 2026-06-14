@@ -20,92 +20,588 @@
       },
       "topics": [
         {
-          "id": "linear_algebra",
-          "label": "FS.1 Math (linear algebra, SVD, eigen, matrix calculus)",
+          "id": "f_fs_1_math_linear_algebra",
+          "label": "FS.1 Math \u2014 linear algebra",
           "done": false,
-          "order": 0
-        },
-        {
-          "id": "probability",
-          "label": "FS.1 Math (probability & statistics, Bayesian, Monte Carlo, info theory)",
-          "done": false,
+          "order": 0,
           "subtopics": [
             {
-              "id": "sub_1779689347369",
-              "label": "Distributions",
+              "id": "sub_matrix_calculus_derivatives_of_vector_matrix_funct",
+              "label": "Matrix calculus: derivatives of vector/matrix functions, Jacobians, Hessians",
+              "done": false
+            },
+            {
+              "id": "sub_singular_value_decomposition_svd_full_vs_economy_t",
+              "label": "Singular Value Decomposition (SVD): full vs economy, truncated SVD, low-rank approximation",
+              "done": false
+            },
+            {
+              "id": "sub_eigendecomposition_eigenvalues_eigenvectors_diagon",
+              "label": "Eigendecomposition: eigenvalues, eigenvectors, diagonalization, matrix powers",
+              "done": false
+            },
+            {
+              "id": "sub_qr_decomposition_gram_schmidt_householder_reflecti",
+              "label": "QR decomposition: Gram-Schmidt, Householder reflections",
+              "done": false
+            },
+            {
+              "id": "sub_cholesky_decomposition_positive_definite_matrices_",
+              "label": "Cholesky decomposition: positive definite matrices, LL\u1d40",
+              "done": false
+            },
+            {
+              "id": "sub_matrix_norms_frobenius_spectral_nuclear_condition_",
+              "label": "Matrix norms: Frobenius, spectral, nuclear; condition number",
               "done": false
             }
-          ],
-          "order": 1
+          ]
         },
         {
-          "id": "optimization",
-          "label": "FS.1 Math (optimization \u2014 convex, gradient descent, Lagrangian)",
+          "id": "f_fs_1_math_probability_statistics",
+          "label": "FS.1 Math \u2014 probability & statistics",
           "done": false,
-          "subtopics": [],
-          "order": 2
+          "order": 1,
+          "subtopics": [
+            {
+              "id": "sub_bayesian_inference_prior_likelihood_posterior_conj",
+              "label": "Bayesian inference: prior, likelihood, posterior, conjugate priors, MAP estimation",
+              "done": false
+            },
+            {
+              "id": "sub_monte_carlo_methods_rejection_sampling_importance_",
+              "label": "Monte Carlo methods: rejection sampling, importance sampling, MCMC (Metropolis-Hastings, HMC)",
+              "done": false
+            },
+            {
+              "id": "sub_information_theory_entropy_cross_entropy_kl_diverg",
+              "label": "Information theory: entropy, cross-entropy, KL-divergence, mutual information, Jensen-Shannon divergence",
+              "done": false
+            },
+            {
+              "id": "sub_hypothesis_testing_null_alternative_p_value_type_i",
+              "label": "Hypothesis testing: null/alternative, p-value, type I/II error, power analysis, multiple testing correction",
+              "done": false
+            },
+            {
+              "id": "sub_distributions_gaussian_bernoulli_binomial_poisson_",
+              "label": "Distributions: Gaussian, Bernoulli, Binomial, Poisson, Beta, Gamma, Dirichlet \u2014 properties and conjugacy",
+              "done": false
+            },
+            {
+              "id": "sub_exponential_family_sufficient_statistics_natural_p",
+              "label": "Exponential family: sufficient statistics, natural parameters, link functions",
+              "done": false
+            }
+          ]
         },
         {
-          "id": "numerical",
-          "label": "FS.1 Math (numerical methods \u2014 integration, root-finding, ODE solvers)",
+          "id": "f_fs_1_math_optimization",
+          "label": "FS.1 Math \u2014 optimization",
           "done": false,
-          "order": 3
+          "order": 2,
+          "subtopics": [
+            {
+              "id": "sub_convex_optimization_convex_sets_functions_gradient",
+              "label": "Convex optimization: convex sets/functions, gradient descent, Newton's method, BFGS, L-BFGS",
+              "done": false
+            },
+            {
+              "id": "sub_constrained_optimization_lagrange_multipliers_kkt_",
+              "label": "Constrained optimization: Lagrange multipliers, KKT conditions, duality, penalty methods",
+              "done": false
+            },
+            {
+              "id": "sub_stochastic_methods_sgd_momentum_nesterov_adam_adam",
+              "label": "Stochastic methods: SGD, momentum (Nesterov), Adam, AdamW, RMSprop, learning rate schedules",
+              "done": false
+            },
+            {
+              "id": "sub_line_search_armijo_condition_wolfe_conditions_back",
+              "label": "Line search: Armijo condition, Wolfe conditions, backtracking",
+              "done": false
+            },
+            {
+              "id": "sub_proximal_methods_proximal_gradient_admm_proximal_o",
+              "label": "Proximal methods: proximal gradient, ADMM, proximal operators",
+              "done": false
+            },
+            {
+              "id": "sub_global_optimization_simulated_annealing_evolutiona",
+              "label": "Global optimization: simulated annealing, evolutionary strategies, Bayesian optimization",
+              "done": false
+            }
+          ]
         },
         {
-          "id": "os_concepts",
-          "label": "FS.2 Computer systems (OS \u2014 processes, virtual memory, file systems)",
+          "id": "f_fs_1_math_numerical_methods",
+          "label": "FS.1 Math \u2014 numerical methods",
           "done": false,
-          "order": 4
+          "order": 3,
+          "subtopics": [
+            {
+              "id": "sub_floating_point_arithmetic_ieee_754_precision_overf",
+              "label": "Floating-point arithmetic: IEEE 754, precision, overflow/underflow, catastrophic cancellation",
+              "done": false
+            },
+            {
+              "id": "sub_numerical_integration_newton_cotes_gaussian_quadra",
+              "label": "Numerical integration: Newton-Cotes, Gaussian quadrature, Monte Carlo integration",
+              "done": false
+            },
+            {
+              "id": "sub_root_finding_newton_raphson_secant_method_bisectio",
+              "label": "Root-finding: Newton-Raphson, secant method, bisection, Brent's method",
+              "done": false
+            },
+            {
+              "id": "sub_ode_solvers_euler_rk4_adaptive_step_dormand_prince",
+              "label": "ODE solvers: Euler, RK4, adaptive step (Dormand-Prince), symplectic integrators (Verlet)",
+              "done": false
+            },
+            {
+              "id": "sub_interpolation_polynomial_spline_cubic_barycentric",
+              "label": "Interpolation: polynomial, spline (cubic), barycentric",
+              "done": false
+            },
+            {
+              "id": "sub_fast_fourier_transform_cooley_tukey_algorithm_appl",
+              "label": "Fast Fourier Transform: Cooley-Tukey algorithm, applications in convolution/spectral methods",
+              "done": false
+            }
+          ]
         },
         {
-          "id": "computer_arch",
-          "label": "FS.2 Computer systems (architecture \u2014 pipeline, cache, RISC-V/x86)",
+          "id": "f_fs_2_computer_systems_os",
+          "label": "FS.2 Computer systems \u2014 OS",
           "done": false,
-          "order": 5
+          "order": 4,
+          "subtopics": [
+            {
+              "id": "sub_processes_pcb_context_switch_fork_exec_wait_proces",
+              "label": "Processes: PCB, context switch, fork/exec/wait, process states, zombie/orphan processes",
+              "done": false
+            },
+            {
+              "id": "sub_threads_kernel_vs_user_threads_pthreads_thread_loc",
+              "label": "Threads: kernel vs user threads, pthreads, thread-local storage, thread pools",
+              "done": false
+            },
+            {
+              "id": "sub_virtual_memory_page_tables_multi_level_tlb_page_fa",
+              "label": "Virtual memory: page tables (multi-level), TLB, page faults, swapping, mmap, huge pages",
+              "done": false
+            },
+            {
+              "id": "sub_file_systems_inodes_ext4_layout_journaling_fuse_vf",
+              "label": "File systems: inodes, ext4 layout, journaling, FUSE, VFS layer, directory structure",
+              "done": false
+            },
+            {
+              "id": "sub_scheduling_cfs_nice_values_cgroups_real_time_class",
+              "label": "Scheduling: CFS, nice values, cgroups, real-time classes (SCHED_FIFO, SCHED_RR, SCHED_DEADLINE)",
+              "done": false
+            },
+            {
+              "id": "sub_ipc_pipes_fifo_sockets_shared_memory_shmget_mmap_s",
+              "label": "IPC: pipes, fifo, sockets, shared memory (shmget/mmap), semaphores, signals",
+              "done": false
+            }
+          ]
         },
         {
-          "id": "gpu_arch",
-          "label": "FS.2 Computer systems (GPU architecture \u2014 SM, warps, tensor cores)",
+          "id": "f_fs_2_computer_systems_architecture",
+          "label": "FS.2 Computer systems \u2014 architecture",
           "done": false,
-          "order": 6
+          "order": 5,
+          "subtopics": [
+            {
+              "id": "sub_cpu_pipeline_fetch_decode_execute_memory_writeback",
+              "label": "CPU pipeline: fetch, decode, execute, memory, writeback; hazards (data, control, structural)",
+              "done": false
+            },
+            {
+              "id": "sub_branch_prediction_2_bit_saturating_counter_correla",
+              "label": "Branch prediction: 2-bit saturating counter, correlating predictors, BTB, RAS",
+              "done": false
+            },
+            {
+              "id": "sub_out_of_order_execution_tomasulo_algorithm_reorder_",
+              "label": "Out-of-order execution: Tomasulo algorithm, reorder buffer, reservation stations",
+              "done": false
+            },
+            {
+              "id": "sub_cache_hierarchy_l1_l2_l3_inclusivity_associativity",
+              "label": "Cache hierarchy: L1/L2/L3, inclusivity, associativity, replacement policy (LRU, pseudo-LRU)",
+              "done": false
+            },
+            {
+              "id": "sub_cache_coherence_mesi_protocol_moesi_directory_base",
+              "label": "Cache coherence: MESI protocol, MOESI, directory-based, snooping",
+              "done": false
+            },
+            {
+              "id": "sub_numa_topology_memory_latency_first_touch_policy_th",
+              "label": "NUMA: topology, memory latency, first-touch policy, thread/process binding (numactl)",
+              "done": false
+            }
+          ]
         },
         {
-          "id": "networking",
-          "label": "FS.3 Networking (TCP/IP, sockets, InfiniBand, RDMA, RoCE)",
+          "id": "f_fs_2_computer_systems_gpu_architecture",
+          "label": "FS.2 Computer systems \u2014 GPU architecture",
           "done": false,
-          "order": 7
+          "order": 6,
+          "subtopics": [
+            {
+              "id": "sub_streaming_multiprocessor_sm_warp_schedulers_warp_d",
+              "label": "Streaming Multiprocessor (SM): warp schedulers, warp divergence, convergence patterns",
+              "done": false
+            },
+            {
+              "id": "sub_memory_hierarchy_registers_shared_memory_banks_ban",
+              "label": "Memory hierarchy: registers, shared memory (banks, bank conflicts), L1/L2 cache, global memory (HBM/HBM2/HBM3)",
+              "done": false
+            },
+            {
+              "id": "sub_occupancy_register_pressure_shared_memory_per_sm_s",
+              "label": "Occupancy: register pressure, shared memory per SM, scheduling, occupancy calculator",
+              "done": false
+            },
+            {
+              "id": "sub_tensor_cores_4x4x4_mma_precision_modes_fp16_bf16_t",
+              "label": "Tensor cores: 4x4x4 MMA, precision modes (fp16, bf16, tf32, int8, int4), throughput",
+              "done": false
+            },
+            {
+              "id": "sub_sm_generations_maxwell_pascal_volta_turing_ampere_",
+              "label": "SM generations: Maxwell \u2192 Pascal \u2192 Volta \u2192 Turing \u2192 Ampere \u2192 Hopper \u2014 key differences",
+              "done": false
+            },
+            {
+              "id": "sub_nvlink_nvswitch_topology_direct_gpu_gpu_access_pee",
+              "label": "NVLink/NVSwitch: topology, direct GPU-GPU access, peer mappings, bandwidth",
+              "done": false
+            }
+          ]
         },
         {
-          "id": "compilers",
-          "label": "FS.4 Compilers (LLVM, MLIR, XLA, TVM, code generation)",
+          "id": "f_fs_3_networking",
+          "label": "FS.3 Networking",
           "done": false,
-          "order": 8
+          "order": 7,
+          "subtopics": [
+            {
+              "id": "sub_tcp_ip_stack_ethernet_frames_ip_routing_subnetting",
+              "label": "TCP/IP stack: Ethernet (frames), IP (routing, subnetting, CIDR), TCP (flow control, congestion control, Nagle, slow start, fast retransmit, SACK), UDP",
+              "done": false
+            },
+            {
+              "id": "sub_bsd_socket_api_socket_bind_listen_accept_connect_s",
+              "label": "BSD socket API: socket, bind, listen, accept, connect, send, recv, select/poll/epoll, non-blocking I/O",
+              "done": false
+            },
+            {
+              "id": "sub_high_performance_i_o_io_uring_completion_queue_sub",
+              "label": "High-performance I/O: io_uring (completion queue, submission queue, link, splice, buffer selection), kernel bypass (DPDK, XDP)",
+              "done": false
+            },
+            {
+              "id": "sub_infiniband_rc_reliable_connection_uc_ud_rdma_verbs",
+              "label": "InfiniBand: RC (reliable connection), UC, UD; RDMA verbs (send/recv, read/write, atomic); subnet manager",
+              "done": false
+            },
+            {
+              "id": "sub_roce_v2_rdma_over_converged_ethernet_pfc_dcqcn_ecn",
+              "label": "RoCE v2: RDMA over Converged Ethernet, PFC, DCQCN, ECN marking",
+              "done": false
+            },
+            {
+              "id": "sub_nccl_all_reduce_ring_tree_rabenseifner_all_gather_",
+              "label": "NCCL: all-reduce (ring, tree/rabenseifner), all-gather, reduce-scatter, topology-aware communication",
+              "done": false
+            }
+          ]
+        },
+        {
+          "id": "f_fs_4_compilers",
+          "label": "FS.4 Compilers",
+          "done": false,
+          "order": 8,
+          "subtopics": [
+            {
+              "id": "sub_compiler_pipeline_lexer_parser_ast_semantic_analys",
+              "label": "Compiler pipeline: lexer \u2192 parser \u2192 AST \u2192 semantic analysis \u2192 IR \u2192 optimization \u2192 code generation",
+              "done": false
+            },
+            {
+              "id": "sub_llvm_ir_ssa_basic_blocks_phi_nodes_optimization_pa",
+              "label": "LLVM: IR (SSA, basic blocks, phi nodes), optimization passes (mem2reg, GVN, inlining, loop unrolling, DCE), target description, MC layer, JIT (ORC JIT)",
+              "done": false
+            },
+            {
+              "id": "sub_mlir_dialects_linalg_affine_scf_func_arith_vector_",
+              "label": "MLIR: dialects (linalg, affine, scf, func, arith, vector), operation semantics, pass pipeline, dialect conversion, pattern rewriting",
+              "done": false
+            },
+            {
+              "id": "sub_xla_hlo_optimization_llvm_ir_fused_ops_layout_assi",
+              "label": "XLA: HLO \u2192 optimization \u2192 LLVM IR, fused ops, layout assignment, Sharding for TPU/GPU",
+              "done": false
+            },
+            {
+              "id": "sub_tvm_relay_ir_auto_tuning_autotvm_ansor_schedule_te",
+              "label": "TVM: Relay IR, auto-tuning (AutoTVM, Ansor), schedule templates, code generation for CPU/GPU/MCU",
+              "done": false
+            },
+            {
+              "id": "sub_triton_compiler_tir_tritongpu_dialect_llvm_ir_bloc",
+              "label": "Triton compiler: TIR \u2192 TritonGPU dialect \u2192 LLVM IR, block-level analysis, shared memory allocation, automatic pipeline",
+              "done": false
+            }
+          ]
         }
       ],
       "resources": [
         {
-          "id": "mml_book",
-          "label": "Mathematics for Machine Learning (Deisenroth)",
+          "id": "res_mathematics_for_machine_learning_deisenroth_faisal",
+          "label": "Mathematics for Machine Learning (Deisenroth, Faisal, Ong) \u2014 free at mml-book.github.io",
           "done": false,
           "order": 0
         },
         {
-          "id": "cohen_stats",
-          "label": "Modern Statistics (Mike X Cohen)",
+          "id": "res_linear_algebra_done_right_axler_conceptual_depth_p",
+          "label": "Linear Algebra Done Right (Axler) \u2014 conceptual depth, proof-based",
           "done": false,
-          "order": 1
+          "order": 0
         },
         {
-          "id": "cs61c",
-          "label": "CS 61C: Machine Structures (UC Berkeley)",
+          "id": "res_3blue1brown_essence_of_linear_algebra_youtube_intu",
+          "label": "3Blue1Brown Essence of Linear Algebra (YouTube) \u2014 intuition",
           "done": false,
-          "order": 2
+          "order": 0
+        },
+        {
+          "id": "res_mit_18_06_linear_algebra_strang_lectures_on_svd_ei",
+          "label": "MIT 18.06 Linear Algebra (Strang) \u2014 lectures on SVD, eigen",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_modern_statistics_intuition_math_python_r_mike_x_c",
+          "label": "Modern Statistics: Intuition, Math, Python, R (Mike X Cohen) \u2014 code-first exercises",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_probability_and_statistics_for_computer_science_fo",
+          "label": "Probability and Statistics for Computer Science (Forsyth) \u2014 practical, code-heavy",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_bayesian_data_analysis_gelman_et_al_mcmc_model_com",
+          "label": "Bayesian Data Analysis (Gelman et al.) \u2014 MCMC, model comparison",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_convex_optimization_boyd_vandenberghe_free_online_",
+          "label": "Convex Optimization (Boyd & Vandenberghe) \u2014 free online, chapters 1-5, 9",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_numerical_optimization_nocedal_wright_comprehensiv",
+          "label": "Numerical Optimization (Nocedal & Wright) \u2014 comprehensive reference",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_adam_optimization_paper_kingma_ba_2014_",
+          "label": "Adam optimization paper (Kingma & Ba, 2014)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_numerical_recipes_press_et_al_reference_for_numeri",
+          "label": "Numerical Recipes (Press et al.) \u2014 reference for numerical methods",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_cleve_moler_s_numerical_computing_with_matlab_free",
+          "label": "Cleve Moler's Numerical Computing with MATLAB (free online, concepts language-agnostic)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_operating_systems_three_easy_pieces_remzi_andrea_a",
+          "label": "Operating Systems: Three Easy Pieces (Remzi & Andrea Arpaci-Dusseau) \u2014 free online",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_linux_kernel_development_love_practical_linux_inte",
+          "label": "Linux Kernel Development (Love) \u2014 practical Linux internals",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_cs_162_uc_berkeley_lectures_on_youtube",
+          "label": "CS 162 (UC Berkeley) lectures on YouTube",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_computer_architecture_a_quantitative_approach_henn",
+          "label": "Computer Architecture: A Quantitative Approach (Hennessy & Patterson) \u2014 chapters 1-3, 5",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_computer_organization_and_design_patterson_henness",
+          "label": "Computer Organization and Design (Patterson & Hennessy) \u2014 RISC-V edition",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_what_every_programmer_should_know_about_memory_dre",
+          "label": "What Every Programmer Should Know About Memory (Drepper) \u2014 Linux memory deep dive",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_programming_massively_parallel_processors_kirk_hwu",
+          "label": "Programming Massively Parallel Processors (Kirk & Hwu) \u2014 GPU architecture chapters",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_nvidia_cuda_programming_guide_occupancy_memory_hie",
+          "label": "NVIDIA CUDA Programming Guide \u2014 occupancy, memory hierarchy",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_hopper_h100_architecture_whitepaper_nvidia_",
+          "label": "Hopper H100 Architecture Whitepaper (NVIDIA)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_tcp_ip_illustrated_stevens_chapters_1_3_12_13_17_1",
+          "label": "TCP/IP Illustrated (Stevens) \u2014 chapters 1-3, 12-13, 17-18",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_beej_s_guide_to_network_programming_beej_practical",
+          "label": "Beej's Guide to Network Programming (Beej) \u2014 practical sockets in C",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_lord_of_the_io_uring_youtube_scylladb_architecture",
+          "label": "Lord of the io_uring (YouTube, ScyllaDB) \u2014 architecture and API",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_nccl_documentation_nvidia_collective_operations",
+          "label": "NCCL documentation (NVIDIA) \u2014 collective operations",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_engineering_a_compiler_cooper_torczon_chapters_1_5",
+          "label": "Engineering a Compiler (Cooper & Torczon) \u2014 chapters 1-5, 8, 10",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_llvm_kaleidoscope_tutorial_llvm_org_build_a_toy_co",
+          "label": "LLVM Kaleidoscope tutorial (llvm.org) \u2014 build a toy compiler front-to-back",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_mlir_a_compiler_infrastructure_for_the_end_of_moor",
+          "label": "MLIR: A Compiler Infrastructure for the End of Moore's Law (Lattner et al., 2019)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_tvm_documentation_tvm_apache_org_getting_started_a",
+          "label": "TVM documentation (tvm.apache.org) \u2014 getting started, auto-tuning",
+          "done": false,
+          "order": 0
         }
       ],
       "projects": [
         {
-          "id": "svd_scratch",
-          "label": "Implement SVD from scratch in NumPy, compress an image, publish blog post",
+          "id": "proj_implement_svd_from_scratch_in_numpy_use_it_to_comp",
+          "label": "Implement SVD from scratch in NumPy, use it to compress an image, blog the derivation",
+          "status": "not_started",
+          "order": 0
+        },
+        {
+          "id": "proj_implement_qr_decomposition_via_gram_schmidt_benchm",
+          "label": "Implement QR decomposition via Gram-Schmidt, benchmark against NumPy",
+          "status": "not_started",
+          "order": 0
+        },
+        {
+          "id": "proj_implement_mcmc_metropolis_hastings_from_scratch_to",
+          "label": "Implement MCMC (Metropolis-Hastings) from scratch to sample from a posterior; verify against analytical solution",
+          "status": "not_started",
+          "order": 0
+        },
+        {
+          "id": "proj_compute_kl_divergence_between_two_distributions_an",
+          "label": "Compute KL-divergence between two distributions and interpret",
+          "status": "not_started",
+          "order": 0
+        },
+        {
+          "id": "proj_implement_adam_optimizer_from_scratch_in_numpy_ver",
+          "label": "Implement Adam optimizer from scratch in NumPy, verify against PyTorch on a logistic regression task",
+          "status": "not_started",
+          "order": 0
+        },
+        {
+          "id": "proj_implement_rk4_ode_solver_simulate_double_pendulum_",
+          "label": "Implement RK4 ODE solver; simulate double pendulum and compare energy conservation vs symplectic integrator",
+          "status": "not_started",
+          "order": 0
+        },
+        {
+          "id": "proj_write_a_c_program_that_creates_processes_via_fork_",
+          "label": "Write a C++ program that creates processes via fork(), communicates via shared memory, and measures context switch latency",
+          "status": "not_started",
+          "order": 0
+        },
+        {
+          "id": "proj_write_a_c_program_that_deliberately_causes_tlb_mis",
+          "label": "Write a C++ program that deliberately causes TLB misses and cache misses; use perf stat to measure them; explain results",
+          "status": "not_started",
+          "order": 0
+        },
+        {
+          "id": "proj_profile_a_matrix_multiplication_kernel_at_differen",
+          "label": "Profile a matrix multiplication kernel at different block/tile sizes using Nsight Compute; plot occupancy vs performance",
+          "status": "not_started",
+          "order": 0
+        },
+        {
+          "id": "proj_write_a_tcp_echo_server_and_client_in_c_with_epoll",
+          "label": "Write a TCP echo server and client in C++ with epoll; benchmark throughput; extend with io_uring; compare results",
+          "status": "not_started",
+          "order": 0
+        },
+        {
+          "id": "proj_write_a_minimal_expression_evaluator_in_llvm_ir_co",
+          "label": "Write a minimal expression evaluator in LLVM IR (compile + JIT); then write a Triton kernel for elementwise addition; compare against handwritten CUDA",
           "status": "not_started",
           "order": 0
         }
@@ -122,160 +618,646 @@
       },
       "topics": [
         {
-          "id": "transformers",
-          "label": "\u03b1.1 Transformer architectures (self-attn, RoPE, MoE, multimodal)",
+          "id": "alpha__1_transformer_architectures_ssms_moe_multimodal_m",
+          "label": "\u03b1.1 Transformer architectures, SSMs, MoE, multimodal models",
           "done": false,
+          "order": 0,
           "subtopics": [
             {
-              "id": "sub_1780853231975",
-              "label": "sd",
-              "done": false,
-              "order": 0
+              "id": "sub_attention_scaled_dot_product_multi_head_cross_atte",
+              "label": "Attention: scaled dot-product, multi-head, cross-attention, causal masking, flash attention",
+              "done": false
             },
             {
-              "id": "sub_1780853224985",
-              "label": "s",
-              "done": false,
-              "order": 1
+              "id": "sub_positional_encodings_sinusoidal_learned_rope_alibi",
+              "label": "Positional encodings: sinusoidal, learned, RoPE, ALiBi, relative position bias",
+              "done": false
+            },
+            {
+              "id": "sub_transformer_variants_encoder_only_bert_decoder_onl",
+              "label": "Transformer variants: encoder-only (BERT), decoder-only (GPT), encoder-decoder (T5), prefix LM",
+              "done": false
+            },
+            {
+              "id": "sub_state_space_models_s4_structured_state_space_mamba",
+              "label": "State-space models: S4 (structured state space), Mamba (selective SSM), Mamba-2",
+              "done": false
+            },
+            {
+              "id": "sub_mixture_of_experts_sparse_moe_layers_top_k_routing",
+              "label": "Mixture-of-Experts: sparse MoE layers, top-k routing, load balancing loss, expert parallelism",
+              "done": false
+            },
+            {
+              "id": "sub_multimodal_vision_encoders_vit_siglip_cross_attent",
+              "label": "Multimodal: vision encoders (ViT, SigLIP), cross-attention fusion, VLA models (RT-2, Octo, PaLM-E)",
+              "done": false
+            },
+            {
+              "id": "sub_kv_cache_caching_memory_management_pagedattention_",
+              "label": "KV cache: caching, memory management, PagedAttention, continuous batching",
+              "done": false
+            },
+            {
+              "id": "sub_long_context_sparse_attention_sliding_window_dilat",
+              "label": "Long context: sparse attention, sliding window, dilated attention, ring attention for >1M tokens",
+              "done": false
             }
-          ],
-          "order": 0
+          ]
         },
         {
-          "id": "ssm",
-          "label": "\u03b1.1 State-space models (Mamba, S4, Mamba-2)",
-          "done": false,
-          "order": 1
-        },
-        {
-          "id": "distributed",
-          "label": "\u03b1.3 Distributed training (FSDP, DeepSpeed, Megatron, tensor/pipeline parallel)",
-          "done": false,
-          "order": 2
-        },
-        {
-          "id": "cuda",
-          "label": "\u03b1.4 GPU programming (CUDA, Triton, CUTLASS, kernel fusion, Nsight profiling)",
-          "done": false,
-          "order": 3
-        },
-        {
-          "id": "inference",
-          "label": "\u03b1.6 Inference optimization (GPTQ, AWQ, vLLM, TensorRT-LLM, ONNX Runtime)",
-          "done": false,
-          "order": 4
-        },
-        {
-          "id": "rl",
-          "label": "\u03b1.7 Reinforcement learning (PPO, SAC, RLHF, DPO, sim-to-real, multi-agent RL)",
-          "done": false,
-          "order": 5
-        },
-        {
-          "id": "data_pipelines",
-          "label": "\u03b1.8 Data pipelines (tokenization, streaming datasets, filtering/curation)",
-          "done": false,
-          "order": 6
-        },
-        {
-          "id": "mixed_precision",
-          "label": "\u03b1.5 Numerical stability (fp16/bf16, gradient accumulation, loss scaling)",
-          "done": false,
-          "order": 7
-        },
-        {
-          "id": "alpha__2_scaling_laws_training_dynamics_data_c",
+          "id": "alpha__2_scaling_laws_training_dynamics_data_curation_ev",
           "label": "\u03b1.2 Scaling laws, training dynamics, data curation, evaluation",
           "done": false,
-          "order": 8
+          "order": 1,
+          "subtopics": [
+            {
+              "id": "sub_scaling_laws_loss_vs_param_count_chinchilla_optima",
+              "label": "Scaling laws: loss vs param count, Chinchilla optimal compute, data scaling (Muennighoff), compute-optimal frontier",
+              "done": false
+            },
+            {
+              "id": "sub_training_dynamics_warmup_linear_cosine_lr_schedule",
+              "label": "Training dynamics: warmup (linear/cosine), LR schedules, batch size scaling, gradient noise scale, \u03bcP (maximal update parameterization)",
+              "done": false
+            },
+            {
+              "id": "sub_data_curation_deduplication_minhash_lsh_bloom_filt",
+              "label": "Data curation: deduplication (MinHash LSH, Bloom filters, particle dedup), quality filtering (fastText, perplexity), decontamination",
+              "done": false
+            },
+            {
+              "id": "sub_evaluation_perplexity_downstream_tasks_mmlu_humane",
+              "label": "Evaluation: perplexity, downstream tasks (MMLU, HumanEval, GSM8K, MATH, BigBench, HELM), LLM-as-judge, calibration (ECE)",
+              "done": false
+            },
+            {
+              "id": "sub_emergent_abilities_grokking_double_descent_phase_c",
+              "label": "Emergent abilities, grokking, double descent, phase changes in scaling",
+              "done": false
+            },
+            {
+              "id": "sub_synthetic_data_self_instruct_evol_instruct_rejecti",
+              "label": "Synthetic data: self-instruct, evol-instruct, rejection sampling, model-generated data for training",
+              "done": false
+            }
+          ]
+        },
+        {
+          "id": "alpha__3_distributed_training_fsdp_deepspeed_megatron_",
+          "label": "\u03b1.3 Distributed training (FSDP, DeepSpeed, Megatron)",
+          "done": false,
+          "order": 2,
+          "subtopics": [
+            {
+              "id": "sub_data_parallelism_ddp_all_reduce_gradients_gradient",
+              "label": "Data parallelism (DDP): all-reduce gradients, gradient accumulation, communication overhead",
+              "done": false
+            },
+            {
+              "id": "sub_fsdp_sharding_params_grads_optimizer_states_hybrid",
+              "label": "FSDP: sharding params/grads/optimizer states, hybrid sharding (HSDP), resharding strategies",
+              "done": false
+            },
+            {
+              "id": "sub_deepspeed_zero_stages_1_2_3_optimizer_state_partit",
+              "label": "DeepSpeed ZeRO stages (1/2/3): optimizer state partitioning, gradient partitioning, parameter partitioning, ZeRO-Offload, ZeRO-Infinity",
+              "done": false
+            },
+            {
+              "id": "sub_tensor_parallelism_column_row_linear_splits_megatr",
+              "label": "Tensor parallelism: column/row linear splits, Megatron-LM strategy, communication volume analysis",
+              "done": false
+            },
+            {
+              "id": "sub_pipeline_parallelism_gpipe_1f1b_schedule_interleav",
+              "label": "Pipeline parallelism: GPipe, 1F1B schedule, interleaved scheduling, bubble size analysis",
+              "done": false
+            },
+            {
+              "id": "sub_mixed_precision_fp16_bf16_training_gradient_scalin",
+              "label": "Mixed precision: fp16/bf16 training, gradient scaling, loss scaling, master weights",
+              "done": false
+            },
+            {
+              "id": "sub_activation_checkpointing_selective_full_layer_wise",
+              "label": "Activation checkpointing: selective, full, layer-wise, recomputation vs memory trade-off",
+              "done": false
+            },
+            {
+              "id": "sub_overlapping_comm_compute_async_all_reduce_double_b",
+              "label": "Overlapping comm/compute: async all-reduce, double buffering, pipeline flush",
+              "done": false
+            }
+          ]
+        },
+        {
+          "id": "alpha__4_gpu_programming_cuda_triton_cutlass_",
+          "label": "\u03b1.4 GPU programming (CUDA, Triton, CUTLASS)",
+          "done": false,
+          "order": 3,
+          "subtopics": [
+            {
+              "id": "sub_cuda_memory_hierarchy_global_shared_registers_loca",
+              "label": "CUDA memory hierarchy: global, shared, registers, local memory; coalesced vs strided access patterns",
+              "done": false
+            },
+            {
+              "id": "sub_thread_hierarchy_grid_block_warp_thread_occupancy_",
+              "label": "Thread hierarchy: grid \u2192 block \u2192 warp \u2192 thread; occupancy, warp divergence, bank conflicts on shared memory",
+              "done": false
+            },
+            {
+              "id": "sub_cuda_kernels_vector_addition_matrix_multiplication",
+              "label": "CUDA kernels: vector addition, matrix multiplication (naive \u2192 tiled \u2192 with shared memory \u2192 1D/2D block tiling)",
+              "done": false
+            },
+            {
+              "id": "sub_triton_block_level_programming_model_pointer_arith",
+              "label": "Triton: block-level programming model, pointer arithmetic, automatic tile scheduling, TMA (Hopper)",
+              "done": false
+            },
+            {
+              "id": "sub_cutlass_template_based_gemm_hierarchical_tiling_ep",
+              "label": "CUTLASS: template-based GEMM, hierarchical tiling, epilogue fusion (bias + ReLU), mixed precision",
+              "done": false
+            },
+            {
+              "id": "sub_kernel_fusion_fusing_elementwise_ops_horizontal_vs",
+              "label": "Kernel fusion: fusing elementwise ops, horizontal vs vertical fusion, flash attention as case study",
+              "done": false
+            },
+            {
+              "id": "sub_profiling_nsight_compute_kernel_level_occupancy_me",
+              "label": "Profiling: Nsight Compute (kernel-level: occupancy, memory, instruction stalls, roofline), Nsight Systems (timeline: streams, memcpy, kernel overlap)",
+              "done": false
+            }
+          ]
+        },
+        {
+          "id": "alpha__5_numerical_stability_mixed_precision_gradient_ac",
+          "label": "\u03b1.5 Numerical stability (mixed precision, gradient accumulation)",
+          "done": false,
+          "order": 4,
+          "subtopics": [
+            {
+              "id": "sub_fp16_vs_bf16_vs_fp32_dynamic_range_precision_overf",
+              "label": "fp16 vs bf16 vs fp32: dynamic range, precision, overflow/underflow behavior",
+              "done": false
+            },
+            {
+              "id": "sub_loss_scaling_static_vs_dynamic_gradient_histogram_",
+              "label": "Loss scaling: static vs dynamic, gradient histogram monitoring, overflow detection",
+              "done": false
+            },
+            {
+              "id": "sub_gradient_accumulation_effective_batch_size_bn_stat",
+              "label": "Gradient accumulation: effective batch size, BN statistics updates, loss scaling interaction",
+              "done": false
+            },
+            {
+              "id": "sub_stochastic_rounding_weight_decay_with_mixed_precis",
+              "label": "Stochastic rounding, weight decay with mixed precision, master weights (fp32 copy)",
+              "done": false
+            },
+            {
+              "id": "sub_numerical_debugging_loss_spikes_nan_detection_grad",
+              "label": "Numerical debugging: loss spikes, NaN detection, gradient clipping (norm vs value), log softmax stability",
+              "done": false
+            },
+            {
+              "id": "sub_log_sum_exp_trick_safe_softmax_numerically_stable_",
+              "label": "Log-sum-exp trick, safe softmax, numerically stable cross-entropy",
+              "done": false
+            }
+          ]
+        },
+        {
+          "id": "alpha__6_inference_optimization_quantization_distillatio",
+          "label": "\u03b1.6 Inference optimization (quantization, distillation, pruning, serving)",
+          "done": false,
+          "order": 5,
+          "subtopics": [
+            {
+              "id": "sub_ptq_int8_int4_nf4_quantization_symmetric_vs_asymme",
+              "label": "PTQ: INT8/INT4/NF4 quantization, symmetric vs asymmetric, per-tensor vs per-channel vs per-group",
+              "done": false
+            },
+            {
+              "id": "sub_qat_fake_quantization_straight_through_estimator_l",
+              "label": "QAT: fake quantization, straight-through estimator, learned step size (LSQ), quantization-aware fine-tuning",
+              "done": false
+            },
+            {
+              "id": "sub_gptq_approximate_hessian_based_weight_quantization",
+              "label": "GPTQ: approximate Hessian-based weight quantization, group size, dampening",
+              "done": false
+            },
+            {
+              "id": "sub_awq_activation_aware_weight_quantization_per_group",
+              "label": "AWQ: activation-aware weight quantization, per-group scaling, equivalent transformation",
+              "done": false
+            },
+            {
+              "id": "sub_distillation_logit_based_kd_feature_based_fitnets_",
+              "label": "Distillation: logit-based (KD), feature-based (FitNets), on-policy vs off-policy, sequence-level distillation",
+              "done": false
+            },
+            {
+              "id": "sub_pruning_unstructured_magnitude_sparsegpt_structure",
+              "label": "Pruning: unstructured (magnitude, SparseGPT), structured (attention head pruning, layer removal)",
+              "done": false
+            },
+            {
+              "id": "sub_vllm_pagedattention_continuous_batching_kv_cache_m",
+              "label": "vLLM: PagedAttention, continuous batching, KV cache management, prefix caching",
+              "done": false
+            },
+            {
+              "id": "sub_tensorrt_llm_graph_optimization_plugin_kernels_in_",
+              "label": "TensorRT-LLM: graph optimization, plugin kernels, in-flight batching, INT4/FP8 quantization",
+              "done": false
+            }
+          ]
+        },
+        {
+          "id": "alpha__7_reinforcement_learning_ppo_sac_rlhf_dpo_sim_to_",
+          "label": "\u03b1.7 Reinforcement learning (PPO, SAC, RLHF, DPO, sim-to-real, multi-agent RL)",
+          "done": false,
+          "order": 6,
+          "subtopics": [
+            {
+              "id": "sub_classic_rl_mdps_policy_gradient_theorem_reinforce_",
+              "label": "Classic RL: MDPs, policy gradient theorem, REINFORCE, advantage estimation (GAE)",
+              "done": false
+            },
+            {
+              "id": "sub_ppo_clipped_surrogate_objective_adaptive_kl_penalt",
+              "label": "PPO: clipped surrogate objective, adaptive KL penalty, trust region, PPO in continuous action spaces",
+              "done": false
+            },
+            {
+              "id": "sub_sac_maximum_entropy_rl_twin_q_networks_automatic_t",
+              "label": "SAC: maximum entropy RL, twin Q-networks, automatic temperature tuning, soft policy evaluation",
+              "done": false
+            },
+            {
+              "id": "sub_rlhf_reward_modeling_ppo_in_language_kl_penalty_re",
+              "label": "RLHF: reward modeling, PPO in language (KL penalty, reward normalization, advantage whitening), InstructGPT pipeline",
+              "done": false
+            },
+            {
+              "id": "sub_dpo_direct_preference_optimization_closed_form_pol",
+              "label": "DPO: direct preference optimization, closed-form policy, no reward model needed, iterative DPO",
+              "done": false
+            },
+            {
+              "id": "sub_sim_to_real_domain_randomization_visual_dynamics_m",
+              "label": "Sim-to-real: domain randomization (visual, dynamics, mass/inertia), system identification, disturbance injection",
+              "done": false
+            },
+            {
+              "id": "sub_multi_agent_rl_ctde_maddpg_qmix_mappo_communicatio",
+              "label": "Multi-agent RL: CTDE, MADDPG, QMIX, MAPPO, communication under bandwidth constraints",
+              "done": false
+            }
+          ]
+        },
+        {
+          "id": "alpha__8_data_pipelines_tokenization_streaming_filtering",
+          "label": "\u03b1.8 Data pipelines (tokenization, streaming, filtering, curation)",
+          "done": false,
+          "order": 7,
+          "subtopics": [
+            {
+              "id": "sub_tokenization_bpe_byte_pair_encoding_wordpiece_unig",
+              "label": "Tokenization: BPE (byte-pair encoding), WordPiece, Unigram, SentencePiece, tiktoken (OpenAI tokenizer), byte-level BPE",
+              "done": false
+            },
+            {
+              "id": "sub_streaming_datasets_webdataset_tar_based_shards_pip",
+              "label": "Streaming datasets: webdataset (tar-based shards, pipe mode), Mosaic StreamingDataset, datatrove, multi-worker",
+              "done": false
+            },
+            {
+              "id": "sub_quality_filtering_fasttext_quality_classifier_ccne",
+              "label": "Quality filtering: fastText quality classifier, CCNet pipeline, perplexity filtering (with reference LM), heuristic filtering",
+              "done": false
+            },
+            {
+              "id": "sub_deduplication_minhash_lsh_document_level_jaccard_s",
+              "label": "Deduplication: MinHash LSH (document-level, Jaccard similarity), exact dedup (hash-based), Bloom filters, SimHash",
+              "done": false
+            },
+            {
+              "id": "sub_data_mixing_proportions_for_pretraining_vs_domain_",
+              "label": "Data mixing: proportions for pretraining vs domain-specific vs instruction tuning, curriculum learning",
+              "done": false
+            },
+            {
+              "id": "sub_data_versioning_dvc_hugging_face_datasets_parquet_",
+              "label": "Data versioning: DVC, Hugging Face Datasets, Parquet/Arrow columnar format, data integrity checks",
+              "done": false
+            }
+          ]
         }
       ],
       "resources": [
         {
-          "id": "karpathy",
-          "label": "Karpathy \u2014 Neural Networks: Zero to Hero (YouTube)",
+          "id": "res_vaswani_et_al_attention_is_all_you_need_original_t",
+          "label": "Vaswani et al. 'Attention Is All You Need' \u2014 original transformer paper",
           "done": false,
           "order": 0
         },
         {
-          "id": "annotated_transformer",
-          "label": "The Annotated Transformer (Harvard NLP)",
+          "id": "res_harvard_nlp_the_annotated_transformer_code_walkthr",
+          "label": "Harvard NLP The Annotated Transformer \u2014 code walkthrough",
           "done": false,
-          "order": 1
+          "order": 0
         },
         {
-          "id": "cuda_guide",
-          "label": "NVIDIA CUDA Programming Guide",
+          "id": "res_gu_dao_mamba_linear_time_sequence_modeling_with_se",
+          "label": "Gu & Dao 'Mamba: Linear-Time Sequence Modeling with Selective State Spaces'",
           "done": false,
-          "order": 2
+          "order": 0
         },
         {
-          "id": "cuda_mode",
-          "label": "CUDA Mode lectures \u2014 Mark Saroufim (YouTube)",
+          "id": "res_shazeer_et_al_outrageously_large_neural_networks_m",
+          "label": "Shazeer et al. 'Outrageously Large Neural Networks' \u2014 MoE origins",
           "done": false,
-          "order": 3
+          "order": 0
         },
         {
-          "id": "pmpp",
-          "label": "Programming Massively Parallel Processors (Kirk & Hwu)",
+          "id": "res_rope_su_et_al_alibi_press_et_al_papers",
+          "label": "RoPE (Su et al.), ALiBi (Press et al.) papers",
           "done": false,
-          "order": 4
+          "order": 0
         },
         {
-          "id": "vllm_github",
-          "label": "vLLM GitHub \u2014 study PagedAttention, continuous batching",
+          "id": "res_rt_2_palm_e_clip_llava_papers_for_multimodal_fusio",
+          "label": "RT-2, PaLM-E, CLIP, LLaVA papers for multimodal fusion",
           "done": false,
-          "order": 5
+          "order": 0
         },
         {
-          "id": "cs285",
-          "label": "CS 285: Deep RL (UC Berkeley, YouTube)",
+          "id": "res_kaplan_et_al_scaling_laws_for_neural_language_mode",
+          "label": "Kaplan et al. 'Scaling Laws for Neural Language Models'",
           "done": false,
-          "order": 6
+          "order": 0
         },
         {
-          "id": "spinning_up",
-          "label": "Spinning Up in Deep RL (OpenAI)",
+          "id": "res_hoffmann_et_al_training_compute_optimal_large_lang",
+          "label": "Hoffmann et al. 'Training Compute-Optimal Large Language Models' (Chinchilla)",
           "done": false,
-          "order": 7
+          "order": 0
         },
         {
-          "id": "triton_tutorials",
-          "label": "Triton official tutorials (triton-lang.org)",
+          "id": "res_scaling_data_constrained_language_models_muennigho",
+          "label": "Scaling Data-Constrained Language Models (Muennighoff et al., 2023)",
           "done": false,
-          "order": 8
+          "order": 0
+        },
+        {
+          "id": "res_deduplicating_training_data_makes_language_models_",
+          "label": "Deduplicating Training Data Makes Language Models Better (Lee et al., 2022)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_mmlu_humaneval_helm_evaluation_frameworks_understa",
+          "label": "MMLU, HumanEval, HELM evaluation frameworks \u2014 understand the benchmarks",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_pytorch_fsdp_official_tutorial_walkthrough",
+          "label": "PyTorch FSDP official tutorial + walkthrough",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_deepspeed_documentation_zero_papers_rajbhandari_et",
+          "label": "DeepSpeed documentation + ZeRO papers (Rajbhandari et al.)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_efficient_large_scale_language_model_training_on_g",
+          "label": "Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM (Narayanan et al.)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_reducing_activation_recomputation_in_large_transfo",
+          "label": "Reducing Activation Recomputation in Large Transformer Models (Korthikanti et al.)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_nvidia_nccl_documentation_all_reduce_all_gather_re",
+          "label": "NVIDIA NCCL documentation \u2014 all-reduce, all-gather, reduce-scatter primitives",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_nvidia_cuda_programming_guide_chapters_1_5_mandato",
+          "label": "NVIDIA CUDA Programming Guide \u2014 chapters 1-5 mandatory",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_programming_massively_parallel_processors_kirk_hwu",
+          "label": "Programming Massively Parallel Processors (Kirk & Hwu) \u2014 best textbook",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_cuda_mode_youtube_lectures_mark_saroufim_practical",
+          "label": "CUDA Mode YouTube lectures (Mark Saroufim) \u2014 practical walkthroughs",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_triton_official_tutorials_triton_lang_org_first_4_",
+          "label": "Triton official tutorials (triton-lang.org) \u2014 first 4 tutorials",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_cutlass_documentation_examples_study_the_gemm_temp",
+          "label": "CUTLASS documentation + examples \u2014 study the GEMM template",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_mixed_precision_training_micikevicius_et_al_2017_t",
+          "label": "Mixed Precision Training (Micikevicius et al., 2017) \u2014 the original paper",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_nvidia_amp_automatic_mixed_precision_documentation",
+          "label": "NVIDIA AMP (Automatic Mixed Precision) documentation",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_training_deep_networks_with_loss_scaling_practical",
+          "label": "Training Deep Networks with Loss Scaling \u2014 practical considerations",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_gptq_accurate_post_training_quantization_for_gener",
+          "label": "GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers (Frantar et al.)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_awq_activation_aware_weight_quantization_for_llm_c",
+          "label": "AWQ: Activation-aware Weight Quantization for LLM Compression (Lin et al.)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_sparsegpt_massive_language_models_can_be_accuratel",
+          "label": "SparseGPT: Massive Language Models Can Be Accurately Pruned in One-Shot (Frantar & Alistarh)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_vllm_efficient_memory_management_for_large_languag",
+          "label": "vLLM: Efficient Memory Management for Large Language Model Serving with PagedAttention",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_tensorrt_llm_documentation_release_notes",
+          "label": "TensorRT-LLM documentation + release notes",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_proximal_policy_optimization_algorithms_schulman_e",
+          "label": "Proximal Policy Optimization Algorithms (Schulman et al., 2017)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_soft_actor_critic_haarnoja_et_al_",
+          "label": "Soft Actor-Critic (Haarnoja et al.)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_training_language_models_to_follow_instructions_wi",
+          "label": "Training Language Models to Follow Instructions with Human Feedback (Ouyang et al., InstructGPT)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_direct_preference_optimization_rafailov_et_al_",
+          "label": "Direct Preference Optimization (Rafailov et al.)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_spinning_up_in_deep_rl_openai_ppo_sac_implementati",
+          "label": "Spinning Up in Deep RL (OpenAI) \u2014 PPO, SAC implementations",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_trl_library_transformer_reinforcement_learning_han",
+          "label": "TRL library (Transformer Reinforcement Learning) \u2014 hands-on RLHF",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_ccnet_extracting_high_quality_monolingual_datasets",
+          "label": "CCNet: Extracting High Quality Monolingual Datasets from Web Crawl Data (Wenzek et al., 2020)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_the_pile_an_800gb_dataset_of_diverse_text_for_lang",
+          "label": "The Pile: An 800GB Dataset of Diverse Text for Language Modeling (Gao et al., 2020)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_webdataset_github_documentation_streaming_for_larg",
+          "label": "webdataset GitHub + documentation \u2014 streaming for large-scale training",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_hugging_face_datasets_library_practical_data_loadi",
+          "label": "Hugging Face Datasets library \u2014 practical data loading",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_datacomp_lm_2024_controlled_data_experiments_for_l",
+          "label": "DataComp-LM (2024) \u2014 controlled data experiments for LLMs",
+          "done": false,
+          "order": 0
         }
       ],
       "projects": [
         {
-          "id": "gpt2_fsdp",
-          "label": "Train GPT-2 sized model from scratch on 2+ GPUs using FSDP \u2014 log loss curves, throughput, GPU utilization",
+          "id": "proj_implement_a_minimal_gpt_2_decoder_block_attn_ffn_r",
+          "label": "Implement a minimal GPT-2 decoder block (attn + FFN + RoPE) in PyTorch; train a tiny language model on Shakespeare to verify loss decreases",
           "status": "not_started",
           "order": 0
         },
         {
-          "id": "cuda_kernel",
-          "label": "Write a custom CUDA kernel for fused attention; benchmark against PyTorch",
+          "id": "proj_implement_a_mamba_block_ssm_selective_scan_and_com",
+          "label": "Implement a Mamba block (SSM + selective scan) and compare inference throughput against a transformer at the same parameter count",
           "status": "not_started",
-          "order": 1
+          "order": 0
         },
         {
-          "id": "llm_quantize",
-          "label": "Quantize an LLM to INT4 with GPTQ and deploy via vLLM; measure throughput/latency",
+          "id": "proj_train_3_small_transformers_70m_150m_300m_params_on",
+          "label": "Train 3 small transformers (70M, 150M, 300M params) on a fixed dataset, plot loss vs compute, verify Chinchilla scaling prediction",
           "status": "not_started",
-          "order": 2
+          "order": 0
         },
         {
-          "id": "ppo_mujoco",
-          "label": "Train a PPO agent in MuJoCo, record video, write up reward curves",
+          "id": "proj_train_a_1b_param_model_on_2_gpus_using_fsdp_log_th",
+          "label": "Train a 1B param model on 2+ GPUs using FSDP; log throughput (tokens/sec), GPU utilization, memory; compare DDP vs FSDP vs ZeRO-3",
           "status": "not_started",
-          "order": 3
+          "order": 0
         },
         {
-          "id": "paper_repro",
-          "label": "Reproduce a recent SSM or MoE paper from scratch; publish reproducibility report",
+          "id": "proj_write_a_fused_attention_kernel_in_cuda_and_triton_",
+          "label": "Write a fused attention kernel in CUDA and Triton; benchmark against PyTorch's scaled_dot_product_attention across various sequence lengths",
           "status": "not_started",
-          "order": 4
+          "order": 0
+        },
+        {
+          "id": "proj_train_the_same_model_in_fp32_and_bf16_log_gradient",
+          "label": "Train the same model in fp32 and bf16; log gradient histograms every 100 steps; identify and fix any numerical divergence",
+          "status": "not_started",
+          "order": 0
+        },
+        {
+          "id": "proj_quantize_a_llama_7b_to_int4_with_gptq_deploy_with_",
+          "label": "Quantize a LLaMA-7B to INT4 with GPTQ; deploy with vLLM; benchmark throughput and latency at batch sizes [1, 4, 16, 32]",
+          "status": "not_started",
+          "order": 0
+        },
+        {
+          "id": "proj_train_a_ppo_agent_in_mujoco_halfcheetah_record_rew",
+          "label": "Train a PPO agent in MuJoCo (HalfCheetah), record reward curve; then fine-tune a small LLM with DPO on a preference dataset; compare alignment approaches",
+          "status": "not_started",
+          "order": 0
+        },
+        {
+          "id": "proj_download_10gb_commoncrawl_sample_quality_filter_de",
+          "label": "Download 10GB CommonCrawl sample \u2192 quality filter \u2192 deduplicate \u2192 tokenize \u2192 stream to training loop; log throughput and loss curves",
+          "status": "not_started",
+          "order": 0
         }
       ]
     },
@@ -290,128 +1272,532 @@
       },
       "topics": [
         {
-          "id": "classical_control",
-          "label": "\u03b2.1 Classical control (PID, root locus, frequency domain)",
+          "id": "beta__1_classical_and_modern_control_pid_lqr_lqg_mpc_robust_",
+          "label": "\u03b2.1 Classical and modern control (PID, LQR, LQG, MPC, robust)",
           "done": false,
-          "order": 0
+          "order": 0,
+          "subtopics": [
+            {
+              "id": "sub_pid_proportional_integral_derivative_tuning_ziegler_nic",
+              "label": "PID: proportional/integral/derivative, tuning (Ziegler-Nichols, Cohen-Coon), integral windup, anti-windup",
+              "done": false
+            },
+            {
+              "id": "sub_state_space_continuous_vs_discrete_controllability_obse",
+              "label": "State-space: continuous vs discrete, controllability, observability, canonical forms (controllable, observable, Jordan)",
+              "done": false
+            },
+            {
+              "id": "sub_lqr_cost_function_design_q_r_weights_solving_algebraic_",
+              "label": "LQR: cost function design (Q/R weights), solving algebraic Riccati equation, gain scheduling",
+              "done": false
+            },
+            {
+              "id": "sub_lqg_kalman_lqr_separation_principle_loop_transfer_recov",
+              "label": "LQG / Kalman + LQR: separation principle, loop transfer recovery (LTR)",
+              "done": false
+            },
+            {
+              "id": "sub_mpc_receding_horizon_qp_formulation_constraint_handling",
+              "label": "MPC: receding horizon, QP formulation, constraint handling (input/state), real-time iteration (RTI)",
+              "done": false
+            },
+            {
+              "id": "sub_robust_control_h_gain_phase_margin_uncertainty_modeling",
+              "label": "Robust control: H\u221e, gain/phase margin, uncertainty modeling, mu-synthesis (concept level)",
+              "done": false
+            },
+            {
+              "id": "sub_implementation_discrete_time_controllers_fixed_point_ar",
+              "label": "Implementation: discrete-time controllers, fixed-point arithmetic, sample rate selection",
+              "done": false
+            }
+          ]
         },
         {
-          "id": "state_space",
-          "label": "\u03b2.1 Modern control (LQR, LQG, pole placement)",
+          "id": "beta__2_state_estimation_kf_ekf_ukf_particle_filters_factor_",
+          "label": "\u03b2.2 State estimation (KF, EKF, UKF, particle filters, factor graphs)",
           "done": false,
-          "order": 1
+          "order": 1,
+          "subtopics": [
+            {
+              "id": "sub_bayes_filter_derivation_prediction_update_markov_assump",
+              "label": "Bayes filter derivation: prediction + update, Markov assumption, Gaussian vs non-Gaussian filtering",
+              "done": false
+            },
+            {
+              "id": "sub_kalman_filter_process_measurement_model_covariance_prop",
+              "label": "Kalman Filter: process/measurement model, covariance propagation, innovation, Kalman gain computation",
+              "done": false
+            },
+            {
+              "id": "sub_extended_kf_jacobian_linearization_first_order_taylor_e",
+              "label": "Extended KF: Jacobian linearization (first-order Taylor), EKF for non-linear dynamics, implementation",
+              "done": false
+            },
+            {
+              "id": "sub_unscented_kf_sigma_points_unscented_transform_no_jacobi",
+              "label": "Unscented KF: sigma points, unscented transform, no Jacobian needed, UT parameters (\u03b1, \u03b2, \u03ba)",
+              "done": false
+            },
+            {
+              "id": "sub_particle_filter_importance_sampling_resampling_multinom",
+              "label": "Particle filter: importance sampling, resampling (multinomial, systematic, stratified, residual), SIR filter, degeneracy",
+              "done": false
+            },
+            {
+              "id": "sub_factor_graphs_gtsam_isam2_nonlinear_least_squares_optim",
+              "label": "Factor graphs: GTSAM, iSAM2, nonlinear least squares optimization, marginalization, smoothing",
+              "done": false
+            },
+            {
+              "id": "sub_multi_sensor_fusion_loosely_coupled_vs_tightly_coupled_",
+              "label": "Multi-sensor fusion: loosely coupled vs tightly coupled, asynchronous sensor handling, outlier rejection (Mahalanobis distance)",
+              "done": false
+            }
+          ]
         },
         {
-          "id": "mpc",
-          "label": "\u03b2.1 Model Predictive Control (receding horizon, QP, constraints)",
-          "done": false,
-          "order": 2
-        },
-        {
-          "id": "kalman",
-          "label": "\u03b2.2 State estimation (KF, EKF, UKF, particle filters)",
-          "done": false,
-          "order": 3
-        },
-        {
-          "id": "factor_graphs",
-          "label": "\u03b2.2 Factor graphs (GTSAM, g2o, nonlinear least squares)",
-          "done": false,
-          "order": 4
-        },
-        {
-          "id": "slam",
+          "id": "beta__3_slam_visual_slam_lidar_slam_visual_inertial_multi_ag",
           "label": "\u03b2.3 SLAM (visual SLAM, LiDAR SLAM, visual-inertial, multi-agent)",
           "done": false,
-          "order": 5
+          "order": 2,
+          "subtopics": [
+            {
+              "id": "sub_front_end_feature_extraction_orb_sift_superpoint_superg",
+              "label": "Front-end: feature extraction (ORB, SIFT, SuperPoint, SuperGlue), feature matching, RANSAC, ICP (point-to-plane, GICP)",
+              "done": false
+            },
+            {
+              "id": "sub_back_end_pose_graph_optimization_isam2_g2o_gtsam_loop_c",
+              "label": "Back-end: pose graph optimization, iSAM2, g2o, GTSAM, loop closure detection (BoW, NetVLAD, ScanContext)",
+              "done": false
+            },
+            {
+              "id": "sub_visual_slam_monocular_orb_slam3_stereo_rgb_d_scale_ambi",
+              "label": "Visual SLAM: monocular (ORB-SLAM3), stereo, RGB-D; scale ambiguity, initialization, IMU preintegration",
+              "done": false
+            },
+            {
+              "id": "sub_visual_inertial_vins_mono_vins_fusion_okvis_msckf_imu_p",
+              "label": "Visual-inertial: VINS-Mono, VINS-Fusion, OKVIS, MSCKF \u2014 IMU preintegration theory, marginalization",
+              "done": false
+            },
+            {
+              "id": "sub_lidar_slam_loam_scan_matching_lidar_odometry_a_loam_car",
+              "label": "LiDAR SLAM: LOAM (scan matching, lidar odometry), A-LOAM, Cartographer (submap, scan-to-submap, loop closure)",
+              "done": false
+            },
+            {
+              "id": "sub_dense_slam_kinectfusion_tsdf_octomap_probabilistic_occu",
+              "label": "Dense SLAM: KinectFusion (TSDF), octomap (probabilistic occupancy), ElasticFusion, RGB-D SLAM",
+              "done": false
+            },
+            {
+              "id": "sub_multi_agent_slam_shared_maps_relative_pose_estimation_c",
+              "label": "Multi-agent SLAM: shared maps, relative pose estimation, communication constraints, CCM-SLAM",
+              "done": false
+            }
+          ]
         },
         {
-          "id": "rigid_body",
-          "label": "\u03b2.5 Rigid-body dynamics (quaternions, Newton-Euler, Lagrangian)",
-          "done": false,
-          "order": 6
-        },
-        {
-          "id": "behavior_trees",
-          "label": "\u03b2.6 Trajectory optimization & planning (RRT*, direct collocation, behavior trees)",
-          "done": false,
-          "order": 7
-        },
-        {
-          "id": "beta__4_sensor_modeling_imu_gps_cameras_lidar",
+          "id": "beta__4_sensor_modeling_imu_gps_cameras_lidar_radar_star_tra",
           "label": "\u03b2.4 Sensor modeling (IMU, GPS, cameras, LiDAR, radar, star trackers)",
           "done": false,
-          "order": 8
+          "order": 3,
+          "subtopics": [
+            {
+              "id": "sub_imu_mems_vs_tactical_grade_accelerometer_gyro_noise_all",
+              "label": "IMU: MEMS vs tactical grade, accelerometer/gyro noise (Allan variance), bias instability, scale factor, misalignment",
+              "done": false
+            },
+            {
+              "id": "sub_gps_gnss_pseudorange_carrier_phase_rtk_real_time_kinema",
+              "label": "GPS/GNSS: pseudorange, carrier phase, RTK (real-time kinematic), DGPS, multipath effects, urban canyon",
+              "done": false
+            },
+            {
+              "id": "sub_cameras_pinhole_model_intrinsic_extrinsic_distortion_ra",
+              "label": "Cameras: pinhole model, intrinsic/extrinsic/distortion (radial/tangential), rolling shutter vs global shutter",
+              "done": false
+            },
+            {
+              "id": "sub_lidar_time_of_flight_beam_divergence_multi_echo_return_",
+              "label": "LiDAR: time-of-flight, beam divergence, multi-echo return, 2D vs 3D (Velodyne, Ouster, Hesai solid-state)",
+              "done": false
+            },
+            {
+              "id": "sub_radar_doppler_velocity_fmcw_point_cloud_vs_detection_li",
+              "label": "Radar: Doppler velocity, FMCW, point cloud vs detection list, weather robustness, micro-Doppler",
+              "done": false
+            },
+            {
+              "id": "sub_star_trackers_centroiding_star_catalog_matching_lost_in",
+              "label": "Star trackers: centroiding, star catalog matching (lost-in-space), attitude quaternion output, accuracy vs FOV",
+              "done": false
+            },
+            {
+              "id": "sub_sensor_calibration_intrinsic_camera_calibration_with_ch",
+              "label": "Sensor calibration: intrinsic (camera calibration with checkerboard), extrinsic (LiDAR-camera, IMU-camera), temporal sync",
+              "done": false
+            }
+          ]
         },
         {
-          "id": "beta__7_physics_simulation_mujoco_isaac_sim_g",
+          "id": "beta__5_rigid_body_dynamics_kinematics_newton_euler_lagrangi",
+          "label": "\u03b2.5 Rigid-body dynamics (kinematics, Newton-Euler, Lagrangian, quaternions)",
+          "done": false,
+          "order": 4,
+          "subtopics": [
+            {
+              "id": "sub_3d_2d_transformations_rotation_matrices_homogeneous_tra",
+              "label": "3D/2D transformations: rotation matrices, homogeneous transforms, SE(3), twist coordinates, se(3) algebra",
+              "done": false
+            },
+            {
+              "id": "sub_quaternions_multiplication_rotation_interpolation_slerp",
+              "label": "Quaternions: multiplication, rotation, interpolation (SLERP), angular velocity \u2194 quaternion derivative",
+              "done": false
+            },
+            {
+              "id": "sub_forward_kinematics_dh_parameters_denavit_hartenberg_con",
+              "label": "Forward kinematics: DH parameters, Denavit-Hartenberg convention, product of exponentials (screw theory)",
+              "done": false
+            },
+            {
+              "id": "sub_inverse_kinematics_analytical_6_dof_spherical_wrist_num",
+              "label": "Inverse kinematics: analytical (6-DOF spherical wrist), numerical (Jacobian pseudoinverse, damped LS, Levenberg-Marquardt)",
+              "done": false
+            },
+            {
+              "id": "sub_velocity_kinematics_geometric_analytical_jacobian_singu",
+              "label": "Velocity kinematics: geometric/analytical Jacobian, singularities, manipulability ellipsoid, null-space motion",
+              "done": false
+            },
+            {
+              "id": "sub_dynamics_newton_euler_recursive_algorithm_o_n_lagrangia",
+              "label": "Dynamics: Newton-Euler recursive algorithm (O(n)), Lagrangian formulation (mass matrix, Coriolis, gravity), Featherstone's ABA (O(n))",
+              "done": false
+            },
+            {
+              "id": "sub_contact_and_friction_coulomb_viscous_stribeck_contact_f",
+              "label": "Contact and friction: Coulomb, viscous, Stribeck; contact forces, soft vs hard contact models",
+              "done": false
+            }
+          ]
+        },
+        {
+          "id": "beta__6_trajectory_optimization_and_planning_rrt_direct_coll",
+          "label": "\u03b2.6 Trajectory optimization and planning (RRT*, direct collocation, behavior trees)",
+          "done": false,
+          "order": 5,
+          "subtopics": [
+            {
+              "id": "sub_sampling_based_planning_rrt_rrt_prm_informed_rrt_bias_t",
+              "label": "Sampling-based planning: RRT, RRT*, PRM, informed RRT*, bias towards goal, lazy collision checking",
+              "done": false
+            },
+            {
+              "id": "sub_optimization_based_direct_collocation_direct_transcript",
+              "label": "Optimization-based: direct collocation, direct transcription (trapezoidal, Hermite-Simpson), indirect (shooting method)",
+              "done": false
+            },
+            {
+              "id": "sub_smoothing_minimum_jerk_minimum_snap_cubic_quadratic_b_s",
+              "label": "Smoothing: minimum-jerk, minimum-snap, cubic/quadratic B-splines, Dubins curves, Reeds-Shepp curves",
+              "done": false
+            },
+            {
+              "id": "sub_behavior_trees_control_flow_sequence_fallback_parallel_",
+              "label": "Behavior trees: control flow (sequence, fallback, parallel), decorators (inverter, repeat, retry), blackboard, reactive behaviors",
+              "done": false
+            },
+            {
+              "id": "sub_state_machines_hierarchical_state_machines_states_vs_tr",
+              "label": "State machines: hierarchical state machines, states vs transitions, UML statechart, behavior-driven design",
+              "done": false
+            },
+            {
+              "id": "sub_collision_checking_gjk_convex_hulls_sat_axis_aligned_bv",
+              "label": "Collision checking: GJK (convex hulls), SAT (axis-aligned), BVH (bounding volume hierarchy), SDF (signed distance fields)",
+              "done": false
+            },
+            {
+              "id": "sub_lqr_trees_locally_linear_feedback_policies_stabilizable",
+              "label": "LQR-Trees: locally-linear feedback policies, stabilizable region, trajectory library",
+              "done": false
+            }
+          ]
+        },
+        {
+          "id": "beta__7_physics_simulation_mujoco_isaac_sim_gazebo_sim_to_re",
           "label": "\u03b2.7 Physics simulation (MuJoCo, Isaac Sim, Gazebo, sim-to-real)",
           "done": false,
-          "order": 9
+          "order": 6,
+          "subtopics": [
+            {
+              "id": "sub_mujoco_model_structure_mjcf_actuators_sensors_imu_force",
+              "label": "MuJoCo: model structure (MJCF), actuators, sensors (IMU, force, camera), contacts (elliptic, pyramidal friction cone), >=10 kHz physics",
+              "done": false
+            },
+            {
+              "id": "sub_gazebo_sdf_urdf_models_plugins_sensor_system_visual_sen",
+              "label": "Gazebo: SDF/URDF models, plugins (sensor, system, visual), sensor simulation (GPU LiDAR, depth camera, IMU), ROS 2 integration",
+              "done": false
+            },
+            {
+              "id": "sub_isaac_sim_nvidia_omniverse_usd_based_scenes_physx_5_phy",
+              "label": "Isaac Sim: NVIDIA Omniverse, USD-based scenes, PhysX 5 physics, RTX rendering, synthetic data generation, domain randomization",
+              "done": false
+            },
+            {
+              "id": "sub_sim_to_real_domain_randomization_visual_dynamics_mass_i",
+              "label": "Sim-to-real: domain randomization (visual, dynamics, mass/inertia, friction), system identification, disturbance injection",
+              "done": false
+            },
+            {
+              "id": "sub_simulation_fidelity_contact_models_friction_cone_accura",
+              "label": "Simulation fidelity: contact models, friction cone accuracy, compliance, joint limits vs real hardware behavior",
+              "done": false
+            },
+            {
+              "id": "sub_validation_sim_to_real_gap_measurement_trajectory_repla",
+              "label": "Validation: sim-to-real gap measurement, trajectory replay on real hardware, regression metrics, offline policy evaluation",
+              "done": false
+            }
+          ]
         }
       ],
       "resources": [
         {
-          "id": "modern_robotics",
-          "label": "Coursera Modern Robotics (Northwestern, Kevin Lynch)",
+          "id": "res_coursera_modern_robotics_mechanics_planning_and_control",
+          "label": "Coursera Modern Robotics: Mechanics, Planning, and Control (Lynch) \u2014 course 3 on control",
           "done": false,
           "order": 0
         },
         {
-          "id": "prob_robotics",
-          "label": "Probabilistic Robotics (Thrun, Burgard, Fox)",
+          "id": "res_cmu_16_299_introduction_to_feedback_control_systems_des",
+          "label": "CMU 16-299 Introduction to Feedback Control Systems \u2014 designed for CS majors",
           "done": false,
-          "order": 1
+          "order": 0
         },
         {
-          "id": "stachniss_slam",
-          "label": "Cyrill Stachniss SLAM lectures (YouTube, Univ. Bonn)",
+          "id": "res_modern_control_engineering_ogata_pid_state_space_lqr_ch",
+          "label": "Modern Control Engineering (Ogata) \u2014 PID, state-space, LQR chapters",
           "done": false,
-          "order": 2
+          "order": 0
         },
         {
-          "id": "gtsam_docs",
-          "label": "GTSAM documentation and examples",
+          "id": "res_model_predictive_control_theory_and_design_rawlings_may",
+          "label": "Model Predictive Control: Theory and Design (Rawlings, Mayne) \u2014 MPC bible",
           "done": false,
-          "order": 3
+          "order": 0
         },
         {
-          "id": "casadi_docs",
-          "label": "CasADi documentation + examples",
+          "id": "res_cyrill_stachniss_slam_course_youtube_u_bonn_lectures_1_",
+          "label": "Cyrill Stachniss SLAM Course (YouTube, U Bonn) \u2014 lectures 1-6 on estimation",
           "done": false,
-          "order": 4
+          "order": 0
+        },
+        {
+          "id": "res_probabilistic_robotics_thrun_burgard_fox_kf_ekf_particl",
+          "label": "Probabilistic Robotics (Thrun, Burgard, Fox) \u2014 KF, EKF, particle filter chapters",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_gtsam_documentation_examples_factor_graph_approach",
+          "label": "GTSAM documentation + examples \u2014 factor graph approach",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_a_tutorial_on_graph_based_slam_grisetti_et_al_",
+          "label": "A Tutorial on Graph-Based SLAM (Grisetti et al.)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_orb_slam3_paper_github_study_the_full_pipeline_architec",
+          "label": "ORB-SLAM3 paper + GitHub \u2014 study the full pipeline architecture",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_loam_lidar_odometry_and_mapping_in_real_time_zhang_sing",
+          "label": "LOAM: Lidar Odometry and Mapping in Real-time (Zhang & Singh)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_cartographer_documentation_google_research_paper_ros_in",
+          "label": "Cartographer documentation + Google research paper \u2014 ROS integration",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_visual_inertial_monocular_slam_with_map_reuse_campos_et",
+          "label": "Visual-Inertial Monocular SLAM with Map Reuse (Campos et al., ORB-SLAM3)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_cyrill_stachniss_slam_lectures_youtube_lectures_7_12_on",
+          "label": "Cyrill Stachniss SLAM lectures (YouTube) \u2014 lectures 7-12 on full SLAM systems",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_the_inertial_navigation_system_woodman_excellent_imu_tu",
+          "label": "The Inertial Navigation System (Woodman) \u2014 excellent IMU tutorial from Cambridge",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_multiple_view_geometry_in_computer_vision_hartley_zisse",
+          "label": "Multiple View Geometry in Computer Vision (Hartley & Zisserman) \u2014 camera model chapters",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_kalibr_eth_multi_sensor_calibration_library_documentati",
+          "label": "Kalibr (ETH) \u2014 multi-sensor calibration library documentation",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_allan_variance_ieee_standard_specification_guide_for_fi",
+          "label": "Allan variance: IEEE Standard Specification Guide for Fiber Optic Gyros",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_modern_robotics_lynch_park_free_online_chapters_2_4_kin",
+          "label": "Modern Robotics (Lynch & Park) \u2014 free online, chapters 2-4 (kinematics), 8 (dynamics)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_a_mathematical_introduction_to_robotic_manipulation_mur",
+          "label": "A Mathematical Introduction to Robotic Manipulation (Murray, Li, Sastry) \u2014 screw theory",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_quaternion_intuition_3blue1brown_youtube_or_visualizing",
+          "label": "Quaternion intuition: 3Blue1Brown (YouTube) or Visualizing Quaternions (Hanson)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_drake_documentation_rigid_body_dynamics_engine_contact_",
+          "label": "Drake documentation \u2014 rigid-body dynamics engine, contact solving",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_rapidly_exploring_random_trees_lavalle_1998_",
+          "label": "Rapidly-Exploring Random Trees (LaValle, 1998)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_planning_algorithms_lavalle_2006_sampling_based_plannin",
+          "label": "Planning Algorithms (LaValle, 2006) \u2014 sampling-based planning chapter",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_behavior_trees_in_robotics_and_ai_colledanchise_gren_",
+          "label": "Behavior Trees in Robotics and AI (Colledanchise & \u00d6gren)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_ompl_open_motion_planning_library_documentation_practic",
+          "label": "OMPL (Open Motion Planning Library) documentation \u2014 practical implementations",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_minimum_snap_trajectory_generation_for_quadrotors_melli",
+          "label": "Minimum Snap Trajectory Generation for Quadrotors (Mellinger & Kumar)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_mujoco_documentation_mujoco_readthedocs_io_getting_star",
+          "label": "MuJoCo documentation (mujoco.readthedocs.io) \u2014 getting started, modeling guide",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_mujoco_python_bindings_dm_control_examples",
+          "label": "MuJoCo Python bindings (dm_control) \u2014 examples",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_gazebo_ros_2_tutorials_gazebosim_org_",
+          "label": "Gazebo + ROS 2 tutorials (gazebosim.org)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_nvidia_isaac_sim_documentation_sample_projects",
+          "label": "NVIDIA Isaac Sim documentation + sample projects",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_domain_randomization_for_transferring_deep_neural_netwo",
+          "label": "Domain Randomization for Transferring Deep Neural Networks (Tobin et al.)",
+          "done": false,
+          "order": 0
         }
       ],
       "projects": [
         {
-          "id": "kalman_scratch",
-          "label": "Implement a Kalman filter from scratch for a 2D robot; publish derivation blog post",
+          "id": "proj_implement_pid_lqr_and_mpc_for_a_simulated_inverted_pend",
+          "label": "Implement PID, LQR, and MPC for a simulated inverted pendulum; compare rise time, overshoot, settling time, disturbance rejection",
           "status": "not_started",
           "order": 0
         },
         {
-          "id": "planar_slam",
-          "label": "Build full planar SLAM using GTSAM or g2o with a public dataset",
+          "id": "proj_implement_2d_ekf_from_scratch_for_a_robot_with_imu_gps_",
+          "label": "Implement 2D EKF from scratch for a robot with IMU + GPS + wheel odometry; plot covariance ellipses vs ground truth trajectory",
           "status": "not_started",
-          "order": 1
+          "order": 0
         },
         {
-          "id": "pendulum_ctrl",
-          "label": "Control simulated inverted pendulum with PID, LQR, MPC; compare performance",
+          "id": "proj_run_orb_slam3_on_a_kitti_sequence_plot_trajectory_again",
+          "label": "Run ORB-SLAM3 on a KITTI sequence; plot trajectory against ground truth with evo; investigate and explain a failure case",
           "status": "not_started",
-          "order": 2
+          "order": 0
         },
         {
-          "id": "orbslam3",
-          "label": "Run ORB-SLAM3 on a public dataset and trace the full pipeline in code",
+          "id": "proj_simulate_imu_gps_camera_sensors_in_python_with_realisti",
+          "label": "Simulate IMU + GPS + camera sensors in Python with realistic noise models (Allan variance); run EKF fusing all three; analyze error growth during GPS outage",
           "status": "not_started",
-          "order": 3
+          "order": 0
         },
         {
-          "id": "ros2_sim",
-          "label": "Build ROS 2 robot simulation with SLAM, navigation, obstacle avoidance",
+          "id": "proj_implement_forward_inverse_kinematics_for_a_6_dof_arm_in",
+          "label": "Implement forward/inverse kinematics for a 6-DOF arm in Python using MuJoCo; make the arm reach a target position in 3D space",
           "status": "not_started",
-          "order": 4
+          "order": 0
+        },
+        {
+          "id": "proj_implement_rrt_in_python_for_a_2d_environment_with_obsta",
+          "label": "Implement RRT* in Python for a 2D environment with obstacles; plan smooth minimum-snap trajectory through waypoints; simulate flight in PyBullet",
+          "status": "not_started",
+          "order": 0
+        },
+        {
+          "id": "proj_model_a_quadcopter_in_mujoco_mass_inertia_propellers_im",
+          "label": "Model a quadcopter in MuJoCo (mass, inertia, propellers); implement a PID stabilizing controller; transfer to Gazebo with sensory noise",
+          "status": "not_started",
+          "order": 0
         }
       ]
     },
@@ -426,112 +1812,628 @@
       },
       "topics": [
         {
-          "id": "realtime_cpp",
+          "id": "gamma__1_real_time_c_c_deterministic_memory_misra_interrupts_",
           "label": "\u03b3.1 Real-time C/C++ (deterministic memory, MISRA, interrupts, watchdog)",
           "done": false,
-          "order": 0
+          "order": 0,
+          "subtopics": [
+            {
+              "id": "sub_deterministic_memory_no_dynamic_allocation_after_init_s",
+              "label": "Deterministic memory: no dynamic allocation after init, stack-only designs, memory pools, ring buffers, static allocation",
+              "done": false
+            },
+            {
+              "id": "sub_misra_c_guidelines_rule_categories_required_advisory_au",
+              "label": "MISRA C++ guidelines: rule categories (required, advisory), auto, templates, exceptions, RTTI restrictions",
+              "done": false
+            },
+            {
+              "id": "sub_interrupt_handling_isr_design_short_reentrant_no_blocki",
+              "label": "Interrupt handling: ISR design (short, reentrant, no blocking), nested interrupts, interrupt priorities, latency analysis",
+              "done": false
+            },
+            {
+              "id": "sub_watchdog_timers_iwdg_independent_vs_wwdg_windowed_petti",
+              "label": "Watchdog timers: IWDG (independent) vs WWDG (windowed), petting patterns, deadlock detection",
+              "done": false
+            },
+            {
+              "id": "sub_real_time_scheduling_fixed_priority_preemptive_rate_mon",
+              "label": "Real-time scheduling: fixed priority preemptive, rate monotonic, earliest deadline first, priority inversion and inheritance",
+              "done": false
+            },
+            {
+              "id": "sub_timing_analysis_wcet_worst_case_execution_time_jitter_r",
+              "label": "Timing analysis: WCET (worst-case execution time), jitter, response time analysis, interference",
+              "done": false
+            },
+            {
+              "id": "sub_lock_free_programming_atomic_operations_compare_and_swa",
+              "label": "Lock-free programming: atomic operations (compare-and-swap, fetch-add), memory ordering (acquire/release/seq-cst), lock-free queues",
+              "done": false
+            },
+            {
+              "id": "sub_static_analysis_sonarqube_pvs_studio_clang_static_analy",
+              "label": "Static analysis: SonarQube, PVS-Studio, Clang Static Analyzer, Coverity for MISRA compliance",
+              "done": false
+            }
+          ]
         },
         {
-          "id": "rtos",
+          "id": "gamma__2_rtos_freertos_zephyr_qnx_vxworks_rtems_",
           "label": "\u03b3.2 RTOS (FreeRTOS, Zephyr, QNX, VxWorks, RTEMS)",
           "done": false,
-          "subtopics": [],
-          "order": 1
+          "order": 1,
+          "subtopics": [
+            {
+              "id": "sub_freertos_tasks_queues_semaphores_binary_counting_mutex_",
+              "label": "FreeRTOS: tasks, queues, semaphores (binary/counting/mutex), timers, event groups, task notifications, config files",
+              "done": false
+            },
+            {
+              "id": "sub_zephyr_device_tree_devicetree_bindings_kernel_objects_b",
+              "label": "Zephyr: device tree (devicetree), bindings, kernel objects, build system (west and CMake), networking stack (Zephyr TCP/IP)",
+              "done": false
+            },
+            {
+              "id": "sub_qnx_message_passing_resource_managers_adaptive_partitio",
+              "label": "QNX: message passing, resource managers, adaptive partitioning, safety certification (IEC 61508, DO-178C)",
+              "done": false
+            },
+            {
+              "id": "sub_vxworks_tasks_semaphores_watchdog_priority_inheritance_",
+              "label": "VxWorks: tasks, semaphores, watchdog, priority inheritance, POSIX compliance, memory protection (MMU-based)",
+              "done": false
+            },
+            {
+              "id": "sub_rtems_nasa_missions_classic_api_vs_posix_api_multiproce",
+              "label": "RTEMS (NASA missions): classic API vs POSIX API, multiprocessing, ED&D (executive, debug, development) support",
+              "done": false
+            },
+            {
+              "id": "sub_rtos_design_patterns_publisher_subscriber_producer_cons",
+              "label": "RTOS design patterns: publisher-subscriber, producer-consumer, commander-executor, watchdog-supervisor, heartbeat-monitor",
+              "done": false
+            },
+            {
+              "id": "sub_hard_vs_soft_real_time_deadline_miss_consequences_stati",
+              "label": "Hard vs soft real-time: deadline miss consequences, statistical guarantees, scheduling analysis",
+              "done": false
+            }
+          ]
         },
         {
-          "id": "embedded_linux",
+          "id": "gamma__3_embedded_linux_yocto_buildroot_device_trees_kernel_m",
           "label": "\u03b3.3 Embedded Linux (Yocto, Buildroot, device trees, kernel modules)",
           "done": false,
-          "order": 2
+          "order": 2,
+          "subtopics": [
+            {
+              "id": "sub_buildroot_minimal_embedded_linux_from_source_menuconfig",
+              "label": "Buildroot: minimal embedded Linux from source, menuconfig, rootfs overlay, cross-compilation toolchain, defconfig",
+              "done": false
+            },
+            {
+              "id": "sub_yocto_layers_meta_poky_bitbake_recipes_classes_tasks_im",
+              "label": "Yocto: layers (meta-*, poky), bitbake recipes/classes/tasks, image/package/sdk generation, build performance",
+              "done": false
+            },
+            {
+              "id": "sub_device_trees_dts_dtsi_syntax_nodes_properties_binding_d",
+              "label": "Device trees: .dts/.dtsi syntax, nodes, properties, binding documentation, overlays, dtc compiler",
+              "done": false
+            },
+            {
+              "id": "sub_linux_kernel_modules_hello_world_module_init_exit_modul",
+              "label": "Linux kernel modules: hello world module, init/exit, module parameters, character device drivers, IOCTL, file_operations",
+              "done": false
+            },
+            {
+              "id": "sub_kernel_configuration_menuconfig_kernel_config_fragments",
+              "label": "Kernel configuration: menuconfig, kernel config fragments, building for target (ARM64, RISC-V, x86), defconfig",
+              "done": false
+            },
+            {
+              "id": "sub_boot_process_u_boot_spl_fit_images_fastboot_kernel_boot",
+              "label": "Boot process: U-Boot (SPL, FIT images, fastboot), kernel boot (decompress \u2192 setup \u2192 start_kernel), initramfs, systemd/busybox init",
+              "done": false
+            },
+            {
+              "id": "sub_nvidia_jetson_platform_jetpack_sdk_l4t_kernel_cuda_tens",
+              "label": "NVIDIA Jetson platform: JetPack SDK (L4T kernel, CUDA, TensorRT, cuDNN), power management (NV Power model), thermal throttling",
+              "done": false
+            }
+          ]
         },
         {
-          "id": "microcontrollers",
-          "label": "\u03b3.4 Microcontrollers (ARM Cortex-M, RISC-V, memory-mapped I/O)",
+          "id": "gamma__4_microcontrollers_arm_cortex_m_risc_v_",
+          "label": "\u03b3.4 Microcontrollers (ARM Cortex-M, RISC-V)",
           "done": false,
-          "order": 3
+          "order": 3,
+          "subtopics": [
+            {
+              "id": "sub_arm_cortex_m_nvic_nested_vector_interrupt_controller_sy",
+              "label": "ARM Cortex-M: NVIC (nested vector interrupt controller), SysTick, MPU (memory protection unit), bit-banding, sleep modes (sleep/stop/standby), CMSIS-Core",
+              "done": false
+            },
+            {
+              "id": "sub_risc_v_clic_plic_clint_s_mode_vs_m_mode_privilege_level",
+              "label": "RISC-V: CLIC/PLIC, CLINT, S-mode vs M-mode privilege levels, vector extensions (V\u6269\u5c55), RISC-V debug spec",
+              "done": false
+            },
+            {
+              "id": "sub_memory_mapped_i_o_registers_base_addresses_bit_manipula",
+              "label": "Memory-mapped I/O: registers base addresses, bit manipulation macros, volatile qualifier usage",
+              "done": false
+            },
+            {
+              "id": "sub_peripherals_gpio_uart_sync_async_fifo_flow_control_i2c_",
+              "label": "Peripherals: GPIO, UART (sync/async, FIFO, flow control), I2C (multi-master, clock stretching), SPI (CPOL/CPHA modes), CAN, DMA, ADC, PWM, timer/counter (input capture, output compare, PWM generation)",
+              "done": false
+            },
+            {
+              "id": "sub_low_power_design_sleep_wake_cycles_clock_gating_rcc_pow",
+              "label": "Low-power design: sleep/wake cycles, clock gating (RCC), power domains (PD), battery life estimation, dynamic voltage/frequency scaling (DVFS)",
+              "done": false
+            },
+            {
+              "id": "sub_debugging_swd_jtag_semihosting_itm_instrumentation_trac",
+              "label": "Debugging: SWD/JTAG, semihosting, ITM (instrumentation trace macrocell) trace, Segger RTT, logic analyzer, oscilloscope",
+              "done": false
+            },
+            {
+              "id": "sub_hal_vs_bare_metal_stm32_hal_ll_low_layer_drivers_zephyr",
+              "label": "HAL vs bare-metal: STM32 HAL/LL (low-layer) drivers, Zephyr driver model, or register-level for deep understanding",
+              "done": false
+            }
+          ]
         },
         {
-          "id": "fpga",
-          "label": "\u03b3.5 FPGAs & high-level synthesis (HDL, HLS, AXI4)",
+          "id": "gamma__5_fpgas_and_hardware_acceleration_hdl_hls_axi4_",
+          "label": "\u03b3.5 FPGAs and hardware acceleration (HDL, HLS, AXI4)",
           "done": false,
-          "order": 4
-        },
-        {
-          "id": "comm_buses",
-          "label": "\u03b3.7 Communication buses (CAN, SPI, I2C, UART, SpaceWire, EtherCAT, 1553)",
-          "done": false,
-          "subtopics": [],
-          "order": 5
-        },
-        {
-          "id": "edge_inference",
-          "label": "\u03b3.8 Edge inference (TensorRT, ONNX Runtime, TFLite Micro, TVM)",
-          "done": false,
-          "order": 6
+          "order": 4,
+          "subtopics": [
+            {
+              "id": "sub_digital_logic_gates_flip_flops_d_jk_t_registers_counter",
+              "label": "Digital logic: gates, flip-flops (D, JK, T), registers, counters, FSMs (Moore, Mealy), clock domains, metastability, synchronizers",
+              "done": false
+            },
+            {
+              "id": "sub_verilog_systemverilog_modules_always_blocks_combination",
+              "label": "Verilog/SystemVerilog: modules, always blocks (combinational vs sequential), blocking vs non-blocking assignments, testbenches, waveform simulation",
+              "done": false
+            },
+            {
+              "id": "sub_fpga_architecture_luts_look_up_tables_flip_flops_bram_b",
+              "label": "FPGA architecture: LUTs (look-up tables), flip-flops, BRAM (block RAM), DSP48 slices (multiply-accumulate), PLLs (clock generation), I/O blocks (LVDS, single-ended)",
+              "done": false
+            },
+            {
+              "id": "sub_hls_vivado_hls_vitis_hls_c_c_rtl_pipelining_ii_1_unroll",
+              "label": "HLS (Vivado HLS, Vitis HLS): C/C++ \u2192 RTL, pipelining (II=1), unrolling (factor), array partitioning, dataflow, interfaces (AXI4-Lite, AXI4-Stream, AXI4-MM)",
+              "done": false
+            },
+            {
+              "id": "sub_cpu_fpga_integration_axi4_lite_control_status_registers",
+              "label": "CPU/FPGA integration: AXI4-Lite (control/status registers), AXI4-Stream (high-bandwidth data), DMA transfers, interrupts",
+              "done": false
+            },
+            {
+              "id": "sub_tool_flow_simulation_modelsim_questa_synthesis_implemen",
+              "label": "Tool flow: simulation (ModelSim/Questa), synthesis, implementation (place and route), timing analysis (setup/hold), bitstream generation",
+              "done": false
+            }
+          ]
         },
         {
           "id": "gamma__6_hardware_in_the_loop_hitl_testing",
           "label": "\u03b3.6 Hardware-in-the-loop (HITL) testing",
           "done": false,
-          "order": 7
+          "order": 5,
+          "subtopics": [
+            {
+              "id": "sub_hitl_architecture_simulation_environment_hardware_devic",
+              "label": "HITL architecture: simulation environment + hardware device (target) + real-time communication bridge",
+              "done": false
+            },
+            {
+              "id": "sub_sim_hardware_serial_rs_232_rs_422_485_can_ethercat_udp_",
+              "label": "Sim \u2194 hardware: serial (RS-232, RS-422/485), CAN, EtherCAT, UDP, shared memory, PXIe backplane",
+              "done": false
+            },
+            {
+              "id": "sub_sil_software_in_the_loop_flight_controller_software_run",
+              "label": "SIL (software-in-the-loop): flight/controller software runs against model simulation on development host",
+              "done": false
+            },
+            {
+              "id": "sub_pil_processor_in_the_loop_compiled_binary_runs_on_targe",
+              "label": "PIL (processor-in-the-loop): compiled binary runs on target CPU within simulation context via debug interface",
+              "done": false
+            },
+            {
+              "id": "sub_real_time_synchronization_hardware_clock_simulation_tim",
+              "label": "Real-time synchronization: hardware clock, simulation time stepping, time scaling factor, external clock reference",
+              "done": false
+            },
+            {
+              "id": "sub_failure_injection_sensor_dropout_disconnection_communic",
+              "label": "Failure injection: sensor dropout/disconnection, communication latency/jitter, actuator saturation, bit flips, brownout",
+              "done": false
+            },
+            {
+              "id": "sub_test_automation_jenkins_gitlab_ci_for_hitl_suites_regre",
+              "label": "Test automation: Jenkins/GitLab CI for HITL suites, regression test criteria (pass/fail metrics), automated report generation",
+              "done": false
+            }
+          ]
+        },
+        {
+          "id": "gamma__7_communication_buses_can_spi_i2c_uart_spacewire_ether",
+          "label": "\u03b3.7 Communication buses (CAN, SPI, I2C, UART, SpaceWire, EtherCAT, MIL-STD-1553)",
+          "done": false,
+          "order": 6,
+          "subtopics": [
+            {
+              "id": "sub_uart_async_serial_start_stop_bits_baud_rate_parity_none",
+              "label": "UART: async serial, start/stop bits, baud rate, parity (none/even/odd), RS-232 (<15m) vs RS-422/485 (<1200m, differential)",
+              "done": false
+            },
+            {
+              "id": "sub_i2c_multi_master_open_drain_clock_stretching_7_bit_vs_1",
+              "label": "I2C: multi-master, open-drain, clock stretching, 7-bit vs 10-bit addressing, bus capacitance (max devices), standard/fast/high-speed modes",
+              "done": false
+            },
+            {
+              "id": "sub_spi_full_duplex_master_slave_chip_select_clock_polarity",
+              "label": "SPI: full-duplex, master/slave, chip select, clock polarity/phase (CPOL/CPHA), daisy-chaining, quad-SPI (QSPI)",
+              "done": false
+            },
+            {
+              "id": "sub_can_2_0a_11_bit_id_vs_2_0b_29_bit_id_csma_ca_arbitratio",
+              "label": "CAN: 2.0A (11-bit ID) vs 2.0B (29-bit ID), CSMA/CA + arbitration, bit stuffing, ACK slot, error states (active/passive/bus-off), CAN-FD (flexible data rate)",
+              "done": false
+            },
+            {
+              "id": "sub_ethercat_master_slave_processing_on_the_fly_datagram_pr",
+              "label": "EtherCAT: master/slave (processing on the fly), datagram processing on the wire, distributed clocks (DC), ECO mode, hot connect",
+              "done": false
+            },
+            {
+              "id": "sub_spacewire_lvds_low_voltage_differential_signaling_wormh",
+              "label": "SpaceWire: LVDS (low-voltage differential signaling), wormhole routing, packet switching, time-codes, data-strobe encoding, RMAP protocol",
+              "done": false
+            },
+            {
+              "id": "sub_mil_std_1553_command_response_protocol_bus_controller_u",
+              "label": "MIL-STD-1553: command/response protocol, bus controller + up to 31 remote terminals, 1 MHz Manchester encoding, transformer-coupled",
+              "done": false
+            }
+          ]
+        },
+        {
+          "id": "gamma__8_edge_inference_tensorrt_onnx_runtime_tflite_micro_tv",
+          "label": "\u03b3.8 Edge inference (TensorRT, ONNX Runtime, TFLite Micro, TVM)",
+          "done": false,
+          "order": 7,
+          "subtopics": [
+            {
+              "id": "sub_tensorrt_network_definition_from_onnx_layer_fusion_fp16",
+              "label": "TensorRT: network definition from ONNX, layer fusion, FP16/INT8 calibration (entropy, percentile), dynamic shapes, DLA (deep learning accelerator)",
+              "done": false
+            },
+            {
+              "id": "sub_onnx_runtime_onnx_model_format_execution_providers_cpu_",
+              "label": "ONNX Runtime: ONNX model format, execution providers (CPU, CUDA, TensorRT, OpenVINO, CoreML), model optimization (level 1-3), custom ops",
+              "done": false
+            },
+            {
+              "id": "sub_tflite_micro_interpreter_runtime_operator_resolver_all_",
+              "label": "TFLite Micro: interpreter runtime, operator resolver (all ops vs selective), arena-based memory, delegates for hardware acceleration",
+              "done": false
+            },
+            {
+              "id": "sub_tvm_relay_ir_schedule_auto_tuning_autotvm_ansor_metasch",
+              "label": "TVM: Relay IR \u2192 schedule \u2192 auto-tuning (AutoTVM, Ansor, MetaSchedule) \u2192 code generation, microTVM for MCU, target-specific schedules",
+              "done": false
+            },
+            {
+              "id": "sub_custom_operator_deployment_writing_tensorrt_plugins_cud",
+              "label": "Custom operator deployment: writing TensorRT plugins (CUDA C++, IPluginV2), ONNX Runtime custom ops (kernel + schema), TFLite Micro custom ops",
+              "done": false
+            },
+            {
+              "id": "sub_memory_constraints_model_size_vs_hardware_ram_quantizat",
+              "label": "Memory constraints: model size vs hardware RAM, quantization + memory mapping, off-chip memory (flash), execution in place",
+              "done": false
+            },
+            {
+              "id": "sub_benchmarking_latency_preprocessing_inference_postproces",
+              "label": "Benchmarking: latency (preprocessing \u2192 inference \u2192 postprocessing), throughput (QPS), power consumption (Joules/inference), thermal throttling effect",
+              "done": false
+            }
+          ]
         }
       ],
       "resources": [
         {
-          "id": "freertos_tutorials",
-          "label": "FreeRTOS official tutorials + STM32CubeIDE examples",
+          "id": "res_real_time_c_efficient_object_oriented_and_template_micr",
+          "label": "Real-Time C++: Efficient Object-Oriented and Template Microcontroller Programming (Kormanyos)",
           "done": false,
           "order": 0
         },
         {
-          "id": "freertos_udemy",
-          "label": "Mastering FreeRTOS using STM32 (Udemy)",
+          "id": "res_misra_c_2023_guidelines_reference_with_ai_not_cover_to_",
+          "label": "MISRA C++:2023 guidelines (reference with AI, not cover-to-cover)",
           "done": false,
-          "order": 1
+          "order": 0
         },
         {
-          "id": "rtos_book",
-          "label": "Hands-On RTOS with Microcontrollers (Amos)",
+          "id": "res_freertos_documentation_implementing_a_watchdog_timer_se",
+          "label": "FreeRTOS documentation: Implementing a Watchdog Timer section",
           "done": false,
-          "order": 2
+          "order": 0
         },
         {
-          "id": "tflite_micro",
-          "label": "TensorFlow Lite Micro documentation",
+          "id": "res_a_practitioner_s_approach_to_real_time_computing_buttaz",
+          "label": "A Practitioner's Approach to Real-Time Computing (Buttazzo) \u2014 scheduling theory",
           "done": false,
-          "order": 3
+          "order": 0
         },
         {
-          "id": "tvm_docs",
-          "label": "TVM documentation \u2014 ML compiler for edge",
+          "id": "res_freertos_official_tutorials_reference_manual_start_here",
+          "label": "FreeRTOS official tutorials + reference manual \u2014 start here",
           "done": false,
-          "order": 4
+          "order": 0
+        },
+        {
+          "id": "res_mastering_freertos_using_stm32_udemy_hands_on_with_hard",
+          "label": "Mastering FreeRTOS using STM32 (Udemy) \u2014 hands-on with hardware",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_zephyr_documentation_build_the_example_applications",
+          "label": "Zephyr documentation \u2014 build the example applications",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_hands_on_rtos_with_microcontrollers_amos_2nd_ed_cross_r",
+          "label": "Hands-On RTOS with Microcontrollers (Amos, 2nd ed) \u2014 cross-RTOS patterns",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_rtems_classic_api_guide_nasa_for_space_domain_awareness",
+          "label": "RTEMS Classic API Guide (NASA) \u2014 for space domain awareness",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_buildroot_documentation_examples_start_with_raspberry_p",
+          "label": "Buildroot documentation + examples \u2014 start with Raspberry Pi or QEMU target",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_yocto_project_development_manual_chapters_1_5",
+          "label": "Yocto Project Development Manual \u2014 chapters 1-5",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_mastering_embedded_linux_programming_simmonds_3rd_ed_",
+          "label": "Mastering Embedded Linux Programming (Simmonds, 3rd ed)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_linux_kernel_module_programming_guide_online_free_",
+          "label": "Linux Kernel Module Programming Guide (online, free)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_nvidia_jetson_developer_guide_building_custom_kernel_fl",
+          "label": "NVIDIA Jetson Developer Guide \u2014 building custom kernel, flashing",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_stm32_nucleo_cubeide_tutorials_practical_start",
+          "label": "STM32 Nucleo + CubeIDE tutorials \u2014 practical start",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_the_definitive_guide_to_arm_cortex_m3_and_cortex_m4_yiu",
+          "label": "The Definitive Guide to ARM Cortex-M3 and Cortex-M4 (Yiu) \u2014 architecture reference",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_arm_cortex_m4_technical_reference_manual_register_map",
+          "label": "ARM Cortex-M4 Technical Reference Manual \u2014 register map",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_stm32_reference_manual_specific_to_your_mcu_",
+          "label": "STM32 reference manual (specific to your MCU)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_the_risc_v_reader_patterson_waterman_concise_architectu",
+          "label": "The RISC-V Reader (Patterson & Waterman) \u2014 concise architecture intro",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_fpga_programming_for_beginners_packt_verilog_vivado_han",
+          "label": "FPGA Programming for Beginners (Packt) \u2014 Verilog + Vivado hands-on",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_digital_design_and_computer_architecture_harris_harris_",
+          "label": "Digital Design and Computer Architecture (Harris & Harris) \u2014 chapters 1-4 (digital logic, Verilog)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_vivado_design_suite_user_guide_synthesis_implementation",
+          "label": "Vivado Design Suite User Guide \u2014 synthesis, implementation, timing",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_vitis_hls_documentation_tutorials_c_rtl_examples",
+          "label": "Vitis HLS documentation + tutorials \u2014 C++ \u2192 RTL examples",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_zipcpu_blog_zipcpu_com_excellent_practical_fpga_cpu_deb",
+          "label": "ZipCPU blog (zipcpu.com) \u2014 excellent practical FPGA/CPU debugging",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_nasa_cfs_hitl_examples_open_source_space_hardened_patte",
+          "label": "NASA cFS HITL examples \u2014 open source, space-hardened patterns",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_dspace_documentation_commercial_hil_market_leader_learn",
+          "label": "dSPACE documentation \u2014 commercial HIL market leader, learn the architectural concepts",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_pixhawk_hitl_setup_px4_sitl_hitl_documentation",
+          "label": "Pixhawk HITL setup \u2014 PX4 SITL/HITL documentation",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_hardware_in_the_loop_testing_defense_technical_informat",
+          "label": "Hardware-in-the-Loop Testing (Defense Technical Information Center) \u2014 survey paper",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_understanding_each_bus_start_with_wikipedia_overview_lo",
+          "label": "Understanding each bus \u2014 start with Wikipedia overview + logic analyzer captures",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_can_specification_2_0_bosch_arbitration_and_error_handl",
+          "label": "CAN Specification 2.0 (Bosch) \u2014 arbitration and error handling chapters",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_spi_i2c_logic_analyzer_in_action_tutorials_saleae_blog_",
+          "label": "SPI / I2C: Logic Analyzer in Action tutorials (Saleae blog)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_ethercat_the_complete_guide_beckhoff_free",
+          "label": "EtherCAT: The Complete Guide (Beckhoff) \u2014 free",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_spacewire_ecss_e_st_50_12c_standard_esa_",
+          "label": "SpaceWire: ECSS-E-ST-50-12C standard (ESA)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_tensorrt_developer_guide_onnx_import_int8_calibration_d",
+          "label": "TensorRT Developer Guide \u2014 ONNX import, INT8 calibration, dynamic shapes",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_onnx_runtime_tutorials_python_c_inference_examples",
+          "label": "ONNX Runtime tutorials \u2014 Python + C++ inference examples",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_tflite_micro_documentation_porting_to_mcu_operator_supp",
+          "label": "TFLite Micro documentation \u2014 porting to MCU, operator support",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_tvm_documentation_microtvm_tvm_apache_org_",
+          "label": "TVM documentation + microTVM (tvm.apache.org)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_efficient_processing_of_deep_neural_networks_sze_et_al_",
+          "label": "Efficient Processing of Deep Neural Networks (Sze et al.) \u2014 DNN accelerator design book",
+          "done": false,
+          "order": 0
         }
       ],
       "projects": [
         {
-          "id": "freertos_stm32",
-          "label": "Set up FreeRTOS on STM32 Nucleo; read IMU via I2C, log to SD card in real-time task",
+          "id": "proj_write_a_freertos_task_in_c_that_reads_imu_via_i2c_runs_",
+          "label": "Write a FreeRTOS task in C++ that reads IMU via I2C, runs an EKF, and logs to SD \u2014 with watchdog, no dynamic allocation, verified with static analysis",
           "status": "not_started",
           "order": 0
         },
         {
-          "id": "tflite_deploy",
-          "label": "Train small classifier, quantize, deploy via TFLite Micro on Nucleo; measure latency",
+          "id": "proj_port_the_imu_ekf_sd_logger_to_zephyr_compare_api_differ",
+          "label": "Port the IMU+EKF+SD logger to Zephyr; compare API differences between FreeRTOS and Zephyr",
           "status": "not_started",
-          "order": 1
+          "order": 0
         },
         {
-          "id": "hitl",
-          "label": "Build HITL: Python sim streams sensor data to Nucleo, which runs EKF, sends back commands",
+          "id": "proj_build_a_custom_embedded_linux_image_with_buildroot_for_",
+          "label": "Build a custom embedded Linux image with Buildroot for Raspberry Pi; write a kernel module that reads GPIO button presses via /dev",
           "status": "not_started",
-          "order": 2
+          "order": 0
         },
         {
-          "id": "jetson_trt",
-          "label": "Deploy quantized transformer on Jetson with TensorRT; benchmark throughput",
+          "id": "proj_blink_an_led_then_read_imu_via_i2c_using_only_register_",
+          "label": "Blink an LED, then read IMU via I2C using only register-level access (no HAL); implement a software I2C bit-bang to verify protocol understanding",
           "status": "not_started",
-          "order": 3
+          "order": 0
+        },
+        {
+          "id": "proj_implement_a_hardware_fir_filter_in_verilog_simulate_wit",
+          "label": "Implement a hardware FIR filter in Verilog; simulate with testbench; synthesize for a dev board; confirm filter output matches Python reference",
+          "status": "not_started",
+          "order": 0
+        },
+        {
+          "id": "proj_set_up_sitl_compile_for_raspberry_pi_connect_via_udp_to",
+          "label": "Set up SITL \u2192 compile for Raspberry Pi \u2192 connect via UDP to Gazebo simulation; inject a GPS dropout and observe estimator drift; verify failover",
+          "status": "not_started",
+          "order": 0
+        },
+        {
+          "id": "proj_connect_an_imu_to_stm32_via_i2c_and_spi_separate_sensor",
+          "label": "Connect an IMU to STM32 via I2C and SPI (separate sensors); read and log both; use a logic analyzer to decode the bus traffic and verify protocol",
+          "status": "not_started",
+          "order": 0
+        },
+        {
+          "id": "proj_export_resnet_18_to_onnx_deploy_with_tensorrt_on_jetson",
+          "label": "Export ResNet-18 to ONNX; deploy with TensorRT on Jetson INT8; deploy same model on MCU with TFLite Micro; compare latency and accuracy",
+          "status": "not_started",
+          "order": 0
         }
       ]
     },
@@ -546,92 +2448,484 @@
       },
       "topics": [
         {
-          "id": "classical_mech",
+          "id": "delta__1_classical_mechanics_lagrangian_hamiltonian_perturbat",
           "label": "\u03b4.1 Classical mechanics (Lagrangian, Hamiltonian, perturbation theory)",
           "done": false,
-          "order": 0
+          "order": 0,
+          "subtopics": [
+            {
+              "id": "sub_lagrangian_mechanics_generalized_coordinates_euler_lagr",
+              "label": "Lagrangian mechanics: generalized coordinates, Euler-Lagrange equations, conservation laws, Noether's theorem",
+              "done": false
+            },
+            {
+              "id": "sub_hamiltonian_mechanics_legendre_transform_hamilton_s_equ",
+              "label": "Hamiltonian mechanics: Legendre transform, Hamilton's equations, phase space (q,p), Poisson brackets, Liouville's theorem",
+              "done": false
+            },
+            {
+              "id": "sub_rigid_body_dynamics_euler_angles_angular_momentum_inert",
+              "label": "Rigid-body dynamics: Euler angles, angular momentum, inertia tensor, Euler's equations, gyroscopic precession",
+              "done": false
+            },
+            {
+              "id": "sub_orbital_perturbation_theory_j2_oblateness_atmospheric_d",
+              "label": "Orbital perturbation theory: J2 (oblateness), atmospheric drag, solar radiation pressure, third-body perturbations, Lagrange planetary equations",
+              "done": false
+            },
+            {
+              "id": "sub_celestial_mechanics_kepler_problem_elliptical_orbits_me",
+              "label": "Celestial mechanics: Kepler problem, elliptical orbits, mean/true/eccentric anomaly, Lambert's problem, orbit determination (Gibbs, Lambert)",
+              "done": false
+            },
+            {
+              "id": "sub_chaos_and_resonance_separatrix_crossing_resonance_overl",
+              "label": "Chaos and resonance: separatrix crossing, resonance overlap (Chirikov criterion), Lyapunov exponents, KAM theorem (concept)",
+              "done": false
+            }
+          ]
         },
         {
-          "id": "electromagnetism",
+          "id": "delta__2_electromagnetism_maxwell_radiation_antenna_theory_",
           "label": "\u03b4.2 Electromagnetism (Maxwell, radiation, antenna theory)",
           "done": false,
-          "order": 1
+          "order": 1,
+          "subtopics": [
+            {
+              "id": "sub_maxwell_s_equations_differential_and_integral_forms_div",
+              "label": "Maxwell's equations: differential and integral forms, divergence/curl, charge conservation, boundary conditions",
+              "done": false
+            },
+            {
+              "id": "sub_em_waves_wave_equation_in_vacuum_matter_polarization_li",
+              "label": "EM waves: wave equation in vacuum/matter, polarization (linear/circular/elliptical), Poynting vector, wave impedance",
+              "done": false
+            },
+            {
+              "id": "sub_radiation_dipole_radiation_hertzian_dipole_antenna_gain",
+              "label": "Radiation: dipole radiation (Hertzian dipole), antenna gain, directivity, effective area, Friis transmission equation",
+              "done": false
+            },
+            {
+              "id": "sub_propagation_free_space_path_loss_atmospheric_attenuatio",
+              "label": "Propagation: free-space path loss, atmospheric attenuation (rain, oxygen, water vapor), multipath (ground bounce), Fresnel zone",
+              "done": false
+            },
+            {
+              "id": "sub_antenna_types_dipole_patch_microstrip_helical_phased_ar",
+              "label": "Antenna types: dipole, patch (microstrip), helical, phased array, parabolic dish, Yagi-Uda \u2014 basic characteristics and radiation patterns",
+              "done": false
+            },
+            {
+              "id": "sub_spacecraft_em_plasma_interactions_spacecraft_charging_s",
+              "label": "Spacecraft EM: plasma interactions, spacecraft charging (surface/internal), EMI/EMC, Faraday cage, grounding/bonding",
+              "done": false
+            }
+          ]
         },
         {
-          "id": "plasma",
+          "id": "delta__3_plasma_physics_mhd_particle_in_cell_methods_",
           "label": "\u03b4.3 Plasma physics (MHD, particle-in-cell methods)",
           "done": false,
-          "order": 2
+          "order": 2,
+          "subtopics": [
+            {
+              "id": "sub_plasma_fundamentals_debye_length_plasma_frequency_gyror",
+              "label": "Plasma fundamentals: Debye length, plasma frequency, gyroradius (Larmor radius), collision frequency, quasi-neutrality",
+              "done": false
+            },
+            {
+              "id": "sub_mhd_equations_continuity_momentum_with_pressure_and_lor",
+              "label": "MHD equations: continuity, momentum (with pressure and Lorentz force), energy, induction equation, frozen-in flux theorem",
+              "done": false
+            },
+            {
+              "id": "sub_mhd_waves_alfv_n_waves_magnetosonic_fast_slow_waves_gro",
+              "label": "MHD waves: Alfv\u00e9n waves, magnetosonic (fast/slow) waves, group/phase velocity diagrams",
+              "done": false
+            },
+            {
+              "id": "sub_pic_particle_pushing_boris_algorithm_field_solve_on_yee",
+              "label": "PIC: particle pushing (Boris algorithm), field solve on Yee grid, current deposition, Monte Carlo collisions",
+              "done": false
+            },
+            {
+              "id": "sub_space_plasmas_solar_wind_fast_slow_magnetosphere_bow_sh",
+              "label": "Space plasmas: solar wind (fast/slow), magnetosphere (bow shock, magnetopause, tail), ionosphere (D/E/F layers), magnetic reconnection",
+              "done": false
+            },
+            {
+              "id": "sub_sheaths_and_double_layers_debye_sheath_formation_bohm_c",
+              "label": "Sheaths and double layers: Debye sheath formation, Bohm criterion, presheath, Child-Langmuir law",
+              "done": false
+            }
+          ]
         },
         {
-          "id": "pde_methods",
+          "id": "delta__4_numerical_pdes_fdm_fvm_spectral_methods_",
           "label": "\u03b4.4 Numerical PDEs (FDM, FVM, spectral methods)",
           "done": false,
-          "order": 3
+          "order": 3,
+          "subtopics": [
+            {
+              "id": "sub_finite_difference_explicit_vs_implicit_cfl_condition_vo",
+              "label": "Finite difference: explicit vs implicit, CFL condition, von Neumann stability analysis, FTCS, Crank-Nicolson, ADI (alternating direction implicit)",
+              "done": false
+            },
+            {
+              "id": "sub_finite_volume_conservation_laws_integral_form_flux_reco",
+              "label": "Finite volume: conservation laws (integral form), flux reconstruction, Riemann solvers (Godunov, HLLC, Roe), slope limiters (minmod, MC, Superbee)",
+              "done": false
+            },
+            {
+              "id": "sub_spectral_methods_fourier_series_periodic_domains_chebys",
+              "label": "Spectral methods: Fourier series (periodic domains), Chebyshev polynomials (non-periodic), Galerkin vs collocation, dealiasing (3/2 rule, 2/3 rule)",
+              "done": false
+            },
+            {
+              "id": "sub_mesh_generation_structured_vs_unstructured_adaptive_mes",
+              "label": "Mesh generation: structured vs unstructured, adaptive mesh refinement (AMR), octrees, quadtrees, Delaunay triangulation",
+              "done": false
+            },
+            {
+              "id": "sub_time_integration_rk4_symplectic_integrators_stormer_ver",
+              "label": "Time integration: RK4, symplectic integrators (Stormer-Verlet, leapfrog), IMEX (implicit-explicit), Rosenbrock methods",
+              "done": false
+            },
+            {
+              "id": "sub_boundary_conditions_dirichlet_neumann_robin_periodic_ab",
+              "label": "Boundary conditions: Dirichlet, Neumann, Robin, periodic, absorbing (PML \u2014 perfectly matched layer)",
+              "done": false
+            }
+          ]
         },
         {
-          "id": "pinns",
-          "label": "\u03b4.5 PINNs & operator learning (DeepONet, FNO)",
+          "id": "delta__5_pinns_and_operator_learning_deeponet_fno_",
+          "label": "\u03b4.5 PINNs and operator learning (DeepONet, FNO)",
           "done": false,
-          "order": 4
+          "order": 4,
+          "subtopics": [
+            {
+              "id": "sub_pinns_loss_function_pde_residual_bc_data_collocation_po",
+              "label": "PINNs: loss function (PDE residual + BC + data), collocation points, automatic differentiation, gradient balancing",
+              "done": false
+            },
+            {
+              "id": "sub_training_strategies_lr_schedules_gradient_balancing_ntk",
+              "label": "Training strategies: LR schedules, gradient balancing (NTK, soft-attention, adaptive weights), curriculum learning (residual-based refinement)",
+              "done": false
+            },
+            {
+              "id": "sub_deeponet_branch_net_input_function_encoder_trunk_net_qu",
+              "label": "DeepONet: branch net (input function encoder) + trunk net (query coordinates), operator learning, stacked/unstacked architectures",
+              "done": false
+            },
+            {
+              "id": "sub_fno_spectral_convolution_in_fourier_space_lifting_proje",
+              "label": "FNO: spectral convolution in Fourier space, lifting/projection layers, resolution invariance, grid-free after training",
+              "done": false
+            },
+            {
+              "id": "sub_applications_inverse_problems_surrogate_modeling_for_pd",
+              "label": "Applications: inverse problems, surrogate modeling for PDE-constrained optimization, design optimization",
+              "done": false
+            },
+            {
+              "id": "sub_limitations_spectral_bias_fourier_feature_encoding_fail",
+              "label": "Limitations: spectral bias (Fourier feature encoding), failure on stiff PDEs, high-frequency modes, training instability",
+              "done": false
+            }
+          ]
         },
         {
-          "id": "hpc_patterns",
-          "label": "\u03b4.6 Scientific computing (HPC patterns, GPU-accelerated PDE solvers)",
+          "id": "delta__6_scientific_computing_hpc_mpi_gpu_pde_solvers_",
+          "label": "\u03b4.6 Scientific computing (HPC, MPI, GPU PDE solvers)",
           "done": false,
-          "order": 5
+          "order": 5,
+          "subtopics": [
+            {
+              "id": "sub_hpc_patterns_domain_decomposition_mpi_message_passing_p",
+              "label": "HPC patterns: domain decomposition, MPI (message passing \u2014 point-to-point, collectives, Cartesian topology), OpenMP (shared memory, tasks, SIMD), hybrid MPI+OpenMP",
+              "done": false
+            },
+            {
+              "id": "sub_gpu_acceleration_cuda_pde_solvers_grid_block_decomposit",
+              "label": "GPU acceleration: CUDA PDE solvers, grid/block decomposition, shared memory tiling, halo exchange (ghost cells), kernel fusion",
+              "done": false
+            },
+            {
+              "id": "sub_parallel_i_o_hdf5_hierarchical_data_format_chunking_com",
+              "label": "Parallel I/O: HDF5 (hierarchical data format, chunking, compression, collective I/O), NetCDF, ADIOS2 (BP format, SST streaming)",
+              "done": false
+            },
+            {
+              "id": "sub_stencil_computation_jacobi_gauss_seidel_red_black_gauss",
+              "label": "Stencil computation: Jacobi, Gauss-Seidel, red-black Gauss-Seidel, multigrid (V-cycle, W-cycle), Roofline model (arithmetic intensity, bandwidth bound)",
+              "done": false
+            },
+            {
+              "id": "sub_performance_profiling_mpi_profiling_papi_score_p_vampir",
+              "label": "Performance profiling: MPI profiling (PAPI, Score-P, Vampir), GPU profiling (Nsight, NVProf), scaling (Amdahl's law, Gustafson's law)",
+              "done": false
+            },
+            {
+              "id": "sub_containerization_docker_for_development_singularity_app",
+              "label": "Containerization: Docker (for development), Singularity/Apptainer (HPC, shared filesystem, GPU support), Charliecloud",
+              "done": false
+            }
+          ]
         },
         {
-          "id": "delta__7_astrophysics_data_analysis_time_serie",
-          "label": "\u03b4.7 Astrophysics data analysis (time-series, image reconstruction, Bayesian inference)",
+          "id": "delta__7_astrophysics_data_analysis_time_series_image_reconst",
+          "label": "\u03b4.7 Astrophysics data analysis (time-series, image reconstruction, Bayes)",
           "done": false,
-          "order": 6
+          "order": 6,
+          "subtopics": [
+            {
+              "id": "sub_time_series_lomb_scargle_periodogram_unevenly_spaced_da",
+              "label": "Time-series: Lomb-Scargle periodogram (unevenly spaced data), Box-fitting Least Squares (transits), wavelets (continuous, discrete), autoregressive models",
+              "done": false
+            },
+            {
+              "id": "sub_image_reconstruction_deconvolution_richardson_lucy_clea",
+              "label": "Image reconstruction: deconvolution (Richardson-Lucy), CLEAN algorithm (radio synthesis), MEM (maximum entropy), PSF modeling, aperture synthesis",
+              "done": false
+            },
+            {
+              "id": "sub_bayesian_inference_mcmc_emcee_pymc3_pyro_nested_samplin",
+              "label": "Bayesian inference: MCMC (emcee, PyMC3, Pyro), nested sampling (MultiNest, dynesty, UltraNest), Gaussian processes (GP regression for time-series)",
+              "done": false
+            },
+            {
+              "id": "sub_spatial_statistics_point_process_models_kriging_gaussia",
+              "label": "Spatial statistics: point process models, kriging (Gaussian process regression for spatial data), dust map inference, clustering (DBSCAN, HDBSCAN)",
+              "done": false
+            },
+            {
+              "id": "sub_multi_messenger_astronomy_gravitational_wave_em_counter",
+              "label": "Multi-messenger astronomy: gravitational wave + EM counterpart identification, time-domain alerts (VOEvent, LVAlert), sky localization",
+              "done": false
+            },
+            {
+              "id": "sub_tools_astropy_fits_coordinates_convolution_cosmology_su",
+              "label": "Tools: AstroPy (FITS, coordinates, convolution, cosmology), SunPy (solar data analysis), AstroML (datasets and examples), CASA (radio interferometry)",
+              "done": false
+            }
+          ]
         }
       ],
       "resources": [
         {
-          "id": "plasma_conde",
-          "label": "Introduction to Plasma Physics (Conde, 2025)",
+          "id": "res_classical_mechanics_goldstein_chapters_1_3_lagrangian_8",
+          "label": "Classical Mechanics (Goldstein) \u2014 chapters 1-3 (Lagrangian), 8-9 (Hamiltonian) \u2014 use AI tutor",
           "done": false,
           "order": 0
         },
         {
-          "id": "plasma_chen",
-          "label": "Introduction to Plasma Physics (Chen) \u2014 classic",
+          "id": "res_orbital_mechanics_for_engineering_students_curtis_two_b",
+          "label": "Orbital Mechanics for Engineering Students (Curtis) \u2014 two-body problem, perturbations",
           "done": false,
-          "order": 1
+          "order": 0
         },
         {
-          "id": "griffiths",
-          "label": "Introduction to Electrodynamics (Griffiths) \u2014 first 4 chapters",
+          "id": "res_methods_of_celestial_mechanics_brouwer_clemence_perturb",
+          "label": "Methods of Celestial Mechanics (Brouwer & Clemence) \u2014 perturbation theory reference",
           "done": false,
-          "order": 2
+          "order": 0
         },
         {
-          "id": "pinns_paper",
-          "label": "Original PINNs paper (Raissi et al.)",
+          "id": "res_introduction_to_electrodynamics_griffiths_chapters_7_9_",
+          "label": "Introduction to Electrodynamics (Griffiths) \u2014 chapters 7-9 (Maxwell's equations, EM waves)",
           "done": false,
-          "order": 3
+          "order": 0
+        },
+        {
+          "id": "res_antenna_theory_and_design_balanis_chapters_1_4_fundamen",
+          "label": "Antenna Theory and Design (Balanis) \u2014 chapters 1-4 (fundamentals, dipoles, arrays)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_spacecraft_charging_garrett_whittlesey_aiaa_progress_se",
+          "label": "Spacecraft Charging (Garrett & Whittlesey) \u2014 AIAA progress series",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_introduction_to_plasma_physics_chen_chapters_1_5_fundam",
+          "label": "Introduction to Plasma Physics (Chen) \u2014 chapters 1-5 (fundamentals, waves)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_plasma_physics_for_astrophysics_priest_space_applicatio",
+          "label": "Plasma Physics for Astrophysics (Priest) \u2014 space applications",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_pic_methods_in_plasma_physics_birdsall_langdon_computat",
+          "label": "PIC Methods in Plasma Physics (Birdsall & Langdon) \u2014 computational approach",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_boris_algorithm_derivations_and_implementations_many_bl",
+          "label": "Boris algorithm \u2014 derivations and implementations (many blog posts)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_numerical_recipes_press_et_al_pdes_odes_fft_chapters",
+          "label": "Numerical Recipes (Press et al.) \u2014 PDEs, ODEs, FFT chapters",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_computational_fluid_dynamics_ferziger_peri_fvm_approach",
+          "label": "Computational Fluid Dynamics (Ferziger & Peri\u0107) \u2014 FVM approach",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_finite_difference_methods_for_odes_and_pdes_leveque_",
+          "label": "Finite Difference Methods for ODEs and PDEs (LeVeque)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_spectral_methods_in_fluid_dynamics_canuto_et_al_chapter",
+          "label": "Spectral Methods in Fluid Dynamics (Canuto et al.) \u2014 chapters 1-3",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_physics_informed_neural_networks_raissi_et_al_2019_orig",
+          "label": "Physics-informed neural networks (Raissi et al., 2019) \u2014 original PINNs paper",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_deeponet_learning_nonlinear_operators_via_deeponet_lu_e",
+          "label": "DeepONet: Learning Nonlinear Operators via DeepONet (Lu et al.)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_fourier_neural_operator_for_parametric_pdes_li_et_al_",
+          "label": "Fourier Neural Operator for Parametric PDEs (Li et al.)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_scientific_machine_learning_online_course_sciml_2023_le",
+          "label": "Scientific Machine Learning online course (SciML, 2023) \u2014 lecture series",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_introduction_to_high_performance_computing_for_scientis",
+          "label": "Introduction to High Performance Computing for Scientists and Engineers (Hager & Wellein)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_mpi_tutorial_mpitutorial_com_collective_ops_cartesian_t",
+          "label": "MPI tutorial (mpitutorial.com) \u2014 collective ops, Cartesian topology",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_cuda_c_best_practices_guide_grid_block_heuristics_memor",
+          "label": "CUDA C++ Best Practices Guide \u2014 grid/block heuristics, memory optimization",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_hdf5_documentation_data_model_python_and_c_apis",
+          "label": "HDF5 documentation \u2014 data model, Python and C APIs",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_roofline_model_williams_et_al_insightful_visual_perform",
+          "label": "Roofline model: Williams et al. \u2014 insightful visual performance model",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_statistics_data_mining_and_machine_learning_in_astronom",
+          "label": "Statistics, Data Mining, and Machine Learning in Astronomy (Ivezi\u0107 et al.) \u2014 comprehensive",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_lomb_scargle_periodograms_vanderplas_2018_aj_article_fr",
+          "label": "Lomb-Scargle Periodograms (VanderPlas, 2018) \u2014 AJ article, free online",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_bayesian_data_analysis_gelman_et_al_mcmc_model_comparis",
+          "label": "Bayesian Data Analysis (Gelman et al.) \u2014 MCMC, model comparison chapters",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_astroml_documentation_astroml_github_io_examples_and_da",
+          "label": "AstroML documentation (astroml.github.io) \u2014 examples and datasets",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_sunpy_documentation_sunpy_org_solar_physics_data_analys",
+          "label": "SunPy documentation (sunpy.org) \u2014 solar physics data analysis",
+          "done": false,
+          "order": 0
         }
       ],
       "projects": [
         {
-          "id": "kp_prediction",
-          "label": "Download real solar wind data; build DL model to predict Kp index 1hr ahead; benchmark vs NOAA",
+          "id": "proj_simulate_a_satellite_orbit_with_j2_perturbation_in_pyth",
+          "label": "Simulate a satellite orbit with J2 perturbation in Python; plot nodal precession over 100 orbits",
           "status": "not_started",
           "order": 0
         },
         {
-          "id": "heat_pinn",
-          "label": "Implement PINN to solve 1D heat equation in PyTorch; compare to finite-difference",
+          "id": "proj_build_a_python_link_budget_calculator_for_a_cubesat_com",
+          "label": "Build a Python link budget calculator for a CubeSat communication downlink (frequency, distance, antenna gains, modulation)",
           "status": "not_started",
-          "order": 1
+          "order": 0
         },
         {
-          "id": "double_pendulum",
-          "label": "Simulate double pendulum via Lagrangian mechanics; compare to numerical integration",
+          "id": "proj_implement_a_1d_electrostatic_pic_code_initialize_a_two_",
+          "label": "Implement a 1D electrostatic PIC code: initialize a two-stream instability, observe the growth of the unstable mode",
           "status": "not_started",
-          "order": 2
+          "order": 0
+        },
+        {
+          "id": "proj_solve_2d_heat_equation_using_finite_difference_explicit",
+          "label": "Solve 2D heat equation using finite difference (explicit and implicit); compare stability and runtime; implement adaptive time stepping",
+          "status": "not_started",
+          "order": 0
+        },
+        {
+          "id": "proj_solve_burgers_equation_with_a_pinn_in_pytorch_compare_a",
+          "label": "Solve Burgers' equation with a PINN in PyTorch; compare against finite-difference reference; try Fourier feature encoding for high-frequency resolution",
+          "status": "not_started",
+          "order": 0
+        },
+        {
+          "id": "proj_write_an_mpi_parallel_2d_heat_equation_solver_in_c_run_",
+          "label": "Write an MPI-parallel 2D heat equation solver in C++; run on 1, 2, 4, 8 processes; plot strong/weak scaling efficiency",
+          "status": "not_started",
+          "order": 0
+        },
+        {
+          "id": "proj_download_solar_wind_data_from_nasa_cdaweb_compute_lomb_",
+          "label": "Download solar wind data from NASA CDAWeb; compute Lomb-Scargle periodogram; build a Gaussian process model to predict solar wind speed with uncertainty intervals",
+          "status": "not_started",
+          "order": 0
         }
       ]
     },
@@ -646,86 +2940,507 @@
       },
       "topics": [
         {
-          "id": "cloud",
+          "id": "eps__1_cloud_aws_ec2_s3_vpc_lambda_iam_",
           "label": "\u03b5.1 Cloud / AWS (EC2, S3, VPC, Lambda, IAM)",
           "done": false,
-          "order": 0
+          "order": 0,
+          "subtopics": [
+            {
+              "id": "sub_ec2_instance_types_gpu_p4d_p5_cpu_c6i_m6i_amis_security",
+              "label": "EC2: instance types (GPU: p4d, p5; CPU: c6i, m6i), AMIs, security groups, elastic IPs, spot instances (interruption handling)",
+              "done": false
+            },
+            {
+              "id": "sub_s3_buckets_objects_storage_classes_standard_ia_glacier_",
+              "label": "S3: buckets, objects, storage classes (Standard, IA, Glacier), lifecycle policies, presigned URLs, S3a/ExpressOne, replication (CRR/SRR)",
+              "done": false
+            },
+            {
+              "id": "sub_vpc_subnets_route_tables_nat_gateway_gateway_security_g",
+              "label": "VPC: subnets, route tables, NAT gateway/gateway, security groups vs NACLs (stateless vs stateful), VPC peering, endpoints (gateway/interface)",
+              "done": false
+            },
+            {
+              "id": "sub_iam_users_groups_roles_policies_aws_managed_vs_customer",
+              "label": "IAM: users, groups, roles, policies (AWS-managed vs customer-managed vs inline), trust relationships, least privilege, instance profiles",
+              "done": false
+            },
+            {
+              "id": "sub_lambda_serverless_functions_triggers_s3_sqs_api_gateway",
+              "label": "Lambda: serverless functions, triggers (S3, SQS, API Gateway, DynamoDB Streams), cold starts (VPC vs no VPC), reserved concurrency, layers",
+              "done": false
+            },
+            {
+              "id": "sub_gpu_specific_efa_elastic_fabric_adapter_gpudirect_rdma_",
+              "label": "GPU-specific: EFA (Elastic Fabric Adapter, GPUDirect RDMA), placement groups (cluster/partition/spread), FSx for Lustre, EBS gp3/io2 performance",
+              "done": false
+            }
+          ]
         },
         {
-          "id": "iac",
+          "id": "eps__2_infrastructure_as_code_terraform_kubernetes_docker_",
           "label": "\u03b5.2 Infrastructure-as-code (Terraform, Kubernetes, Docker)",
           "done": false,
-          "order": 1
+          "order": 1,
+          "subtopics": [
+            {
+              "id": "sub_docker_dockerfile_best_practices_multi_stage_builds_lay",
+              "label": "Docker: Dockerfile best practices (multi-stage builds, layer caching, .dockerignore), Compose (services, networks, volumes), buildx for multi-arch",
+              "done": false
+            },
+            {
+              "id": "sub_kubernetes_pods_deployments_statefulsets_services_clust",
+              "label": "Kubernetes: pods, deployments, StatefulSets, services (ClusterIP, NodePort, LoadBalancer), ConfigMaps, Secrets, volumes (emptyDir, hostPath, PVC), Ingress, Helm charts",
+              "done": false
+            },
+            {
+              "id": "sub_k8s_for_ml_gpu_scheduling_nvidia_device_plugin_time_sli",
+              "label": "K8s for ML: GPU scheduling (NVIDIA device plugin, time-slicing, MIG), Volcano (batch scheduling, queue, podgroup), Kubeflow (pipelines, notebooks, Katib, KFServing)",
+              "done": false
+            },
+            {
+              "id": "sub_terraform_hcl_syntax_modules_state_management_local_vs_",
+              "label": "Terraform: HCL syntax, modules, state management (local vs remote backends \u2014 S3+DynamoDB), providers, resource lifecycle (create, read, update, delete), workspaces",
+              "done": false
+            },
+            {
+              "id": "sub_gitops_argocd_declarative_git_sync_sync_waves_prune_flu",
+              "label": "GitOps: ArgoCD (declarative Git-sync, sync waves, prune), Flux (Kustomize, Helm, notification controller), continuous sync, drift detection",
+              "done": false
+            },
+            {
+              "id": "sub_cluster_lifecycle_kops_aws_kubeadm_k3s_edge_lightweight",
+              "label": "Cluster lifecycle: Kops (AWS), kubeadm, K3s (edge/lightweight), EKS/AKS/GKE (managed), Bottlerocket OS, Cluster API (declarative cluster management)",
+              "done": false
+            },
+            {
+              "id": "sub_container_security_image_scanning_trivy_clair_runtime_s",
+              "label": "Container security: image scanning (Trivy, Clair), runtime security (Falco, seccomp, AppArmor), pod security standards (privileged, baseline, restricted), network policies",
+              "done": false
+            }
+          ]
         },
         {
-          "id": "cicd",
+          "id": "eps__3_ci_cd_github_actions_gitlab_ci_pytest_gtest_",
           "label": "\u03b5.3 CI/CD (GitHub Actions, GitLab CI, pytest, GTest)",
           "done": false,
-          "order": 2
+          "order": 2,
+          "subtopics": [
+            {
+              "id": "sub_github_actions_workflow_syntax_jobs_steps_matrix_strate",
+              "label": "GitHub Actions: workflow syntax (jobs, steps, matrix strategy), self-hosted runners (actions-runner-controller), caching (actions/cache, dependencies), artifacts",
+              "done": false
+            },
+            {
+              "id": "sub_gitlab_ci_gitlab_ci_yml_stages_jobs_rules_artifacts_dep",
+              "label": "GitLab CI: .gitlab-ci.yml (stages, jobs, rules, artifacts, dependencies), runners (shared, specific, group), DAG scheduling (needs), CI/CD for K8s",
+              "done": false
+            },
+            {
+              "id": "sub_python_testing_pytest_fixtures_scopes_parametrize_conft",
+              "label": "Python testing: pytest (fixtures scopes, parametrize, conftest, markers), coverage (pytest-cov, diff-cover), tox (multi-version), hypothesis (property-based)",
+              "done": false
+            },
+            {
+              "id": "sub_c_testing_gtest_test_fixtures_assertions_expect_assert_",
+              "label": "C++ testing: GTest (test fixtures, assertions (EXPECT/ASSERT), death tests, typed tests), CMake integration (enable_testing, GTest discovery), CTest/CDash",
+              "done": false
+            },
+            {
+              "id": "sub_ci_for_ml_data_validation_tfx_model_evaluation_gate_com",
+              "label": "CI for ML: data validation (TFX), model evaluation gate (compare baseline vs candidate on eval set), W&B integration (diff metrics), approval step",
+              "done": false
+            },
+            {
+              "id": "sub_docker_in_ci_building_images_with_kaniko_buildkit_no_do",
+              "label": "Docker-in-CI: building images with Kaniko/buildkit (no Docker daemon), pushing to ECR/DockerHub, integration tests in ephemeral containers",
+              "done": false
+            },
+            {
+              "id": "sub_secrets_management_github_secrets_encrypted_env_vars_gi",
+              "label": "Secrets management: GitHub Secrets (encrypted env vars), GitLab CI variables (masked, file, group), HashiCorp Vault (dynamic secrets, kv engine), Doppler",
+              "done": false
+            }
+          ]
         },
         {
-          "id": "build_systems",
+          "id": "eps__4_build_systems_cmake_bazel_platformio_",
           "label": "\u03b5.4 Build systems (CMake, Bazel, PlatformIO)",
           "done": false,
-          "order": 3
+          "order": 3,
+          "subtopics": [
+            {
+              "id": "sub_cmake_targets_executable_library_custom_properties_targ",
+              "label": "CMake: targets (executable, library, custom), properties (target-specific, directory), find_package (config vs module mode), FetchContent (external dependencies), toolchain files (cross-compilation), install rules (export, DESTINATION)",
+              "done": false
+            },
+            {
+              "id": "sub_cmake_modern_c_interface_shared_static_targets_alias_ta",
+              "label": "CMake + modern C++: INTERFACE/SHARED/STATIC targets, alias targets (namespace), generator expressions ($<\u2026>), target_include/properties/link_* commands",
+              "done": false
+            },
+            {
+              "id": "sub_bazel_build_files_rules_cc_binary_cc_library_cc_test_py",
+              "label": "Bazel: BUILD files (rules: cc_binary, cc_library, cc_test, py_binary), dependencies (deps, data, runtime_deps), remote caching (buildbarn, nginx + S3), remote execution (buildfarm)",
+              "done": false
+            },
+            {
+              "id": "sub_platformio_embedded_build_system_for_mcu_board_definiti",
+              "label": "PlatformIO: embedded build system for MCU, board definitions (boards/), library management (platformio.ini, lib_deps), unit testing on target, CI integration",
+              "done": false
+            },
+            {
+              "id": "sub_cross_compilation_cmake_toolchain_files_cmake_toolchain",
+              "label": "Cross-compilation: CMake toolchain files (CMAKE_TOOLCHAIN_FILE, set compiler/sysroot/arch), Bazel --config (platform mapping, toolchain resolution), PlatformIO board profiles",
+              "done": false
+            },
+            {
+              "id": "sub_package_managers_conan_c_conanfile_txt_conanfile_py_rem",
+              "label": "Package managers: Conan (C++ \u2014 conanfile.txt, conanfile.py, remote repos), vcpkg (C++ \u2014 manifests, triplets), pip/conda (Python), npm/yarn (Node.js), conan + CMake integration",
+              "done": false
+            }
+          ]
         },
         {
-          "id": "data_pipelines_ep",
+          "id": "eps__5_data_pipelines_kafka_ray_distributed_data_loading_",
           "label": "\u03b5.5 Data pipelines (Kafka, Ray, distributed data loading)",
           "done": false,
-          "order": 4
+          "order": 4,
+          "subtopics": [
+            {
+              "id": "sub_kafka_topics_partitions_keyed_vs_round_robin_producers_",
+              "label": "Kafka: topics, partitions (keyed vs round-robin), producers (acks, idempotent, compression), consumer groups (assign vs subscribe, rebalance), offsets (auto/manual), replication (ISR, min.insync.replicas), schema registry (Avro, Protobuf, JSON Schema)",
+              "done": false
+            },
+            {
+              "id": "sub_kafka_streams_kstream_ktable_globalktable_state_stores_",
+              "label": "Kafka Streams: KStream/KTable/GlobalKTable, state stores (RocksDB), exactly-once semantics, processor API, interactive queries",
+              "done": false
+            },
+            {
+              "id": "sub_ray_core_tasks_actors_object_store_placement_groups_ray",
+              "label": "Ray: Core (tasks, actors, object store, placement groups), Ray Data (distributed dataset, map/batch/inference/config), Ray Train (distributed training orchestration), Ray Serve (model composition, autoscaling, batching)",
+              "done": false
+            },
+            {
+              "id": "sub_distributed_data_loading_webdataset_tar_based_shards_ca",
+              "label": "Distributed data loading: webdataset (tar-based shards, caching, shard shuffle), Mosaic StreamingDataset (online shuffling, mix of datasets), NVIDIA DALI (GPU-accelerated data loading and augmentation pipeline)",
+              "done": false
+            },
+            {
+              "id": "sub_performance_data_access_bottlenecks_cpu_decode_vs_gpu_i",
+              "label": "Performance: data access bottlenecks (CPU decode vs GPU idle), prefetching (DoubleBuffer, prefetch_factor), shared memory, NUMA-aware data loading, HDD vs SSD vs NVMe bandwidth",
+              "done": false
+            }
+          ]
         },
         {
-          "id": "experiment_tracking",
-          "label": "\u03b5.7 Experiment tracking (Weights & Biases, MLflow)",
-          "done": false,
-          "order": 5
-        },
-        {
-          "id": "epsilon__6_open_source_collaboration_git_pr_etiq",
+          "id": "eps__6_open_source_collaboration_git_pr_etiquette_licenses_",
           "label": "\u03b5.6 Open-source collaboration (Git, PR etiquette, licenses, documentation)",
           "done": false,
-          "order": 6
+          "order": 5,
+          "subtopics": [
+            {
+              "id": "sub_git_deep_rebase_vs_merge_interactive_rebase_squash_fixu",
+              "label": "Git deep: rebase vs merge, interactive rebase (squash, fixup, reword), bisect (binary search for regressions), blame, reflog (recovery), submodules vs subtrees",
+              "done": false
+            },
+            {
+              "id": "sub_pr_etiquette_atomic_commits_single_concern_descriptive_",
+              "label": "PR etiquette: atomic commits (single concern), descriptive titles, linking issues (Fixes #\u2026), changelogs, responding to review (resolve, reply, update), small focused PRs",
+              "done": false
+            },
+            {
+              "id": "sub_open_source_licenses_mit_permissive_apache_2_0_permissi",
+              "label": "Open-source licenses: MIT (permissive), Apache 2.0 (permissive + patent grant), GPLv3 (copyleft), LGPL (library copyleft), AGPL (network copyleft), BSD (2/3-clause), license compatibility, choosing the right one",
+              "done": false
+            },
+            {
+              "id": "sub_documentation_readme_structure_what_why_how_quickstart_",
+              "label": "Documentation: README (structure: what, why, how, quickstart), API docs (Sphinx for Python, Doxygen for C++, JSDoc for TypeScript), developer guide (CONTRIBUTING.md), Sphinx-Napoleon for Google/NumPy docstrings",
+              "done": false
+            },
+            {
+              "id": "sub_release_management_semantic_versioning_major_minor_patc",
+              "label": "Release management: semantic versioning (MAJOR.MINOR.PATCH), release notes (Keep a Changelog, github-changelog-generator), tags (git tag -s signed), CI/CD for releases, artifact publishing (npm, PyPI, Cargo, Docker Hub)",
+              "done": false
+            },
+            {
+              "id": "sub_community_code_of_conduct_contributor_covenant_issue_tr",
+              "label": "Community: code of conduct (Contributor Covenant), issue triage (labels, milestones, stale bot), reviewing others' PRs (be kind, constructive), becoming a maintainer, CHANGELOG-driven development",
+              "done": false
+            }
+          ]
+        },
+        {
+          "id": "eps__7_experiment_tracking_weights_biases_mlflow_",
+          "label": "\u03b5.7 Experiment tracking (Weights & Biases, MLflow)",
+          "done": false,
+          "order": 6,
+          "subtopics": [
+            {
+              "id": "sub_w_b_runs_config_hyperparameters_metrics_loss_accuracy_g",
+              "label": "W&B: runs, config (hyperparameters), metrics (loss, accuracy, gradient histograms), artifacts (datasets, models), sweeps (grid, random, Bayesian, hyperband), reports (tables, charts, markdown), alerts",
+              "done": false
+            },
+            {
+              "id": "sub_mlflow_tracking_server_runs_params_metrics_tags_artifac",
+              "label": "MLflow: tracking server (runs, params, metrics, tags, artifacts), model registry (versions, stage transitions, lineage, signatures), MLflow Projects (conda/Docker environments), MLflow Recipes (step-by-step pipelines)",
+              "done": false
+            },
+            {
+              "id": "sub_comparison_w_b_vs_mlflow_vs_comet_vs_neptune_vs_dvc_vs_",
+              "label": "Comparison: W&B vs MLflow vs Comet vs Neptune vs DVC vs TensorBoard \u2014 when each fits (team size, deployment model, experiment volume, artifact storage)",
+              "done": false
+            },
+            {
+              "id": "sub_reproducibility_full_environment_capture_pip_freeze_req",
+              "label": "Reproducibility: full environment capture (pip freeze > requirements.txt, conda env export, Docker + commit hash), seed management (random, numpy, torch.cuda), deterministic algorithms (torch.use_deterministic_algorithms)",
+              "done": false
+            },
+            {
+              "id": "sub_metrics_loss_accuracy_curves_gradient_histograms_distri",
+              "label": "Metrics: loss/accuracy curves, gradient histograms (distribution over time), parameter distribution (weights, biases), GPU utilization, throughput (samples/sec), memory bandwidth, PCIe utilization",
+              "done": false
+            },
+            {
+              "id": "sub_visualization_parallel_coordinates_hyperparameter_effec",
+              "label": "Visualization: parallel coordinates (hyperparameter effects), contour plots (2D parameter landscape), learning rate finder, confusion matrix, ROC (receiver operating characteristic) curves, PR curves",
+              "done": false
+            }
+          ]
         }
       ],
       "resources": [
         {
-          "id": "github_actions",
-          "label": "GitHub Actions documentation",
+          "id": "res_aws_well_architected_framework_six_pillars_operational_",
+          "label": "AWS Well-Architected Framework \u2014 six pillars (operational excellence, security, reliability, performance efficiency, cost optimization, sustainability)",
           "done": false,
           "order": 0
         },
         {
-          "id": "docker_docs",
-          "label": "Docker documentation",
+          "id": "res_aws_documentation_ec2_gpu_instances_efa_setup_for_multi",
+          "label": "AWS documentation: EC2 GPU instances, EFA setup for multi-node training",
           "done": false,
-          "order": 1
+          "order": 0
         },
         {
-          "id": "wandb_quickstart",
-          "label": "Weights & Biases quickstart",
+          "id": "res_aws_in_action_wittig_wittig_practical_hands_on",
+          "label": "AWS in Action (Wittig & Wittig) \u2014 practical hands-on",
           "done": false,
-          "order": 2
+          "order": 0
         },
         {
-          "id": "cmake_tutorial",
-          "label": "CMake official tutorial",
+          "id": "res_iam_policy_simulator_test_policies_before_deploying",
+          "label": "IAM policy simulator \u2014 test policies before deploying",
           "done": false,
-          "order": 3
+          "order": 0
+        },
+        {
+          "id": "res_docker_documentation_getting_started_dockerfile_best_pr",
+          "label": "Docker documentation \u2014 getting started, Dockerfile best practices",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_kubernetes_in_action_luksa_2nd_ed_chapters_1_10",
+          "label": "Kubernetes in Action (Luksa, 2nd ed) \u2014 chapters 1-10",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_terraform_learn_hashicorp_com_tutorials_aws_provider_mo",
+          "label": "Terraform: learn.hashicorp.com tutorials \u2014 AWS provider, modules",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_kubeflow_documentation_end_to_end_ml_on_k8s",
+          "label": "Kubeflow documentation \u2014 end-to-end ML on K8s",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_nvidia_gpu_operator_documentation_deploying_gpu_nodes_w",
+          "label": "NVIDIA GPU Operator documentation \u2014 deploying GPU nodes with MIG",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_github_actions_documentation_starter_workflows",
+          "label": "GitHub Actions documentation + starter workflows",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_pytest_documentation_fixtures_marks_plugins_pytest_cov_",
+          "label": "pytest documentation \u2014 fixtures, marks, plugins (pytest-cov, pytest-xdist)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_gtest_primer_google_github_io_googletest_getting_starte",
+          "label": "GTest primer (google.github.io/googletest) \u2014 getting started",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_continuous_delivery_for_machine_learning_cd4ml_thoughtw",
+          "label": "Continuous Delivery for Machine Learning (CD4ML) \u2014 ThoughtWorks pattern",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_modern_cmake_for_c_schmidt_or_professional_cmake_craig_",
+          "label": "Modern CMake for C++ (Schmidt) or Professional CMake (Craig Scott) \u2014 practical guide",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_cmake_documentation_cmake_org_especially_the_tutorial",
+          "label": "CMake documentation \u2014 cmake.org, especially the tutorial",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_bazel_c_tutorial_bazel_build_hello_world_deps_test_inte",
+          "label": "Bazel C++ tutorial (bazel.build) \u2014 hello world, deps, test integration",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_platformio_documentation_mcu_projects_ci_integration",
+          "label": "PlatformIO documentation \u2014 MCU projects, CI integration",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_conan_documentation_c_packages_conan_center_index_bincr",
+          "label": "Conan documentation \u2014 C++ packages (conan-center-index, bincrafters)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_kafka_the_definitive_guide_confluent_narkhede_et_al_cha",
+          "label": "Kafka: The Definitive Guide (Confluent / Narkhede et al.) \u2014 chapters 1-5",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_ray_documentation_ray_core_walkthrough_ray_data_tutoria",
+          "label": "Ray documentation \u2014 Ray Core walkthrough, Ray Data tutorial",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_webdataset_github_documentation_github_com_webdataset_w",
+          "label": "Webdataset GitHub documentation (github.com/webdataset/webdataset)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_nvidia_dali_documentation_gpu_accelerated_data_loading_",
+          "label": "NVIDIA DALI documentation \u2014 GPU-accelerated data loading and augmentation",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_pro_git_chacon_straub_rebasing_distributed_workflows_ch",
+          "label": "Pro Git (Chacon & Straub) \u2014 rebasing, distributed workflows chapters",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_semantic_versioning_2_0_0_semver_org_",
+          "label": "Semantic Versioning 2.0.0 (semver.org)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_choose_a_license_choosealicense_com_",
+          "label": "Choose a License (choosealicense.com)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_google_s_release_in_15_minutes_practical_release_engine",
+          "label": "Google's Release in 15 Minutes \u2014 practical release engineering",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_sphinx_documentation_python_or_doxygen_c_documentation_",
+          "label": "Sphinx documentation (Python) or Doxygen (C++) \u2014 documentation generation",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_w_b_quickstart_wandb_ai_10_minute_intro",
+          "label": "W&B Quickstart (wandb.ai) \u2014 10 minute intro",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_mlflow_documentation_tracking_model_registry_deployment",
+          "label": "MLflow documentation \u2014 tracking, model registry, deployment",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_experiment_tracking_with_weights_and_biases_youtube_w_b",
+          "label": "Experiment Tracking with Weights and Biases (YouTube, W&B playlist)",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_tensorboard_tutorial_basic_usage_for_comparison",
+          "label": "TensorBoard tutorial \u2014 basic usage for comparison",
+          "done": false,
+          "order": 0
         }
       ],
       "projects": [
         {
-          "id": "docker_wandb",
-          "label": "Containerize PyTorch training script with Docker, run on cloud GPU, log metrics to W&B, version dataset with DVC",
+          "id": "proj_set_up_a_multi_node_gpu_training_environment_on_aws_ec2",
+          "label": "Set up a multi-node GPU training environment on AWS (EC2 p4d, EFA, FSx for Lustre); launch a distributed PyTorch job; tear down with infrastructure-as-code",
           "status": "not_started",
           "order": 0
         },
         {
-          "id": "cicd_pipeline",
-          "label": "Set up CI/CD pipeline for a C++ or Python project with automated tests via GitHub Actions",
+          "id": "proj_write_terraform_to_provision_an_eks_cluster_with_gpu_no",
+          "label": "Write Terraform to provision an EKS cluster with GPU node group; deploy a training job via Kubeflow; automate teardown to avoid runaway costs",
           "status": "not_started",
-          "order": 1
+          "order": 0
+        },
+        {
+          "id": "proj_set_up_github_actions_for_python_c_monorepo_matrix_buil",
+          "label": "Set up GitHub Actions for Python + C++ monorepo: matrix build (py 3.10-3.12, C++ CI), run pytest + GTest, cache deps, package as Docker image, push to registry",
+          "status": "not_started",
+          "order": 0
+        },
+        {
+          "id": "proj_set_up_a_cmake_based_c_project_with_googletest_fmt_and_",
+          "label": "Set up a CMake-based C++ project with GoogleTest, fmt, and Eigen; cross-compile for ARM (Raspberry Pi) with custom toolchain; integrate with Conan for dependencies",
+          "status": "not_started",
+          "order": 0
+        },
+        {
+          "id": "proj_build_a_pipeline_streaming_sensor_data_from_kafka_prepr",
+          "label": "Build a pipeline: streaming sensor data from Kafka \u2192 preprocess with Ray Data \u2192 write to Parquet; benchmark throughput at different batch sizes",
+          "status": "not_started",
+          "order": 0
+        },
+        {
+          "id": "proj_contribute_a_meaningful_pr_to_an_open_source_robotics_o",
+          "label": "Contribute a meaningful PR to an open-source robotics or ML library (ROS2, ORB-SLAM3, PyTorch, HuggingFace, etc.) that passes review and merges",
+          "status": "not_started",
+          "order": 0
+        },
+        {
+          "id": "proj_train_10_variants_of_a_model_with_different_hyperparame",
+          "label": "Train 10 variants of a model with different hyperparameters via W&B Sweeps; auto-log config, metrics, GPU utilization; create a report comparing the best 3 runs",
+          "status": "not_started",
+          "order": 0
         }
       ]
     },
