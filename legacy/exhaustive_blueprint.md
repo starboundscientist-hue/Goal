@@ -996,6 +996,30 @@ Serves: All roles. Necessary fluency, not a deep moat.
 
 ---
 
+#### FS.5 Data Science & ML Fundamentals (scikit-learn, from-scratch, time series, PRML/ESL revision)
+
+**Subtopics:**
+- Scikit-learn ecosystem: pipelines, ColumnTransformer, cross-validation, GridSearchCV, RandomizedSearchCV, custom transformers, evaluation metrics (accuracy, precision, recall, F1, ROC-AUC, PR curve)
+- Linear models: OLS closed-form & gradient descent, ridge (L2), lasso (L1, coordinate descent), logistic regression (cross-entropy, multi-class one-vs-rest/softmax), from-scratch implementations
+- Tree-based methods: decision trees (CART, Gini/entropy, pruning), random forests (bagging, OOB), gradient boosting (AdaBoost, XGBoost, LightGBM, CatBoost), from-scratch implementations
+- Support Vector Machines: primal/dual formulation, hinge loss, kernel trick (RBF, polynomial, sigmoid), SVR, soft-margin C, from-scratch via SMO
+- Clustering: k-means (k-means++, elbow/silhouette), DBSCAN (epsilon, minPts), hierarchical/agglomerative (linkage), Gaussian mixture models (EM algorithm), from-scratch implementations
+- Dimensionality reduction: PCA via SVD (explained variance, whitening), kernel PCA, t-SNE (perplexity, Barnes-Hut), UMAP, feature selection (filter/wrapper/embedded)
+- Time series analysis: stationarity (ADF test), ARIMA/SARIMA, exponential smoothing (Holt-Winters), seasonality decomposition (STL), Prophet, feature engineering (lags, rolling windows, Fourier features)
+- PRML/ESL reference: key chapters for conceptual revision (Bishop ch.1-4, 6-9, 12; ESL ch.2-7, 9-10, 12-14, 16)
+
+**Study:**
+- *Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow* (Géron) — practical from-scratch implementations
+- *Introduction to Statistical Learning* (James, Witten, Hastie, Tibshirani) — free at statlearning.com
+- scikit-learn documentation (scikit-learn.org) — user guide + API reference
+- *Forecasting: Principles and Practice* (Hyndman & Athanasopoulos) — free at otexts.com/fpp3
+- *Pattern Recognition and Machine Learning* (Bishop) — PRML, canonical ML theory (revision reference)
+- *Elements of Statistical Learning* (Hastie, Tibshirani, Friedman) — free online, deeper theory (revision reference)
+
+**Close:** Implement linear regression, decision tree, and PCA from scratch in Python; verify against scikit-learn on a real dataset. Forecast a time series using ARIMA and Prophet, compare held-out error.
+
+---
+
 ### Career Track ζ — SDE Engineering
 Serves: Interview readiness (FAANG), system design fluency, distributed systems fundamentals for all engineering roles.
 

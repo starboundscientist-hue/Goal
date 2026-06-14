@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { Progress, WorkData, PendingGitEntry, LogEntry, WorkTask, Subtask, AutomationEntry, Subtopic } from './types';
+import type { Progress, WorkData, PendingGitEntry, LogEntry, WorkTask, Subtask, AutomationEntry, Subtopic, Resource } from './types';
 import * as api from './api';
 
 interface AppStore {
@@ -29,6 +29,8 @@ interface AppStore {
   toggleSubtopic: (clusterId: string, topicId: string, subtopicId: string) => Promise<void>;
   updateSubtopic: (clusterId: string, topicId: string, subtopicId: string, patch: Partial<Subtopic>) => Promise<void>;
   reorderSubtopics: (clusterId: string, topicId: string, orderedIds: string[]) => Promise<void>;
+  toggleSubtopicResource: (clusterId: string, topicId: string, subtopicId: string, resourceId: string) => Promise<void>;
+  toggleTopicResource: (clusterId: string, topicId: string, resourceId: string) => Promise<void>;
   toggleResource: (clusterId: string, resourceId: string) => Promise<void>;
   addResource: (clusterId: string, label: string) => Promise<void>;
   removeResource: (clusterId: string, resourceId: string) => Promise<void>;
@@ -301,6 +303,67 @@ export const useStore = create<AppStore>((set, get) => ({
     await api.saveProgress(updated);
   },
 
+  toggleSubtopicResource: async (clusterId, topicId, subtopicId, resourceId) => {
+    const { progress } = get();
+    if (!progress) return;
+    const clusters = progress.clusters as Record<string, any>;
+    const updated = {
+      ...progress,
+      clusters: {
+        ...progress.clusters,
+        [clusterId]: {
+          ...clusters[clusterId],
+          topics: clusters[clusterId].topics.map((t: any) =>
+            t.id === topicId
+              ? {
+                  ...t,
+                  subtopics: (t.subtopics ?? []).map((s: any) =>
+                    s.id === subtopicId
+                      ? {
+                          ...s,
+                          resourceIds: s.resourceIds?.includes(resourceId)
+                            ? s.resourceIds.filter((r: string) => r !== resourceId)
+                            : [...(s.resourceIds ?? []), resourceId],
+                        }
+                      : s
+                  ),
+                }
+              : t
+          ),
+        },
+      },
+    };
+    set({ progress: updated });
+    await api.saveProgress(updated);
+  },
+
+  toggleTopicResource: async (clusterId, topicId, resourceId) => {
+    const { progress } = get();
+    if (!progress) return;
+    const clusters = progress.clusters as Record<string, any>;
+    const updated = {
+      ...progress,
+      clusters: {
+        ...progress.clusters,
+        [clusterId]: {
+          ...clusters[clusterId],
+          topics: clusters[clusterId].topics.map((t: any) =>
+            t.id === topicId
+              ? {
+                  ...t,
+                  resourceIds: t.resourceIds?.includes(resourceId)
+                    ? t.resourceIds.filter((r: string) => r !== resourceId)
+                    : [...(t.resourceIds ?? []), resourceId],
+                }
+              : t
+          ),
+        },
+      },
+    };
+    set({ progress: updated });
+    await api.saveProgress(updated);
+  },
+
   toggleResource: async (clusterId, resourceId) => {
     const { progress } = get();
     if (!progress) return;
@@ -352,7 +415,15 @@ export const useStore = create<AppStore>((set, get) => ({
         ...progress.clusters,
         [clusterId]: {
           ...clusters[clusterId],
-          resources: clusters[clusterId].resources.filter((r: any) => r.id !== resourceId)
+          resources: clusters[clusterId].resources.filter((r: any) => r.id !== resourceId),
+          topics: clusters[clusterId].topics.map((t: any) => ({
+            ...t,
+            resourceIds: t.resourceIds?.filter((r: string) => r !== resourceId),
+            subtopics: (t.subtopics ?? []).map((s: any) => ({
+              ...s,
+              resourceIds: s.resourceIds?.filter((r: string) => r !== resourceId),
+            })),
+          })),
         }
       }
     };

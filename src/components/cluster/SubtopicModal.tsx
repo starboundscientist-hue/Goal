@@ -17,7 +17,7 @@ import {
   arrayMove,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import type { Topic, Subtopic } from '../../lib/types';
+import type { Topic, Subtopic, Resource } from '../../lib/types';
 import { useStore } from '../../lib/store';
 
 interface Props {
@@ -32,9 +32,16 @@ export function SubtopicModal({ clusterId, topic, onClose }: Props) {
   const toggleSubtopic = useStore(s => s.toggleSubtopic);
   const updateSubtopic = useStore(s => s.updateSubtopic);
   const reorderSubtopics = useStore(s => s.reorderSubtopics);
+  const toggleSubtopicResource = useStore(s => s.toggleSubtopicResource);
+  const toggleTopicResource = useStore(s => s.toggleTopicResource);
+  const toggleResource = useStore(s => s.toggleResource);
+  const clusterResources = useStore(s =>
+    s.progress?.clusters?.[clusterId as keyof typeof s.progress.clusters]?.resources ?? []
+  );
 
   const [newLabel, setNewLabel] = useState('');
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [showTopicResources, setShowTopicResources] = useState(true);
   const overlayRef = useRef<HTMLDivElement>(null);
   const subInputRef = useRef<HTMLInputElement>(null);
 
@@ -48,6 +55,13 @@ export function SubtopicModal({ clusterId, topic, onClose }: Props) {
 
   const circumference = 2 * Math.PI * 20;
   const offset = circumference - (pct / 100) * circumference;
+
+  const topicResourceIds = topic.resourceIds ?? [];
+
+  const linkedTopicResources = useMemo(
+    () => clusterResources.filter(r => topicResourceIds.includes(r.id)),
+    [clusterResources, topicResourceIds]
+  );
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
@@ -93,7 +107,7 @@ export function SubtopicModal({ clusterId, topic, onClose }: Props) {
         initial={{ opacity: 0, scale: 0.96, y: 8 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ type: 'spring', stiffness: 300, damping: 24 }}
-        className="relative w-full max-w-2xl max-h-[85vh] flex flex-col bg-surface-card/80 backdrop-blur-2xl border border-surface-border rounded-2xl shadow-2xl overflow-hidden conic-border grain"
+        className="relative w-full max-w-2xl max-h-[85vh] flex flex-col bg-surface-card backdrop-blur-2xl border border-surface-border rounded-2xl shadow-2xl overflow-hidden conic-border grain"
         onClick={e => e.stopPropagation()}
         role="dialog"
         aria-label={`Subtopics for ${topic.label}`}
@@ -156,6 +170,48 @@ export function SubtopicModal({ clusterId, topic, onClose }: Props) {
 
         {/* Body */}
         <div className="px-7 py-5 overflow-y-auto flex-1">
+          {/* Topic-linked resources */}
+          {linkedTopicResources.length > 0 && (
+            <div className="mb-4">
+              <button
+                onClick={() => setShowTopicResources(v => !v)}
+                className="flex items-center gap-1.5 text-[10px] uppercase tracking-[0.15em] text-muted-foreground/50 font-medium mb-2 hover:text-foreground/70 transition-colors"
+              >
+                <span className="text-muted-foreground/40 text-[9px]">{showTopicResources ? '\u25bc' : '\u25b6'}</span>
+                Resources ({linkedTopicResources.length})
+              </button>
+              {showTopicResources && (
+                <div className="space-y-1">
+                  {linkedTopicResources.map(r => (
+                    <div key={r.id} className="flex items-center gap-2 py-1 px-2 rounded-lg bg-surface-base/40">
+                      <button
+                        onClick={() => toggleResource(clusterId, r.id)}
+                        className={`w-3.5 h-3.5 rounded border flex items-center justify-center shrink-0 transition-all ${
+                          r.done
+                            ? 'bg-blue-500/20 border-blue-500/60 text-blue-500'
+                            : 'border-surface-border/60 hover:border-blue-500/40'
+                        }`}
+                      >
+                        {r.done && <span className="text-[8px]">{'\u2713'}</span>}
+                      </button>
+                      <span className={`text-xs flex-1 ${r.done ? 'text-muted-foreground/50 line-through' : 'text-foreground/70'}`}>
+                        {r.label}
+                      </span>
+                      <button
+                        onClick={() => toggleTopicResource(clusterId, topic.id, r.id)}
+                        className="text-muted-foreground/40 hover:text-red-400 text-[10px] shrink-0 transition-colors"
+                        title="Unlink from topic"
+                      >
+                        {'\u2715'}
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Subtopic list */}
           {subtopics.length === 0 ? (
             <div className="flex flex-col items-center justify-center text-center py-10 px-4 rounded-xl border border-dashed border-surface-border/80 bg-surface-base/30">
               <p className="text-sm text-foreground/80 mb-1 font-medium">Break this down.</p>
@@ -179,11 +235,14 @@ export function SubtopicModal({ clusterId, topic, onClose }: Props) {
                         index={i}
                         clusterId={clusterId}
                         topicId={topic.id}
+                        resources={clusterResources}
                         expandedId={expandedId}
                         onToggle={() => toggleSubtopic(clusterId, topic.id, sub.id)}
                         onRemove={() => removeSubtopic(clusterId, topic.id, sub.id)}
                         onToggleDescription={() => setExpandedId(expandedId === sub.id ? null : sub.id)}
                         onDescriptionChange={(desc) => updateSubtopic(clusterId, topic.id, sub.id, { description: desc || undefined })}
+                        onToggleResourceDone={(resourceId) => toggleResource(clusterId, resourceId)}
+                        onUnlinkResource={(resourceId) => toggleSubtopicResource(clusterId, topic.id, sub.id, resourceId)}
                       />
                     ))}
                   </AnimatePresence>
@@ -192,6 +251,18 @@ export function SubtopicModal({ clusterId, topic, onClose }: Props) {
             </DndContext>
           )}
 
+          {/* Resource picker */}
+          <ResourcePicker
+            clusterId={clusterId}
+            topicId={topic.id}
+            resources={clusterResources}
+            topicResourceIds={topicResourceIds}
+            subtopics={subtopics}
+            onLinkTopic={(resourceId) => toggleTopicResource(clusterId, topic.id, resourceId)}
+            onLinkSubtopic={(subtopicId, resourceId) => toggleSubtopicResource(clusterId, topic.id, subtopicId, resourceId)}
+          />
+
+          {/* Add subtopic input */}
           <div className="mt-4 flex items-center gap-2">
             <input
               ref={subInputRef}
@@ -220,29 +291,127 @@ export function SubtopicModal({ clusterId, topic, onClose }: Props) {
   );
 }
 
+function ResourcePicker({
+  clusterId,
+  topicId,
+  resources,
+  topicResourceIds,
+  subtopics,
+  onLinkTopic,
+  onLinkSubtopic,
+}: {
+  clusterId: string;
+  topicId: string;
+  resources: Resource[];
+  topicResourceIds: string[];
+  subtopics: Subtopic[];
+  onLinkTopic: (resourceId: string) => void;
+  onLinkSubtopic: (subtopicId: string, resourceId: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const [selectedSubId, setSelectedSubId] = useState<string | ''>('');
+
+  const linkedSubtopicIds = useMemo(
+    () => new Set(selectedSubId ? (subtopics.find(s => s.id === selectedSubId)?.resourceIds ?? []) : []),
+    [subtopics, selectedSubId]
+  );
+  const unlinked = useMemo(
+    () => resources.filter(r => {
+      if (linkedSubtopicIds.has(r.id)) return false;
+      if (selectedSubId) return true;
+      return !topicResourceIds.includes(r.id) && !subtopics.some(s => s.resourceIds?.includes(r.id));
+    }),
+    [resources, topicResourceIds, subtopics, selectedSubId, linkedSubtopicIds]
+  );
+
+  if (unlinked.length === 0) return null;
+
+  return (
+    <div className="mt-4">
+      {!open ? (
+        <button
+          onClick={() => setOpen(true)}
+          className="flex items-center gap-1.5 text-xs text-muted-foreground/60 hover:text-foreground/80 transition-colors"
+        >
+          <span className="text-base leading-none">+</span> Link resource
+        </button>
+      ) : (
+        <div className="bg-surface-base/40 border border-surface-border/60 rounded-lg p-3 space-y-2">
+          <div className="flex items-center gap-2">
+            <select
+              value={selectedSubId}
+              onChange={e => setSelectedSubId(e.target.value)}
+              className="flex-1 bg-surface-base/90 border border-surface-border rounded-md px-2 py-1.5 text-xs text-foreground outline-none focus:border-blue-500/60"
+            >
+              <option value="">Link to topic (all subtopics)</option>
+              {subtopics.map(s => (
+                <option key={s.id} value={s.id}>Link to: {s.label.slice(0, 40)}&hellip;</option>
+              ))}
+            </select>
+            <button
+              onClick={() => { setOpen(false); setSelectedSubId(''); }}
+              className="text-muted-foreground/50 hover:text-foreground text-xs px-1"
+            >
+              {'\u2715'}
+            </button>
+          </div>
+          <div className="max-h-32 overflow-y-auto space-y-1">
+            {unlinked.map(r => (
+              <button
+                key={r.id}
+                onClick={() => {
+                  if (selectedSubId) {
+                    onLinkSubtopic(selectedSubId, r.id);
+                  } else {
+                    onLinkTopic(r.id);
+                  }
+                }}
+                className="w-full text-left text-xs text-foreground/70 hover:text-foreground hover:bg-surface-hover/40 rounded px-2 py-1 transition-colors truncate"
+              >
+                {r.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 interface RowProps {
   subtopic: Subtopic;
   index: number;
   clusterId: string;
   topicId: string;
+  resources: Resource[];
   expandedId: string | null;
   onToggle: () => void;
   onRemove: () => void;
   onToggleDescription: () => void;
   onDescriptionChange: (desc: string) => void;
+  onToggleResourceDone: (resourceId: string) => void;
+  onUnlinkResource: (resourceId: string) => void;
 }
 
 function SortableSubtopicRow({
   subtopic,
   index,
+  resources,
   onToggle,
   onRemove,
   onToggleDescription,
   onDescriptionChange,
+  onToggleResourceDone,
+  onUnlinkResource,
   expandedId,
 }: RowProps) {
   const isExpanded = expandedId === subtopic.id;
   const [descDraft, setDescDraft] = useState(subtopic.description ?? '');
+
+  const linkedResources = useMemo(
+    () => resources.filter(r => subtopic.resourceIds?.includes(r.id)),
+    [resources, subtopic.resourceIds]
+  );
 
   const {
     attributes,
@@ -302,7 +471,7 @@ function SortableSubtopicRow({
         <button
           type="button"
           onClick={onToggleDescription}
-          className="flex-1 text-left"
+          className="flex-1 text-left min-w-0"
           data-testid="subtopic-label"
         >
           <span className={`text-sm transition-colors ${
@@ -310,9 +479,21 @@ function SortableSubtopicRow({
           }`}>
             {subtopic.label}
           </span>
-          {subtopic.description && !isExpanded && (
+          {!isExpanded && subtopic.description && (
             <span className="block text-[11px] text-muted-foreground/60 truncate mt-0.5">
               {subtopic.description}
+            </span>
+          )}
+          {linkedResources.length > 0 && !isExpanded && (
+            <span className="flex flex-wrap gap-1 mt-1">
+              {linkedResources.slice(0, 3).map(r => (
+                <span key={r.id} className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-500/15 text-blue-500 truncate max-w-[120px]">
+                  {r.label}
+                </span>
+              ))}
+              {linkedResources.length > 3 && (
+                <span className="text-[10px] text-muted-foreground/50">+{linkedResources.length - 3}</span>
+              )}
             </span>
           )}
         </button>
@@ -321,11 +502,11 @@ function SortableSubtopicRow({
           type="button"
           onClick={onToggleDescription}
           className={`text-xs px-1 shrink-0 transition-opacity ${
-            subtopic.description
+            subtopic.description || linkedResources.length > 0
               ? 'text-muted-foreground/70 hover:text-foreground'
               : 'opacity-0 group-hover:opacity-100 text-muted-foreground/50 hover:text-foreground'
           }`}
-          aria-label="Toggle description"
+          aria-label="Toggle details"
           data-testid="subtopic-desc-toggle"
         >
           {'\u22ef'}
@@ -351,15 +532,46 @@ function SortableSubtopicRow({
             transition={{ duration: 0.15 }}
             className="overflow-hidden"
           >
-            <textarea
-              value={descDraft}
-              onChange={e => setDescDraft(e.target.value)}
-              onBlur={() => onDescriptionChange(descDraft)}
-              placeholder="Notes or details about this subtopic\u2026"
-              rows={2}
-              data-testid="subtopic-desc-input"
-              className="ml-9 mt-1 mb-1.5 w-[calc(100%-2.25rem)] bg-surface-base/90 border border-surface-border rounded-md px-2.5 py-1.5 text-xs text-foreground placeholder:text-muted-foreground outline-none focus:border-blue-500/60 resize-none transition-colors"
-            />
+            <div className="ml-9 mt-1 mb-1.5 space-y-2">
+              <textarea
+                value={descDraft}
+                onChange={e => setDescDraft(e.target.value)}
+                onBlur={() => onDescriptionChange(descDraft)}
+                placeholder="Notes or details about this subtopic\u2026"
+                rows={2}
+                data-testid="subtopic-desc-input"
+                className="w-full bg-surface-base/90 border border-surface-border rounded-md px-2.5 py-1.5 text-xs text-foreground placeholder:text-muted-foreground outline-none focus:border-blue-500/60 resize-none transition-colors"
+              />
+              {linkedResources.length > 0 && (
+                <div className="space-y-1">
+                  <p className="text-[10px] uppercase tracking-[0.1em] text-muted-foreground/40 font-medium">Resources</p>
+                  {linkedResources.map(r => (
+                    <div key={r.id} className="flex items-center gap-2 py-1 px-2 rounded-md bg-surface-base/40">
+                      <button
+                        onClick={() => onToggleResourceDone(r.id)}
+                        className={`w-3.5 h-3.5 rounded border flex items-center justify-center shrink-0 transition-all ${
+                          r.done
+                            ? 'bg-blue-500/20 border-blue-500/60 text-blue-500'
+                            : 'border-surface-border/60 hover:border-blue-500/40'
+                        }`}
+                      >
+                        {r.done && <span className="text-[8px]">{'\u2713'}</span>}
+                      </button>
+                      <span className={`text-xs flex-1 ${r.done ? 'text-muted-foreground/50 line-through' : 'text-foreground/70'}`}>
+                        {r.label}
+                      </span>
+                      <button
+                        onClick={() => onUnlinkResource(r.id)}
+                        className="text-muted-foreground/40 hover:text-red-400 text-[10px] shrink-0 transition-colors"
+                        title="Unlink"
+                      >
+                        {'\u2715'}
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

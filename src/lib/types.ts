@@ -45,6 +45,7 @@ export interface Subtopic {
   done: boolean;
   order: number;
   description?: string;
+  resourceIds?: string[];
 }
 
 export interface Subtask {
@@ -60,6 +61,7 @@ export interface Topic {
   done: boolean;
   order: number;
   subtopics?: Subtopic[];
+  resourceIds?: string[];
 }
 
 export interface Resource {

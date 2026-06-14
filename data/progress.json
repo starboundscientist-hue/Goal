@@ -24,36 +24,64 @@
           "label": "FS.1 Math \u2014 linear algebra",
           "done": false,
           "order": 0,
+          "resourceIds": [
+            "res_mathematics_for_machine_learning_deisenroth_faisal",
+            "res_linear_algebra_done_right_axler_conceptual_depth_p",
+            "res_3blue1brown_essence_of_linear_algebra_youtube_intu",
+            "res_mit_18_06_linear_algebra_strang_lectures_on_svd_ei"
+          ],
           "subtopics": [
             {
               "id": "sub_matrix_calculus_derivatives_of_vector_matrix_funct",
               "label": "Matrix calculus: derivatives of vector/matrix functions, Jacobians, Hessians",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_mathematics_for_machine_learning_deisenroth_faisal"
+              ]
             },
             {
               "id": "sub_singular_value_decomposition_svd_full_vs_economy_t",
               "label": "Singular Value Decomposition (SVD): full vs economy, truncated SVD, low-rank approximation",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_mathematics_for_machine_learning_deisenroth_faisal",
+                "res_mit_18_06_linear_algebra_strang_lectures_on_svd_ei"
+              ]
             },
             {
               "id": "sub_eigendecomposition_eigenvalues_eigenvectors_diagon",
               "label": "Eigendecomposition: eigenvalues, eigenvectors, diagonalization, matrix powers",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_mathematics_for_machine_learning_deisenroth_faisal",
+                "res_mit_18_06_linear_algebra_strang_lectures_on_svd_ei"
+              ]
             },
             {
               "id": "sub_qr_decomposition_gram_schmidt_householder_reflecti",
               "label": "QR decomposition: Gram-Schmidt, Householder reflections",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_mathematics_for_machine_learning_deisenroth_faisal"
+              ]
             },
             {
               "id": "sub_cholesky_decomposition_positive_definite_matrices_",
               "label": "Cholesky decomposition: positive definite matrices, LL\u1d40",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_mathematics_for_machine_learning_deisenroth_faisal",
+                "res_linear_algebra_done_right_axler_conceptual_depth_p"
+              ]
             },
             {
               "id": "sub_matrix_norms_frobenius_spectral_nuclear_condition_",
               "label": "Matrix norms: Frobenius, spectral, nuclear; condition number",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_mathematics_for_machine_learning_deisenroth_faisal",
+                "res_linear_algebra_done_right_axler_conceptual_depth_p"
+              ]
             }
           ]
         },
@@ -62,36 +90,62 @@
           "label": "FS.1 Math \u2014 probability & statistics",
           "done": false,
           "order": 1,
+          "resourceIds": [
+            "res_mathematics_for_machine_learning_deisenroth_faisal",
+            "res_modern_statistics_intuition_math_python_r_mike_x_c",
+            "res_probability_and_statistics_for_computer_science_fo",
+            "res_bayesian_data_analysis_gelman_et_al_mcmc_model_com"
+          ],
           "subtopics": [
             {
               "id": "sub_bayesian_inference_prior_likelihood_posterior_conj",
               "label": "Bayesian inference: prior, likelihood, posterior, conjugate priors, MAP estimation",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_bayesian_data_analysis_gelman_et_al_mcmc_model_com"
+              ]
             },
             {
               "id": "sub_monte_carlo_methods_rejection_sampling_importance_",
               "label": "Monte Carlo methods: rejection sampling, importance sampling, MCMC (Metropolis-Hastings, HMC)",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_bayesian_data_analysis_gelman_et_al_mcmc_model_com"
+              ]
             },
             {
               "id": "sub_information_theory_entropy_cross_entropy_kl_diverg",
               "label": "Information theory: entropy, cross-entropy, KL-divergence, mutual information, Jensen-Shannon divergence",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_mathematics_for_machine_learning_deisenroth_faisal"
+              ]
             },
             {
               "id": "sub_hypothesis_testing_null_alternative_p_value_type_i",
               "label": "Hypothesis testing: null/alternative, p-value, type I/II error, power analysis, multiple testing correction",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_modern_statistics_intuition_math_python_r_mike_x_c",
+                "res_probability_and_statistics_for_computer_science_fo"
+              ]
             },
             {
               "id": "sub_distributions_gaussian_bernoulli_binomial_poisson_",
               "label": "Distributions: Gaussian, Bernoulli, Binomial, Poisson, Beta, Gamma, Dirichlet \u2014 properties and conjugacy",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_modern_statistics_intuition_math_python_r_mike_x_c",
+                "res_probability_and_statistics_for_computer_science_fo"
+              ]
             },
             {
               "id": "sub_exponential_family_sufficient_statistics_natural_p",
               "label": "Exponential family: sufficient statistics, natural parameters, link functions",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_mathematics_for_machine_learning_deisenroth_faisal"
+              ]
             }
           ]
         },
@@ -100,36 +154,62 @@
           "label": "FS.1 Math \u2014 optimization",
           "done": false,
           "order": 2,
+          "resourceIds": [
+            "res_mathematics_for_machine_learning_deisenroth_faisal",
+            "res_convex_optimization_boyd_vandenberghe_free_online_",
+            "res_numerical_optimization_nocedal_wright_comprehensiv",
+            "res_adam_optimization_paper_kingma_ba_2014_"
+          ],
           "subtopics": [
             {
               "id": "sub_convex_optimization_convex_sets_functions_gradient",
               "label": "Convex optimization: convex sets/functions, gradient descent, Newton's method, BFGS, L-BFGS",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_convex_optimization_boyd_vandenberghe_free_online_",
+                "res_numerical_optimization_nocedal_wright_comprehensiv"
+              ]
             },
             {
               "id": "sub_constrained_optimization_lagrange_multipliers_kkt_",
               "label": "Constrained optimization: Lagrange multipliers, KKT conditions, duality, penalty methods",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_convex_optimization_boyd_vandenberghe_free_online_"
+              ]
             },
             {
               "id": "sub_stochastic_methods_sgd_momentum_nesterov_adam_adam",
               "label": "Stochastic methods: SGD, momentum (Nesterov), Adam, AdamW, RMSprop, learning rate schedules",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_adam_optimization_paper_kingma_ba_2014_"
+              ]
             },
             {
               "id": "sub_line_search_armijo_condition_wolfe_conditions_back",
               "label": "Line search: Armijo condition, Wolfe conditions, backtracking",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_numerical_optimization_nocedal_wright_comprehensiv"
+              ]
             },
             {
               "id": "sub_proximal_methods_proximal_gradient_admm_proximal_o",
               "label": "Proximal methods: proximal gradient, ADMM, proximal operators",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_convex_optimization_boyd_vandenberghe_free_online_",
+                "res_numerical_optimization_nocedal_wright_comprehensiv"
+              ]
             },
             {
               "id": "sub_global_optimization_simulated_annealing_evolutiona",
               "label": "Global optimization: simulated annealing, evolutionary strategies, Bayesian optimization",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_numerical_optimization_nocedal_wright_comprehensiv"
+              ]
             }
           ]
         },
@@ -138,36 +218,58 @@
           "label": "FS.1 Math \u2014 numerical methods",
           "done": false,
           "order": 3,
+          "resourceIds": [
+            "res_numerical_recipes_press_et_al_reference_for_numeri",
+            "res_cleve_moler_s_numerical_computing_with_matlab_free"
+          ],
           "subtopics": [
             {
               "id": "sub_floating_point_arithmetic_ieee_754_precision_overf",
               "label": "Floating-point arithmetic: IEEE 754, precision, overflow/underflow, catastrophic cancellation",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_numerical_recipes_press_et_al_reference_for_numeri"
+              ]
             },
             {
               "id": "sub_numerical_integration_newton_cotes_gaussian_quadra",
               "label": "Numerical integration: Newton-Cotes, Gaussian quadrature, Monte Carlo integration",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_numerical_recipes_press_et_al_reference_for_numeri"
+              ]
             },
             {
               "id": "sub_root_finding_newton_raphson_secant_method_bisectio",
               "label": "Root-finding: Newton-Raphson, secant method, bisection, Brent's method",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_numerical_recipes_press_et_al_reference_for_numeri"
+              ]
             },
             {
               "id": "sub_ode_solvers_euler_rk4_adaptive_step_dormand_prince",
               "label": "ODE solvers: Euler, RK4, adaptive step (Dormand-Prince), symplectic integrators (Verlet)",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_numerical_recipes_press_et_al_reference_for_numeri"
+              ]
             },
             {
               "id": "sub_interpolation_polynomial_spline_cubic_barycentric",
               "label": "Interpolation: polynomial, spline (cubic), barycentric",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_numerical_recipes_press_et_al_reference_for_numeri"
+              ]
             },
             {
               "id": "sub_fast_fourier_transform_cooley_tukey_algorithm_appl",
               "label": "Fast Fourier Transform: Cooley-Tukey algorithm, applications in convolution/spectral methods",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_cleve_moler_s_numerical_computing_with_matlab_free"
+              ]
             }
           ]
         },
@@ -176,36 +278,61 @@
           "label": "FS.2 Computer systems \u2014 OS",
           "done": false,
           "order": 4,
+          "resourceIds": [
+            "res_operating_systems_three_easy_pieces_remzi_andrea_a",
+            "res_linux_kernel_development_love_practical_linux_inte",
+            "res_cs_162_uc_berkeley_lectures_on_youtube"
+          ],
           "subtopics": [
             {
               "id": "sub_processes_pcb_context_switch_fork_exec_wait_proces",
               "label": "Processes: PCB, context switch, fork/exec/wait, process states, zombie/orphan processes",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_operating_systems_three_easy_pieces_remzi_andrea_a"
+              ]
             },
             {
               "id": "sub_threads_kernel_vs_user_threads_pthreads_thread_loc",
               "label": "Threads: kernel vs user threads, pthreads, thread-local storage, thread pools",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_operating_systems_three_easy_pieces_remzi_andrea_a",
+                "res_linux_kernel_development_love_practical_linux_inte"
+              ]
             },
             {
               "id": "sub_virtual_memory_page_tables_multi_level_tlb_page_fa",
               "label": "Virtual memory: page tables (multi-level), TLB, page faults, swapping, mmap, huge pages",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_operating_systems_three_easy_pieces_remzi_andrea_a",
+                "res_linux_kernel_development_love_practical_linux_inte"
+              ]
             },
             {
               "id": "sub_file_systems_inodes_ext4_layout_journaling_fuse_vf",
               "label": "File systems: inodes, ext4 layout, journaling, FUSE, VFS layer, directory structure",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_linux_kernel_development_love_practical_linux_inte"
+              ]
             },
             {
               "id": "sub_scheduling_cfs_nice_values_cgroups_real_time_class",
               "label": "Scheduling: CFS, nice values, cgroups, real-time classes (SCHED_FIFO, SCHED_RR, SCHED_DEADLINE)",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_linux_kernel_development_love_practical_linux_inte"
+              ]
             },
             {
               "id": "sub_ipc_pipes_fifo_sockets_shared_memory_shmget_mmap_s",
               "label": "IPC: pipes, fifo, sockets, shared memory (shmget/mmap), semaphores, signals",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_operating_systems_three_easy_pieces_remzi_andrea_a"
+              ]
             }
           ]
         },
@@ -214,36 +341,60 @@
           "label": "FS.2 Computer systems \u2014 architecture",
           "done": false,
           "order": 5,
+          "resourceIds": [
+            "res_computer_architecture_a_quantitative_approach_henn",
+            "res_computer_organization_and_design_patterson_henness",
+            "res_what_every_programmer_should_know_about_memory_dre"
+          ],
           "subtopics": [
             {
               "id": "sub_cpu_pipeline_fetch_decode_execute_memory_writeback",
               "label": "CPU pipeline: fetch, decode, execute, memory, writeback; hazards (data, control, structural)",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_computer_organization_and_design_patterson_henness"
+              ]
             },
             {
               "id": "sub_branch_prediction_2_bit_saturating_counter_correla",
               "label": "Branch prediction: 2-bit saturating counter, correlating predictors, BTB, RAS",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_computer_architecture_a_quantitative_approach_henn"
+              ]
             },
             {
               "id": "sub_out_of_order_execution_tomasulo_algorithm_reorder_",
               "label": "Out-of-order execution: Tomasulo algorithm, reorder buffer, reservation stations",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_computer_architecture_a_quantitative_approach_henn"
+              ]
             },
             {
               "id": "sub_cache_hierarchy_l1_l2_l3_inclusivity_associativity",
               "label": "Cache hierarchy: L1/L2/L3, inclusivity, associativity, replacement policy (LRU, pseudo-LRU)",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_computer_architecture_a_quantitative_approach_henn",
+                "res_what_every_programmer_should_know_about_memory_dre"
+              ]
             },
             {
               "id": "sub_cache_coherence_mesi_protocol_moesi_directory_base",
               "label": "Cache coherence: MESI protocol, MOESI, directory-based, snooping",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_computer_architecture_a_quantitative_approach_henn"
+              ]
             },
             {
               "id": "sub_numa_topology_memory_latency_first_touch_policy_th",
               "label": "NUMA: topology, memory latency, first-touch policy, thread/process binding (numactl)",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_what_every_programmer_should_know_about_memory_dre"
+              ]
             }
           ]
         },
@@ -252,36 +403,60 @@
           "label": "FS.2 Computer systems \u2014 GPU architecture",
           "done": false,
           "order": 6,
+          "resourceIds": [
+            "res_programming_massively_parallel_processors_kirk_hwu",
+            "res_nvidia_cuda_programming_guide_occupancy_memory_hie",
+            "res_hopper_h100_architecture_whitepaper_nvidia_"
+          ],
           "subtopics": [
             {
               "id": "sub_streaming_multiprocessor_sm_warp_schedulers_warp_d",
               "label": "Streaming Multiprocessor (SM): warp schedulers, warp divergence, convergence patterns",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_programming_massively_parallel_processors_kirk_hwu"
+              ]
             },
             {
               "id": "sub_memory_hierarchy_registers_shared_memory_banks_ban",
               "label": "Memory hierarchy: registers, shared memory (banks, bank conflicts), L1/L2 cache, global memory (HBM/HBM2/HBM3)",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_programming_massively_parallel_processors_kirk_hwu",
+                "res_nvidia_cuda_programming_guide_occupancy_memory_hie"
+              ]
             },
             {
               "id": "sub_occupancy_register_pressure_shared_memory_per_sm_s",
               "label": "Occupancy: register pressure, shared memory per SM, scheduling, occupancy calculator",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_nvidia_cuda_programming_guide_occupancy_memory_hie"
+              ]
             },
             {
               "id": "sub_tensor_cores_4x4x4_mma_precision_modes_fp16_bf16_t",
               "label": "Tensor cores: 4x4x4 MMA, precision modes (fp16, bf16, tf32, int8, int4), throughput",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_hopper_h100_architecture_whitepaper_nvidia_"
+              ]
             },
             {
               "id": "sub_sm_generations_maxwell_pascal_volta_turing_ampere_",
               "label": "SM generations: Maxwell \u2192 Pascal \u2192 Volta \u2192 Turing \u2192 Ampere \u2192 Hopper \u2014 key differences",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_hopper_h100_architecture_whitepaper_nvidia_"
+              ]
             },
             {
               "id": "sub_nvlink_nvswitch_topology_direct_gpu_gpu_access_pee",
               "label": "NVLink/NVSwitch: topology, direct GPU-GPU access, peer mappings, bandwidth",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_nvidia_cuda_programming_guide_occupancy_memory_hie"
+              ]
             }
           ]
         },
@@ -290,36 +465,60 @@
           "label": "FS.3 Networking",
           "done": false,
           "order": 7,
+          "resourceIds": [
+            "res_tcp_ip_illustrated_stevens_chapters_1_3_12_13_17_1",
+            "res_beej_s_guide_to_network_programming_beej_practical",
+            "res_lord_of_the_io_uring_youtube_scylladb_architecture",
+            "res_nccl_documentation_nvidia_collective_operations"
+          ],
           "subtopics": [
             {
               "id": "sub_tcp_ip_stack_ethernet_frames_ip_routing_subnetting",
               "label": "TCP/IP stack: Ethernet (frames), IP (routing, subnetting, CIDR), TCP (flow control, congestion control, Nagle, slow start, fast retransmit, SACK), UDP",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_tcp_ip_illustrated_stevens_chapters_1_3_12_13_17_1"
+              ]
             },
             {
               "id": "sub_bsd_socket_api_socket_bind_listen_accept_connect_s",
               "label": "BSD socket API: socket, bind, listen, accept, connect, send, recv, select/poll/epoll, non-blocking I/O",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_beej_s_guide_to_network_programming_beej_practical"
+              ]
             },
             {
               "id": "sub_high_performance_i_o_io_uring_completion_queue_sub",
               "label": "High-performance I/O: io_uring (completion queue, submission queue, link, splice, buffer selection), kernel bypass (DPDK, XDP)",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_lord_of_the_io_uring_youtube_scylladb_architecture"
+              ]
             },
             {
               "id": "sub_infiniband_rc_reliable_connection_uc_ud_rdma_verbs",
               "label": "InfiniBand: RC (reliable connection), UC, UD; RDMA verbs (send/recv, read/write, atomic); subnet manager",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_tcp_ip_illustrated_stevens_chapters_1_3_12_13_17_1"
+              ]
             },
             {
               "id": "sub_roce_v2_rdma_over_converged_ethernet_pfc_dcqcn_ecn",
               "label": "RoCE v2: RDMA over Converged Ethernet, PFC, DCQCN, ECN marking",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_tcp_ip_illustrated_stevens_chapters_1_3_12_13_17_1"
+              ]
             },
             {
               "id": "sub_nccl_all_reduce_ring_tree_rabenseifner_all_gather_",
               "label": "NCCL: all-reduce (ring, tree/rabenseifner), all-gather, reduce-scatter, topology-aware communication",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_nccl_documentation_nvidia_collective_operations"
+              ]
             }
           ]
         },
@@ -328,36 +527,140 @@
           "label": "FS.4 Compilers",
           "done": false,
           "order": 8,
+          "resourceIds": [
+            "res_engineering_a_compiler_cooper_torczon_chapters_1_5",
+            "res_llvm_kaleidoscope_tutorial_llvm_org_build_a_toy_co",
+            "res_mlir_a_compiler_infrastructure_for_the_end_of_moor",
+            "res_tvm_documentation_tvm_apache_org_getting_started_a"
+          ],
           "subtopics": [
             {
               "id": "sub_compiler_pipeline_lexer_parser_ast_semantic_analys",
               "label": "Compiler pipeline: lexer \u2192 parser \u2192 AST \u2192 semantic analysis \u2192 IR \u2192 optimization \u2192 code generation",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_engineering_a_compiler_cooper_torczon_chapters_1_5"
+              ]
             },
             {
               "id": "sub_llvm_ir_ssa_basic_blocks_phi_nodes_optimization_pa",
               "label": "LLVM: IR (SSA, basic blocks, phi nodes), optimization passes (mem2reg, GVN, inlining, loop unrolling, DCE), target description, MC layer, JIT (ORC JIT)",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_llvm_kaleidoscope_tutorial_llvm_org_build_a_toy_co"
+              ]
             },
             {
               "id": "sub_mlir_dialects_linalg_affine_scf_func_arith_vector_",
               "label": "MLIR: dialects (linalg, affine, scf, func, arith, vector), operation semantics, pass pipeline, dialect conversion, pattern rewriting",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_mlir_a_compiler_infrastructure_for_the_end_of_moor"
+              ]
             },
             {
               "id": "sub_xla_hlo_optimization_llvm_ir_fused_ops_layout_assi",
               "label": "XLA: HLO \u2192 optimization \u2192 LLVM IR, fused ops, layout assignment, Sharding for TPU/GPU",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_engineering_a_compiler_cooper_torczon_chapters_1_5"
+              ]
             },
             {
               "id": "sub_tvm_relay_ir_auto_tuning_autotvm_ansor_schedule_te",
               "label": "TVM: Relay IR, auto-tuning (AutoTVM, Ansor), schedule templates, code generation for CPU/GPU/MCU",
-              "done": false
+              "done": false,
+              "resourceIds": [
+                "res_tvm_documentation_tvm_apache_org_getting_started_a"
+              ]
             },
             {
               "id": "sub_triton_compiler_tir_tritongpu_dialect_llvm_ir_bloc",
               "label": "Triton compiler: TIR \u2192 TritonGPU dialect \u2192 LLVM IR, block-level analysis, shared memory allocation, automatic pipeline",
-              "done": false
+              "done": false,
+              "resourceIds": []
+            }
+          ]
+        },
+        {
+          "id": "f_fs_5_data_science_ml_fundamentals",
+          "label": "FS.5 Data Science & ML fundamentals",
+          "done": false,
+          "order": 9,
+          "resourceIds": [
+            "res_hands_on_ml_with_scikit_learn_keras_tensorflow_g",
+            "res_introduction_to_statistical_learning_james_witten",
+            "res_pattern_recognition_and_machine_learning_bishop_p",
+            "res_elements_of_statistical_learning_hastie_tibshirani",
+            "res_scikit_learn_documentation_scikit_learn_org",
+            "res_forecasting_principles_and_practice_hyndman_online"
+          ],
+          "subtopics": [
+            {
+              "id": "sub_scikit_learn_ecosystem_pipelines_cross_validation_",
+              "label": "Scikit-learn ecosystem: pipelines, ColumnTransformer, cross-validation, GridSearchCV, RandomizedSearchCV, custom transformers, metrics (accuracy, precision, recall, F1, ROC-AUC)",
+              "done": false,
+              "resourceIds": [
+                "res_hands_on_ml_with_scikit_learn_keras_tensorflow_g",
+                "res_scikit_learn_documentation_scikit_learn_org"
+              ]
+            },
+            {
+              "id": "sub_linear_models_ols_ridge_lasso_logistic_regression_m",
+              "label": "Linear models: OLS (closed-form, gradient descent), ridge regression (L2), lasso (L1, coordinate descent), logistic regression (cross-entropy, multi-class one-vs-rest/softmax)",
+              "done": false,
+              "resourceIds": [
+                "res_hands_on_ml_with_scikit_learn_keras_tensorflow_g",
+                "res_introduction_to_statistical_learning_james_witten",
+                "res_elements_of_statistical_learning_hastie_tibshirani"
+              ]
+            },
+            {
+              "id": "sub_tree_based_methods_decision_trees_cart_random_forest",
+              "label": "Tree-based methods: decision trees (CART, Gini/entropy, pruning), random forests (bagging, out-of-bag), gradient boosting (AdaBoost, XGBoost, LightGBM, CatBoost), feature importance",
+              "done": false,
+              "resourceIds": [
+                "res_hands_on_ml_with_scikit_learn_keras_tensorflow_g",
+                "res_introduction_to_statistical_learning_james_witten",
+                "res_elements_of_statistical_learning_hastie_tibshirani"
+              ]
+            },
+            {
+              "id": "sub_support_vector_machines_primal_dual_kernel_trick_sv",
+              "label": "Support Vector Machines: primal/dual formulation, hinge loss, kernel trick (RBF, polynomial, sigmoid), SVR, soft-margin C parameter",
+              "done": false,
+              "resourceIds": [
+                "res_hands_on_ml_with_scikit_learn_keras_tensorflow_g",
+                "res_elements_of_statistical_learning_hastie_tibshirani",
+                "res_pattern_recognition_and_machine_learning_bishop_p"
+              ]
+            },
+            {
+              "id": "sub_clustering_k_means_dbscan_hierarchical_gaussian_mix",
+              "label": "Clustering: k-means (k-means++ initialization, elbow/silhouette), DBSCAN (epsilon, minPts), hierarchical/agglomerative (linkage criteria), Gaussian mixture models (EM algorithm)",
+              "done": false,
+              "resourceIds": [
+                "res_hands_on_ml_with_scikit_learn_keras_tensorflow_g",
+                "res_pattern_recognition_and_machine_learning_bishop_p"
+              ]
+            },
+            {
+              "id": "sub_dimensionality_reduction_pca_svd_kernel_pca_tsne_uma",
+              "label": "Dimensionality reduction: PCA (SVD, explained variance, whitening), kernel PCA, t-SNE (perplexity, Barnes-Hut), UMAP, feature selection (filter/wrapper/embedded)",
+              "done": false,
+              "resourceIds": [
+                "res_hands_on_ml_with_scikit_learn_keras_tensorflow_g",
+                "res_pattern_recognition_and_machine_learning_bishop_p"
+              ]
+            },
+            {
+              "id": "sub_time_series_analysis_arima_exponential_smoothing_se",
+              "label": "Time series analysis: stationarity (ADF test), ARIMA/SARIMA, exponential smoothing (Holt-Winters), seasonality decomposition (STL), Prophet, feature engineering (lags, rolling windows, Fourier features)",
+"done": false,
+              "resourceIds": [
+                "res_forecasting_principles_and_practice_hyndman_online",
+                "res_hands_on_ml_with_scikit_learn_keras_tensorflow_g"
+              ]
             }
           ]
         }
@@ -536,6 +839,42 @@
           "label": "TVM documentation (tvm.apache.org) \u2014 getting started, auto-tuning",
           "done": false,
           "order": 0
+        },
+        {
+          "id": "res_hands_on_ml_with_scikit_learn_keras_tensorflow_g",
+          "label": "Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow (G\u00e9ron) \u2014 practical from-scratch implementations",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_introduction_to_statistical_learning_james_witten",
+          "label": "Introduction to Statistical Learning (James, Witten, Hastie, Tibshirani) \u2014 free at statlearning.com",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_pattern_recognition_and_machine_learning_bishop_p",
+          "label": "Pattern Recognition and Machine Learning (Bishop) \u2014 PRML, the canonical ML theory text",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_elements_of_statistical_learning_hastie_tibshirani",
+          "label": "Elements of Statistical Learning (Hastie, Tibshirani, Friedman) \u2014 free at hastie.su.domains/ElemStatLearn",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_scikit_learn_documentation_scikit_learn_org",
+          "label": "Scikit-learn documentation (scikit-learn.org) \u2014 user guide, API reference, examples",
+          "done": false,
+          "order": 0
+        },
+        {
+          "id": "res_forecasting_principles_and_practice_hyndman_online",
+          "label": "Forecasting: Principles and Practice (Hyndman & Athanasopoulos) \u2014 free at otexts.com/fpp3",
+          "done": false,
+          "order": 0
         }
       ],
       "projects": [
@@ -602,6 +941,30 @@
         {
           "id": "proj_write_a_minimal_expression_evaluator_in_llvm_ir_co",
           "label": "Write a minimal expression evaluator in LLVM IR (compile + JIT); then write a Triton kernel for elementwise addition; compare against handwritten CUDA",
+          "status": "not_started",
+          "order": 0
+        },
+        {
+          "id": "proj_implement_linear_regression_from_scratch_ols_and_gd",
+          "label": "Implement linear regression from scratch (OLS closed-form + gradient descent), compare coefficients against scikit-learn on a real dataset",
+          "status": "not_started",
+          "order": 0
+        },
+        {
+          "id": "proj_implement_decision_tree_cart_from_scratch_in_pytho",
+          "label": "Implement decision tree (CART) from scratch in Python, compare against scikit-learn on UCI datasets, visualize decision boundaries",
+          "status": "not_started",
+          "order": 0
+        },
+        {
+          "id": "proj_implement_pca_from_scratch_via_svd_apply_to_mnist_",
+          "label": "Implement PCA from scratch via SVD, apply to MNIST for 2D visualization, compare with scikit-learn's PCA",
+          "status": "not_started",
+          "order": 0
+        },
+        {
+          "id": "proj_forecast_a_time_series_using_arima_compare_with_prop",
+          "label": "Forecast a time series using ARIMA (auto-arima for order selection), compare with Prophet, evaluate on held-out period",
           "status": "not_started",
           "order": 0
         }
