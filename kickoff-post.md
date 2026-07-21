@@ -22,7 +22,7 @@ Built and maintained by one learner, in the open. Goal is simple — go from wor
 
 Each cluster has ordered topics, curated resources, and projects to build. Everything tracked in an open-source dashboard.
 
-**[Goal OS →](https://github.com/starboundscientist-hue/goal-os)**
+**[Goal OS →](https://github.com/starboundscientist-hue/Goal)**
 
 ---
 
@@ -43,7 +43,7 @@ I don't have a famous name, a research lab, or an affiliation. I have a laptop a
 This is my record of wanting it — and hopefully achieving everything a common person could dream of.
 
 **Repos:**
-- **[Goal OS](https://github.com/starboundscientist-hue/goal-os)** — the dashboard
-- **[Learning code](https://github.com/starboundscientist-hue)** — implementations and experiments
+- **[Goal OS](https://github.com/starboundscientist-hue/Goal)** — the dashboard
+- **[Learning code](https://github.com/starboundscientist-hue/Learning)** — implementations and experiments
 
 Everything is free. Pull requests welcome.
