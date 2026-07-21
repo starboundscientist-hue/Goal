@@ -2,9 +2,9 @@
   "meta": {
     "dev_root": "~/Dev",
     "git_author_email": "",
-    "start_date": "2026-05-23",
+    "start_date": "2026-07-21",
     "target_years": 5,
-    "weekly_goal_hours": 5,
+    "weekly_goal_hours": 25,
     "last_coach_run": null,
     "last_coach_output": null
   },
@@ -337,6 +337,45 @@
           ]
         },
         {
+          "id": "f_fs_2_cpp_systems_programming",
+          "label": "FS.2 C++ systems programming",
+          "done": false,
+          "order": 4.5,
+          "resourceIds": [],
+          "subtopics": [
+            {
+              "id": "sub_learncpp_com_chapters_1_8_fundamentals_functions_arrays_pointers",
+              "label": "LearnCPP chapters 1-8: fundamentals, functions, arrays, pointers, control flow, debugging",
+              "done": true,
+              "resourceIds": []
+            },
+            {
+              "id": "sub_learncpp_com_chapters_9_12_compound_types_enum_struct_class_inheritance_virtual",
+              "label": "LearnCPP chapters 9-12: compound types, enums, structs, classes, inheritance, virtual functions",
+              "done": false,
+              "resourceIds": []
+            },
+            {
+              "id": "sub_learncpp_com_chapters_13_17_templates_exceptions_smart_pointers_stl",
+              "label": "LearnCPP chapters 13-17: templates, exceptions, smart pointers, move semantics, STL",
+              "done": false,
+              "resourceIds": []
+            },
+            {
+              "id": "sub_cpp_memory_model_allocators_placement_new_custom_allocators",
+              "label": "C++ memory model: allocators, placement new, custom allocators, memory pools",
+              "done": false,
+              "resourceIds": []
+            },
+            {
+              "id": "sub_cpp_compile_time_metaprogramming_consteval_constexpr_sfinae_concepts",
+              "label": "Compile-time metaprogramming: consteval, constexpr, SFINAE, concepts, type traits",
+              "done": false,
+              "resourceIds": []
+            }
+          ]
+        },
+        {
           "id": "f_fs_2_computer_systems_architecture",
           "label": "FS.2 Computer systems \u2014 architecture",
           "done": false,
@@ -392,6 +431,14 @@
               "id": "sub_numa_topology_memory_latency_first_touch_policy_th",
               "label": "NUMA: topology, memory latency, first-touch policy, thread/process binding (numactl)",
               "done": false,
+              "resourceIds": [
+                "res_what_every_programmer_should_know_about_memory_dre"
+              ]
+            },
+            {
+              "id": "sub_ieee_754_floating_point_representation_rounding_precision",
+              "label": "IEEE 754: floating-point representation (single/double), rounding modes, subnormals, special values, precision vs accuracy",
+              "done": true,
               "resourceIds": [
                 "res_what_every_programmer_should_know_about_memory_dre"
               ]
@@ -656,7 +703,7 @@
             {
               "id": "sub_time_series_analysis_arima_exponential_smoothing_se",
               "label": "Time series analysis: stationarity (ADF test), ARIMA/SARIMA, exponential smoothing (Holt-Winters), seasonality decomposition (STL), Prophet, feature engineering (lags, rolling windows, Fourier features)",
-"done": false,
+              "done": false,
               "resourceIds": [
                 "res_forecasting_principles_and_practice_hyndman_online",
                 "res_hands_on_ml_with_scikit_learn_keras_tensorflow_g"
@@ -4304,5 +4351,36 @@
       ]
     }
   },
-  "logs": []
+  "logs": [
+    {
+      "id": "log-backfill-pytorch-basics",
+      "date": "2026-06-06",
+      "cluster": "alpha",
+      "topic": "PyTorch fundamentals",
+      "hours": 6,
+      "notes": "Backfill: PyTorch basics \u2014 tensors, autograd, training loops (est. hours, adjust as needed)",
+      "is_completed": true,
+      "source": "manual"
+    },
+    {
+      "id": "log-backfill-transformer-scratch",
+      "date": "2026-06-27",
+      "cluster": "alpha",
+      "topic": "\u03b1.1 Transformer architectures",
+      "hours": 14,
+      "notes": "Backfill: implemented GPT-style transformer from scratch in PyTorch \u2014 attention, positional encodings, decoder block; trained tiny LM (\u03b1.1 close artifact, est. hours)",
+      "is_completed": true,
+      "source": "manual"
+    },
+    {
+      "id": "log-backfill-cpp-lectures",
+      "date": "2026-07-11",
+      "cluster": "sde_engineering",
+      "topic": "\u03b6.1 C++ for DSA",
+      "hours": 10,
+      "notes": "Backfill: ~30 LearnCpp lectures (~halfway) \u2014 C++ fundamentals for the DSA track (est. hours, adjust as needed)",
+      "is_completed": false,
+      "source": "manual"
+    }
+  ]
 }

@@ -17,7 +17,8 @@ import {
   arrayMove,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import type { WorkTask, Subtask, TaskStatus } from '../../lib/types';
+import type { WorkTask, Subtask, TaskStatus, ResourceWithCluster } from '../../lib/types';
+import { CLUSTER_LABELS } from '../../lib/types';
 import { useStore } from '../../lib/store';
 import * as api from '../../lib/api';
 
@@ -51,6 +52,7 @@ export function TaskDetailModal({ task, onClose }: Props) {
   const toggleSubtask = useStore(s => s.toggleSubtask);
   const removeSubtask = useStore(s => s.removeSubtask);
   const reorderSubtasks = useStore(s => s.reorderSubtasks);
+  const toggleSubtaskResource = useStore(s => s.toggleSubtaskResource);
 
   const [editingTitle, setEditingTitle] = useState(false);
   const [titleDraft, setTitleDraft] = useState(task.title);
@@ -58,6 +60,12 @@ export function TaskDetailModal({ task, onClose }: Props) {
   const [suggesting, setSuggesting] = useState(false);
   const [suggestError, setSuggestError] = useState<string | null>(null);
   const [shimmerKey, setShimmerKey] = useState(0);
+  const [allResources, setAllResources] = useState<ResourceWithCluster[]>([]);
+  const [showResourcePicker, setShowResourcePicker] = useState<string | null>(null);
+
+  useEffect(() => {
+    api.loadAllResources().then(setAllResources);
+  }, []);
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
@@ -354,6 +362,11 @@ export function TaskDetailModal({ task, onClose }: Props) {
                           index={i}
                           onToggle={() => toggleSubtask(task.id, sub.id)}
                           onRemove={() => removeSubtask(task.id, sub.id)}
+                          allResources={allResources}
+                          linkedResources={allResources.filter(r => (sub.resourceIds ?? []).includes(r.resource.id))}
+                          showPicker={showResourcePicker === sub.id}
+                          onTogglePicker={() => setShowResourcePicker(showResourcePicker === sub.id ? null : sub.id)}
+                          onLinkResource={(resourceId) => toggleSubtaskResource(task.id, sub.id, resourceId)}
                         />
                       ))}
                     </AnimatePresence>
@@ -368,7 +381,7 @@ export function TaskDetailModal({ task, onClose }: Props) {
                 value={newSubLabel}
                 onChange={e => setNewSubLabel(e.target.value)}
                 onKeyDown={handleSubInputKey}
-                placeholder="Add a subtask\u2026"
+                placeholder={'Add a subtask\u2026'}
                 className="flex-1 bg-surface-base/90 border border-surface-border rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-blue-500/60 focus:bg-surface-base transition-colors"
                 data-testid="subtask-input"
               />
@@ -460,9 +473,14 @@ interface RowProps {
   index: number;
   onToggle: () => void;
   onRemove: () => void;
+  allResources: ResourceWithCluster[];
+  linkedResources: ResourceWithCluster[];
+  showPicker: boolean;
+  onTogglePicker: () => void;
+  onLinkResource: (resourceId: string) => void;
 }
 
-function SortableSubtaskRow({ subtask, index, onToggle, onRemove }: RowProps) {
+function SortableSubtaskRow({ subtask, index, onToggle, onRemove, allResources, linkedResources, showPicker, onTogglePicker, onLinkResource }: RowProps) {
   const {
     attributes,
     listeners,
@@ -486,7 +504,7 @@ function SortableSubtaskRow({ subtask, index, onToggle, onRemove }: RowProps) {
       initial={{ opacity: 0, x: -8 }}
       animate={{ opacity: 1, x: 0, transition: { delay: index * 0.03, duration: 0.18 } }}
       exit={{ opacity: 0, x: 8, transition: { duration: 0.12 } }}
-      className="group flex items-center gap-2 py-1.5 px-1 rounded-lg hover:bg-surface-hover/60"
+      className="group relative flex items-center gap-2 py-1.5 px-1 rounded-lg hover:bg-surface-hover/60"
       data-testid="subtask-row"
       data-subtask-id={subtask.id}
     >
@@ -536,6 +554,56 @@ function SortableSubtaskRow({ subtask, index, onToggle, onRemove }: RowProps) {
       >
         {subtask.label}
       </span>
+
+      {linkedResources.length > 0 && (
+        <div className="flex items-center gap-1 shrink-0">
+          {linkedResources.slice(0, 2).map(r => (
+            <span
+              key={r.resource.id}
+              className="text-[9px] px-1 py-0.5 rounded bg-surface-muted/40 text-muted-foreground/50 font-medium"
+              title={`${CLUSTER_LABELS[r.clusterId as keyof typeof CLUSTER_LABELS] || r.clusterId}: ${r.resource.label}`}
+            >
+              {r.resource.label.length > 10 ? r.resource.label.slice(0, 8) + '\u2026' : r.resource.label}
+            </span>
+          ))}
+          {linkedResources.length > 2 && (
+            <span className="text-[9px] text-muted-foreground/30">+{linkedResources.length - 2}</span>
+          )}
+        </div>
+      )}
+
+      <button
+        type="button"
+        onClick={onTogglePicker}
+        className="opacity-0 group-hover:opacity-100 text-muted-foreground/40 hover:text-blue-400/80 text-xs px-1 transition-all"
+        aria-label="Link resource"
+        title="Link resource"
+      >
+        {'\u002b'}
+      </button>
+
+      {showPicker && (
+        <div className="absolute top-full left-0 right-0 z-20 mt-1 p-2 bg-surface-card border border-surface-border rounded-lg shadow-xl max-h-40 overflow-y-auto">
+          {allResources.filter(r => !(subtask.resourceIds ?? []).includes(r.resource.id)).length === 0 ? (
+            <span className="text-[10px] text-muted-foreground/50 block px-2 py-1">No more resources</span>
+          ) : (
+            allResources
+              .filter(r => !(subtask.resourceIds ?? []).includes(r.resource.id))
+              .map(r => (
+                <button
+                  key={r.resource.id}
+                  onClick={() => { onLinkResource(r.resource.id); onTogglePicker(); }}
+                  className="w-full text-left text-[11px] text-foreground/70 hover:text-foreground hover:bg-surface-hover/40 rounded px-2 py-1 transition-colors truncate"
+                >
+                  <span className="text-[9px] text-muted-foreground/50 mr-1">
+                    {CLUSTER_LABELS[r.clusterId as keyof typeof CLUSTER_LABELS] || r.clusterId}:
+                  </span>
+                  {r.resource.label}
+                </button>
+              ))
+          )}
+        </div>
+      )}
 
       <button
         type="button"

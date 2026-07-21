@@ -53,6 +53,7 @@ export interface Subtask {
   label: string;
   done: boolean;
   order: number;
+  resourceIds?: string[];
 }
 
 export interface Topic {
@@ -184,4 +185,49 @@ export interface FocusItem {
   reason: string;
   detail?: string;
   priority: number;
+}
+
+export interface MotivationEntry {
+  date: string;
+  body: string;
+}
+
+export interface MotivationData {
+  northStar: string;
+  entries: MotivationEntry[];
+}
+
+export type SprintGoalStatus = 'not_started' | 'in_progress' | 'done';
+
+export interface SprintGoalSource {
+  clusterId: string;
+  topicId: string;
+  subtopicId?: string;
+}
+
+export interface SprintGoal {
+  id: string;
+  label: string;
+  lane: string;
+  status: SprintGoalStatus;
+  source?: SprintGoalSource;
+}
+
+export interface Sprint {
+  id: string;
+  name: string;
+  startDate: string;
+  endDate: string;
+  goals: SprintGoal[];
+  closed: boolean;
+}
+
+export interface ResourceWithCluster {
+  resource: Resource;
+  clusterId: string;
+}
+
+export interface SprintData {
+  sprints: Sprint[];
+  backlog: SprintGoal[];
 }

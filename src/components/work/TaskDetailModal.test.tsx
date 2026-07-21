@@ -8,6 +8,7 @@ const {
   mockToggleSubtask,
   mockRemoveSubtask,
   mockReorderSubtasks,
+  mockToggleSubtaskResource,
   mockUpdateWorkTaskStatus,
   mockUpdateWorkTask,
   mockUseStore,
@@ -17,6 +18,7 @@ const {
   mockToggleSubtask: vi.fn(),
   mockRemoveSubtask: vi.fn(),
   mockReorderSubtasks: vi.fn(),
+  mockToggleSubtaskResource: vi.fn(),
   mockUpdateWorkTaskStatus: vi.fn(),
   mockUpdateWorkTask: vi.fn(),
   mockUseStore: vi.fn(),
@@ -29,6 +31,7 @@ vi.mock('../../lib/store', () => ({
 
 vi.mock('../../lib/api', () => ({
   suggestSubtasks: mockSuggestSubtasks,
+  loadAllResources: () => Promise.resolve([]),
 }));
 
 import { makeWorkTask } from '../../lib/test-fixtures';
@@ -43,6 +46,7 @@ beforeEach(() => {
       toggleSubtask: mockToggleSubtask,
       removeSubtask: mockRemoveSubtask,
       reorderSubtasks: mockReorderSubtasks,
+      toggleSubtaskResource: mockToggleSubtaskResource,
     })
   );
   mockSuggestSubtasks.mockResolvedValue([]);

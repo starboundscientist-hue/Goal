@@ -48,4 +48,23 @@ router.put('/', (req, res) => {
   }
 });
 
+router.get('/resources', (_req, res) => {
+  try {
+    const data = JSON.parse(readFileSync(DATA_PATH, 'utf-8'));
+    const clusters = data.clusters || {};
+    const entries: { resource: any; clusterId: string }[] = [];
+    for (const [clusterId, cluster] of Object.entries(clusters)) {
+      const c = cluster as any;
+      if (Array.isArray(c.resources)) {
+        for (const r of c.resources) {
+          entries.push({ resource: r, clusterId });
+        }
+      }
+    }
+    res.json(entries);
+  } catch {
+    res.status(500).json({ error: 'Could not read progress.json' });
+  }
+});
+
 export default router;

@@ -48,6 +48,7 @@ interface AppStore {
   toggleSubtask: (taskId: string, subtaskId: string) => Promise<void>;
   removeSubtask: (taskId: string, subtaskId: string) => Promise<void>;
   reorderSubtasks: (taskId: string, orderedIds: string[]) => Promise<void>;
+  toggleSubtaskResource: (taskId: string, subtaskId: string, resourceId: string) => Promise<void>;
   addAutomationEntry: (entry: AutomationEntry) => Promise<void>;
 }
 
@@ -681,6 +682,32 @@ export const useStore = create<AppStore>((set, get) => ({
           .filter((s): s is Subtask => s !== null);
         return { ...t, subtasks: reordered };
       })
+    };
+    set({ work: updated });
+    await api.saveWork(updated);
+  },
+
+  toggleSubtaskResource: async (taskId, subtaskId, resourceId) => {
+    const { work } = get();
+    if (!work) return;
+    const updated = {
+      ...work,
+      tasks: work.tasks.map(t => {
+        if (t.id !== taskId) return t;
+        return {
+          ...t,
+          subtasks: (t.subtasks ?? []).map(s => {
+            if (s.id !== subtaskId) return s;
+            const ids = s.resourceIds ?? [];
+            return {
+              ...s,
+              resourceIds: ids.includes(resourceId)
+                ? ids.filter(id => id !== resourceId)
+                : [...ids, resourceId],
+            };
+          }),
+        };
+      }),
     };
     set({ work: updated });
     await api.saveWork(updated);

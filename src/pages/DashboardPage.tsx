@@ -1,5 +1,6 @@
 import { useStore } from '../lib/store';
 import { PaceBar } from '../components/dashboard/PaceBar';
+import { NorthStarCard } from '../components/dashboard/NorthStarCard';
 import { ClusterCard } from '../components/dashboard/ClusterCard';
 import { ActivityHeatmap } from '../components/dashboard/ActivityHeatmap';
 import { GitPendingCard } from '../components/dashboard/GitPendingCard';
@@ -27,6 +28,8 @@ export function DashboardPage() {
           {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
         </span>
       </div>
+
+      <NorthStarCard />
 
       <PaceBar progress={progress} />
 

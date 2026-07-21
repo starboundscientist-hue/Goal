@@ -6,6 +6,8 @@ import { ClusterPage } from './pages/ClusterPage';
 import { LogPage } from './pages/LogPage';
 import { WorkPage } from './pages/WorkPage';
 import { WeeklyPage } from './pages/WeeklyPage';
+import { SprintsPage } from './pages/SprintsPage';
+import { SubtasksPage } from './pages/SubtasksPage';
 import { SemanticLogger } from './components/logging/SemanticLogger';
 import { useStore } from './lib/store';
 import * as api from './lib/api';
@@ -64,6 +66,8 @@ export default function App() {
           <Route path="/cluster/:id" element={<ClusterPage />} />
           <Route path="/log" element={<LogPage />} />
           <Route path="/work" element={<WorkPage />} />
+          <Route path="/sprints" element={<SprintsPage />} />
+          <Route path="/subtasks" element={<SubtasksPage />} />
           <Route path="/review" element={<WeeklyPage />} />
         </Routes>
       </Shell>

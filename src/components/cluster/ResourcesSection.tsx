@@ -81,7 +81,7 @@ export function ResourcesSection({ clusterId, resources }: Props) {
             onChange={e => setNewLabel(e.target.value)}
             onKeyDown={handleKeyDown}
             onBlur={handleAdd}
-            placeholder="Resource name\u2026"
+            placeholder={'Resource name\u2026'}
             className="flex-1 bg-surface-muted/80 text-foreground text-sm rounded-lg px-3 py-1.5 outline-none border border-surface-border/60 focus:border-blue-500/50 placeholder:text-muted-foreground/60"
           />
           <button
@@ -92,7 +92,7 @@ export function ResourcesSection({ clusterId, resources }: Props) {
           </button>
           <button
             onMouseDown={() => { setAdding(false); setNewLabel(''); }}
-            className="text-xs text-muted-foreground hover:text-foreground px-1"
+            className="text-xs text-muted-foreground hover:text-foreground px-1 transition-colors"
           >
             {'\u2715'}
           </button>
@@ -157,7 +157,7 @@ function SortableResourceRow({ clusterId, resource, onToggle, onRemove }: {
       )}
       <button
         onClick={onRemove}
-        className="text-muted-foreground/50 hover:text-red-400 text-xs shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
+        className="text-muted-foreground/50 hover:text-red-400 text-xs shrink-0 opacity-0 group-hover:opacity-100 transition-all"
         title="Remove"
       >
         {'\u2715'}

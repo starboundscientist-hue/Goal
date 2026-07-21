@@ -1,0 +1,13 @@
+{
+  "backlog": [],
+  "sprints": [
+    {
+      "id": "sprint_1",
+      "name": "Sprint 1",
+      "startDate": "2026-07-21",
+      "endDate": "2026-08-03",
+      "goals": [],
+      "closed": false
+    }
+  ]
+}

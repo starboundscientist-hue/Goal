@@ -60,6 +60,32 @@ describe('PUT /api/progress', () => {
   });
 });
 
+describe('GET /api/progress/resources', () => {
+  it('returns flattenend resources across clusters', async () => {
+    writeFileSync(join(testDataDir, 'progress.json'), JSON.stringify({
+      meta: { weekly_goal_hours: 5 },
+      clusters: {
+        alpha: { resources: [{ id: 'r1', label: 'Paper A', done: false, order: 0 }] },
+        beta: { resources: [{ id: 'r2', label: 'Paper B', done: true, order: 0 }] },
+      },
+      logs: []
+    }), 'utf-8');
+    const res = await request(app).get('/api/progress/resources');
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveLength(2);
+    expect(res.body[0].clusterId).toBe('alpha');
+    expect(res.body[0].resource.id).toBe('r1');
+    expect(res.body[1].clusterId).toBe('beta');
+    expect(res.body[1].resource.id).toBe('r2');
+  });
+
+  it('returns [] when there are no clusters', async () => {
+    const res = await request(app).get('/api/progress/resources');
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual([]);
+  });
+});
+
 describe('GET /api/work', () => {
   it('returns 200 with work data', async () => {
     const res = await request(app).get('/api/work');

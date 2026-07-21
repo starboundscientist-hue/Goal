@@ -64,6 +64,12 @@ export function Sidebar() {
         <NavLink to="/work" className={({ isActive }) => `${navBase} ${isActive ? navActive : navInactive}`}>
           Work Tracker
         </NavLink>
+        <NavLink to="/subtasks" className={({ isActive }) => `${navBase} ${isActive ? navActive : navInactive}`}>
+          Subtasks
+        </NavLink>
+        <NavLink to="/sprints" className={({ isActive }) => `${navBase} ${isActive ? navActive : navInactive}`}>
+          Sprints
+        </NavLink>
         <NavLink to="/review" className={({ isActive }) => `${navBase} ${isActive ? navActive : navInactive}`}>
           Weekly Review
         </NavLink>

@@ -17,16 +17,20 @@ import {
   arrayMove,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import type { Topic, Subtopic, Resource } from '../../lib/types';
+import type { Topic, Subtopic, Resource, SprintData, SprintGoal } from '../../lib/types';
 import { useStore } from '../../lib/store';
+import { generateId } from '../../lib/utils';
+import { saveSprints } from '../../lib/api';
+import { findMatchingSprintGoal, SprintBadge } from './sprintUtils';
 
 interface Props {
   clusterId: string;
   topic: Topic;
+  sprintData: SprintData | null;
   onClose: () => void;
 }
 
-export function SubtopicModal({ clusterId, topic, onClose }: Props) {
+export function SubtopicModal({ clusterId, topic, sprintData: inSprintData, onClose }: Props) {
   const addSubtopic = useStore(s => s.addSubtopic);
   const removeSubtopic = useStore(s => s.removeSubtopic);
   const toggleSubtopic = useStore(s => s.toggleSubtopic);
@@ -42,8 +46,13 @@ export function SubtopicModal({ clusterId, topic, onClose }: Props) {
   const [newLabel, setNewLabel] = useState('');
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [showTopicResources, setShowTopicResources] = useState(true);
+  const [localSprintData, setLocalSprintData] = useState<SprintData | null>(inSprintData);
   const overlayRef = useRef<HTMLDivElement>(null);
   const subInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (inSprintData) setLocalSprintData(inSprintData);
+  }, [inSprintData]);
 
   const subtopics = useMemo(
     () => [...(topic.subtopics ?? [])].sort((a, b) => (a.order ?? 0) - (b.order ?? 0)),
@@ -79,12 +88,47 @@ export function SubtopicModal({ clusterId, topic, onClose }: Props) {
     if (e.target === overlayRef.current) onClose();
   }, [onClose]);
 
+  const [addingToSprint, setAddingToSprint] = useState(false);
+
   const handleAdd = async () => {
     const label = newLabel.trim();
     if (!label) return;
     await addSubtopic(clusterId, topic.id, label);
     setNewLabel('');
     subInputRef.current?.focus();
+  };
+
+  const addSubtopicToSprint = async (subtopicId: string) => {
+    if (!localSprintData || addingToSprint) return;
+    setAddingToSprint(true);
+    const sub = subtopics.find(s => s.id === subtopicId);
+    if (!sub) { setAddingToSprint(false); return; }
+
+    const goal: SprintGoal = {
+      id: generateId(),
+      label: sub.label,
+      lane: 'main',
+      status: 'not_started',
+      source: { clusterId, topicId: topic.id, subtopicId },
+    };
+
+    const current = localSprintData.sprints.find(s => !s.closed);
+    const updated: SprintData = {
+      backlog: localSprintData.backlog,
+      sprints: localSprintData.sprints,
+    };
+
+    if (current) {
+      updated.sprints = localSprintData.sprints.map(s =>
+        s.id === current.id ? { ...s, goals: [...s.goals, goal] } : s
+      );
+    } else {
+      updated.backlog = [...localSprintData.backlog, goal];
+    }
+
+    const ok = await saveSprints(updated);
+    if (ok) setLocalSprintData(updated);
+    setAddingToSprint(false);
   };
 
   const handleDragEnd = (e: DragEndEvent) => {
@@ -143,7 +187,7 @@ export function SubtopicModal({ clusterId, topic, onClose }: Props) {
             </div>
             <button
               onClick={onClose}
-              className="text-muted-foreground hover:text-foreground text-lg leading-none shrink-0 -mr-1"
+              className="text-muted-foreground hover:text-foreground text-lg leading-none shrink-0 -mr-1 transition-colors"
               aria-label="Close"
             >
               {'\u2715'}
@@ -235,6 +279,7 @@ export function SubtopicModal({ clusterId, topic, onClose }: Props) {
                         index={i}
                         clusterId={clusterId}
                         topicId={topic.id}
+                        sprintData={localSprintData}
                         resources={clusterResources}
                         expandedId={expandedId}
                         onToggle={() => toggleSubtopic(clusterId, topic.id, sub.id)}
@@ -243,6 +288,7 @@ export function SubtopicModal({ clusterId, topic, onClose }: Props) {
                         onDescriptionChange={(desc) => updateSubtopic(clusterId, topic.id, sub.id, { description: desc || undefined })}
                         onToggleResourceDone={(resourceId) => toggleResource(clusterId, resourceId)}
                         onUnlinkResource={(resourceId) => toggleSubtopicResource(clusterId, topic.id, sub.id, resourceId)}
+                        onAddToSprint={addSubtopicToSprint}
                       />
                     ))}
                   </AnimatePresence>
@@ -272,7 +318,7 @@ export function SubtopicModal({ clusterId, topic, onClose }: Props) {
                 if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleAdd(); }
                 if (e.key === 'Escape') { setNewLabel(''); e.currentTarget.blur(); }
               }}
-              placeholder="Add a subtopic\u2026"
+              placeholder={'Add a subtopic\u2026'}
               className="flex-1 bg-surface-base/90 border border-surface-border rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-blue-500/60 focus:bg-surface-base transition-colors"
               data-testid="subtopic-input"
             />
@@ -350,7 +396,7 @@ function ResourcePicker({
             </select>
             <button
               onClick={() => { setOpen(false); setSelectedSubId(''); }}
-              className="text-muted-foreground/50 hover:text-foreground text-xs px-1"
+              className="text-muted-foreground/50 hover:text-foreground text-xs px-1 transition-colors"
             >
               {'\u2715'}
             </button>
@@ -383,6 +429,7 @@ interface RowProps {
   index: number;
   clusterId: string;
   topicId: string;
+  sprintData: SprintData | null;
   resources: Resource[];
   expandedId: string | null;
   onToggle: () => void;
@@ -391,11 +438,15 @@ interface RowProps {
   onDescriptionChange: (desc: string) => void;
   onToggleResourceDone: (resourceId: string) => void;
   onUnlinkResource: (resourceId: string) => void;
+  onAddToSprint: (subtopicId: string) => void;
 }
 
 function SortableSubtopicRow({
   subtopic,
   index,
+  clusterId,
+  topicId,
+  sprintData,
   resources,
   onToggle,
   onRemove,
@@ -403,6 +454,7 @@ function SortableSubtopicRow({
   onDescriptionChange,
   onToggleResourceDone,
   onUnlinkResource,
+  onAddToSprint,
   expandedId,
 }: RowProps) {
   const isExpanded = expandedId === subtopic.id;
@@ -515,12 +567,31 @@ function SortableSubtopicRow({
         <button
           type="button"
           onClick={onRemove}
-          className="opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-red-400 text-xs px-1 transition-opacity shrink-0"
+          className="opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-red-400 text-xs px-1 transition-all shrink-0"
           aria-label="Remove subtopic"
           data-testid="subtopic-remove"
         >
           {'\u2715'}
         </button>
+
+        {sprintData && (() => {
+          const match = findMatchingSprintGoal(
+            { clusterId, topicId, subtopicId: subtopic.id },
+            sprintData
+          );
+          if (match) {
+            return <SprintBadge goal={match.goal} sprintLabel={match.sprintLabel} />;
+          }
+          return (
+            <button
+              onClick={() => onAddToSprint(subtopic.id)}
+              className="text-[10px] px-1.5 py-0.5 rounded text-muted-foreground/40 hover:text-blue-400/80 bg-surface-muted/30 hover:bg-blue-500/10 opacity-0 group-hover:opacity-100 transition-all shrink-0"
+              title="Add to current sprint"
+            >
+              {'\u002b'}
+            </button>
+          );
+        })()}
       </div>
 
       <AnimatePresence>
@@ -537,7 +608,7 @@ function SortableSubtopicRow({
                 value={descDraft}
                 onChange={e => setDescDraft(e.target.value)}
                 onBlur={() => onDescriptionChange(descDraft)}
-                placeholder="Notes or details about this subtopic\u2026"
+                placeholder={'Notes or details about this subtopic\u2026'}
                 rows={2}
                 data-testid="subtopic-desc-input"
                 className="w-full bg-surface-base/90 border border-surface-border rounded-md px-2.5 py-1.5 text-xs text-foreground placeholder:text-muted-foreground outline-none focus:border-blue-500/60 resize-none transition-colors"

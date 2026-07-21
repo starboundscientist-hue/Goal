@@ -1,4 +1,4 @@
-import type { Progress, WorkData, ParsedLogEntry, CommitGroup } from './types';
+import type { Progress, WorkData, ParsedLogEntry, CommitGroup, MotivationData, SprintData, ResourceWithCluster } from './types';
 import { parseLLMResponse } from './utils';
 
 const BASE = '/api';
@@ -58,6 +58,39 @@ export async function runCoach(logsText: string): Promise<string> {
   return data.text || 'Coach unavailable.';
 }
 
+export async function loadSprints(): Promise<SprintData | null> {
+  try {
+    const res = await fetch(`${BASE}/sprints`);
+    if (!res.ok) return null;
+    return res.json();
+  } catch {
+    return null;
+  }
+}
+
+export async function saveSprints(data: SprintData): Promise<boolean> {
+  try {
+    const res = await fetch(`${BASE}/sprints`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
+export async function loadMotivation(): Promise<MotivationData | null> {
+  try {
+    const res = await fetch(`${BASE}/motivation`);
+    if (!res.ok) return null;
+    return res.json();
+  } catch {
+    return null;
+  }
+}
+
 export async function checkAI(): Promise<boolean> {
   try {
     const res = await fetch(`${BASE}/llm/health`);
@@ -65,6 +98,16 @@ export async function checkAI(): Promise<boolean> {
     return data.online === true;
   } catch {
     return false;
+  }
+}
+
+export async function loadAllResources(): Promise<ResourceWithCluster[]> {
+  try {
+    const res = await fetch(`${BASE}/progress/resources`);
+    if (!res.ok) return [];
+    return res.json();
+  } catch {
+    return [];
   }
 }
 

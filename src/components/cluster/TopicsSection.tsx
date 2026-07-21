@@ -3,9 +3,12 @@ import { useSortable } from '@dnd-kit/sortable';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent } from '@dnd-kit/core';
 import { SortableContext, sortableKeyboardCoordinates as sortableKb, arrayMove, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import type { Topic } from '../../lib/types';
+import type { Topic, SprintData, SprintGoal } from '../../lib/types';
 import { useStore } from '../../lib/store';
 import { SubtopicModal } from './SubtopicModal';
+import { loadSprints, saveSprints } from '../../lib/api';
+import { findMatchingSprintGoal, SprintBadge } from './sprintUtils';
+import { generateId } from '../../lib/utils';
 
 interface Props {
   clusterId: string;
@@ -21,7 +24,49 @@ export function TopicsSection({ clusterId, topics }: Props) {
   const [addingTopic, setAddingTopic] = useState(false);
   const [newTopicLabel, setNewTopicLabel] = useState('');
   const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
+  const [sprintData, setSprintData] = useState<SprintData | null>(null);
+  const [addingToSprint, setAddingToSprint] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    loadSprints().then(d => {
+      if (d && !d.backlog) (d as SprintData).backlog = [];
+      setSprintData(d);
+    });
+  }, []);
+
+  const addTopicToSprint = async (topicId: string) => {
+    if (!sprintData || addingToSprint) return;
+    setAddingToSprint(true);
+    const topic = topics.find(t => t.id === topicId);
+    if (!topic) { setAddingToSprint(false); return; }
+
+    const goal: SprintGoal = {
+      id: generateId(),
+      label: topic.label,
+      lane: 'main',
+      status: 'not_started',
+      source: { clusterId, topicId },
+    };
+
+    const current = sprintData.sprints.find(s => !s.closed);
+    const updated: SprintData = {
+      backlog: sprintData.backlog,
+      sprints: sprintData.sprints,
+    };
+
+    if (current) {
+      updated.sprints = sprintData.sprints.map(s =>
+        s.id === current.id ? { ...s, goals: [...s.goals, goal] } : s
+      );
+    } else {
+      updated.backlog = [...sprintData.backlog, goal];
+    }
+
+    const ok = await saveSprints(updated);
+    if (ok) setSprintData(updated);
+    setAddingToSprint(false);
+  };
 
   useEffect(() => {
     if (addingTopic) inputRef.current?.focus();
@@ -71,9 +116,11 @@ export function TopicsSection({ clusterId, topics }: Props) {
                 key={topic.id}
                 clusterId={clusterId}
                 topic={topic}
+                sprintData={sprintData}
                 onToggle={() => toggleTopic(clusterId, topic.id)}
                 onRemove={() => removeTopic(clusterId, topic.id)}
                 onOpenSubtopics={() => setSelectedTopic(topic)}
+                onAddToSprint={addTopicToSprint}
               />
             ))}
           </div>
@@ -88,7 +135,7 @@ export function TopicsSection({ clusterId, topics }: Props) {
             onChange={e => setNewTopicLabel(e.target.value)}
             onKeyDown={handleKeyDown}
             onBlur={handleAddTopic}
-            placeholder="Topic name\u2026"
+            placeholder={'Topic name\u2026'}
             className="flex-1 bg-surface-muted/80 text-foreground text-sm rounded-lg px-3 py-1.5 outline-none border border-surface-border/60 focus:border-blue-500/50 placeholder:text-muted-foreground/60"
           />
           <button
@@ -99,7 +146,7 @@ export function TopicsSection({ clusterId, topics }: Props) {
           </button>
           <button
             onMouseDown={() => { setAddingTopic(false); setNewTopicLabel(''); }}
-            className="text-xs text-muted-foreground hover:text-foreground px-1"
+            className="text-xs text-muted-foreground hover:text-foreground px-1 transition-colors"
           >
             {'\u2715'}
           </button>
@@ -117,6 +164,7 @@ export function TopicsSection({ clusterId, topics }: Props) {
         <SubtopicModal
           clusterId={clusterId}
           topic={liveTopic}
+          sprintData={sprintData}
           onClose={() => setSelectedTopic(null)}
         />
       )}
@@ -124,12 +172,14 @@ export function TopicsSection({ clusterId, topics }: Props) {
   );
 }
 
-function SortableTopicRow({ clusterId, topic, onToggle, onRemove, onOpenSubtopics }: {
+function SortableTopicRow({ clusterId, topic, sprintData, onToggle, onRemove, onOpenSubtopics, onAddToSprint }: {
   clusterId: string;
   topic: Topic;
+  sprintData: SprintData | null;
   onToggle: () => void;
   onRemove: () => void;
   onOpenSubtopics: () => void;
+  onAddToSprint: (topicId: string) => void;
 }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: topic.id });
 
@@ -151,9 +201,12 @@ function SortableTopicRow({ clusterId, topic, onToggle, onRemove, onOpenSubtopic
       </button>
       <TopicRowContent
         topic={topic}
+        sprintData={sprintData}
+        clusterId={clusterId}
         onToggle={onToggle}
         onRemove={onRemove}
         onOpenSubtopics={onOpenSubtopics}
+        onAddToSprint={onAddToSprint}
       />
     </div>
   );
@@ -161,14 +214,20 @@ function SortableTopicRow({ clusterId, topic, onToggle, onRemove, onOpenSubtopic
 
 function TopicRowContent({
   topic,
+  sprintData,
+  clusterId,
   onToggle,
   onRemove,
   onOpenSubtopics,
+  onAddToSprint,
 }: {
   topic: Topic;
+  sprintData: SprintData | null;
+  clusterId: string;
   onToggle: () => void;
   onRemove: () => void;
   onOpenSubtopics: () => void;
+  onAddToSprint: (topicId: string) => void;
 }) {
   const subtopicCount = topic.subtopics?.length ?? 0;
   const subtopicDone = topic.subtopics?.filter(s => s.done).length ?? 0;
@@ -202,6 +261,22 @@ function TopicRowContent({
           {subtopicDone}/{subtopicCount}
         </span>
       )}
+
+      {sprintData && (() => {
+        const match = findMatchingSprintGoal({ clusterId, topicId: topic.id }, sprintData);
+        if (match) {
+          return <SprintBadge goal={match.goal} sprintLabel={match.sprintLabel} />;
+        }
+        return (
+          <button
+            onClick={() => onAddToSprint(topic.id)}
+            className="text-[10px] px-1.5 py-0.5 rounded text-muted-foreground/40 hover:text-blue-400/80 bg-surface-muted/30 hover:bg-blue-500/10 opacity-0 group-hover:opacity-100 transition-all shrink-0"
+            title="Add to current sprint"
+          >
+            {'\u002b'}
+          </button>
+        );
+      })()}
 
       <button
         onClick={onOpenSubtopics}
